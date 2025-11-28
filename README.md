@@ -75,8 +75,8 @@ Pricing is customised after a quick look at your profile, topic, and deadlines. 
 
 ## Contact
 
-- WhatsApp (fastest): `https://wa.me/91XXXXXXXXXX`  
-- Email: `youremail@example.com`  
+- WhatsApp (fastest): `https://wa.me/918374606752`  
+- Email: `praneethreddy0112@example.com`  
 - GitHub: `https://github.com/PraneethPW`
 
 If you are close to placements and your GitHub / LinkedIn still look empty, send a quick message with your situation and deadlines. Project Studio will tell you honestly what can be done in the time you have.
