@@ -1,9 +1,22 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, animate, useInView } from "framer-motion";
 import { FaReact, FaNodeJs, FaAws, FaDocker } from "react-icons/fa";
-import { SiSpringboot, SiTypescript, SiNextdotjs, SiMongodb, SiPostgresql, SiMysql, SiPrisma, SiTailwindcss, SiVercel, SiGraphql, SiLangchain, SiCloudflare } from "react-icons/si";
+import {
+  SiSpringboot,
+  SiTypescript,
+  SiNextdotjs,
+  SiMongodb,
+  SiPostgresql,
+  SiMysql,
+  SiPrisma,
+  SiTailwindcss,
+  SiVercel,
+  SiGraphql,
+  SiLangchain,
+  SiCloudflare
+} from "react-icons/si";
 import type { JSX } from "react/jsx-runtime";
 
 const Home: React.FC = () => {
@@ -64,8 +77,73 @@ const Home: React.FC = () => {
     }
   ];
 
+  // Rolling stat number
+  const StatNumber: React.FC<{ value: number }> = ({ value }) => {
+    const ref = useRef<HTMLSpanElement | null>(null);
+    const isInView = useInView(ref, { amount: 0.5 });
+    const [current, setCurrent] = useState(0);
+
+    useEffect(() => {
+      if (isInView) {
+        const controls = animate(0, value, {
+          duration: 1.4,
+          onUpdate(latest) {
+            setCurrent(Math.floor(latest));
+          }
+        });
+        return () => controls.stop();
+      } else {
+        setCurrent(0);
+      }
+    }, [isInView, value]);
+
+    return <span ref={ref}>{current}+</span>;
+  };
+
   return (
     <main className="min-h-screen bg-neutral-900 text-neutral-100 antialiased">
+      {/* SIDE NEW YEAR OFFER PILL (flashy, larger, slightly higher) */}
+      <motion.div
+        initial={{ x: 80, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 120, damping: 18 }}
+        className="pointer-events-none fixed right-10 top-20 z-30 hidden lg:flex"
+      >
+        <motion.div
+          animate={{
+            opacity: [1, 0.25, 1],
+            scale: [1, 1.07, 1]
+          }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-auto"
+        >
+          <div className="flex items-center gap-4 rounded-3xl border border-sky-400/70 bg-neutral-900/95 px-6 py-4 text-xs text-neutral-50 shadow-xl shadow-sky-500/35 backdrop-blur-sm">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-500/25 text-lg">
+              🎉
+            </span>
+            <div className="flex flex-col leading-tight max-w-xs">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-sky-300/90">
+                New year offer
+              </span>
+              <span className="mt-[2px] text-[12px] font-medium text-neutral-100">
+                30% off on every project from{" "}
+                <span className="font-semibold">Dec 31 – Jan 5</span>. Lock your slot now.
+              </span>
+            </div>
+            <motion.a
+              whileHover={{ scale: 1.1, y: -1 }}
+              whileTap={{ scale: 0.95 }}
+              href={whatsapp}
+              target="_blank"
+              rel="noreferrer"
+              className="ml-1 rounded-full bg-sky-500 px-4 py-2 text-[11px] font-semibold text-black shadow-md whitespace-nowrap"
+            >
+              Grab 30% off
+            </motion.a>
+          </div>
+        </motion.div>
+      </motion.div>
+
       <div className="mx-auto max-w-6xl px-6 py-10">
         {/* HERO */}
         <header className="grid gap-8 md:grid-cols-[2fr,1.4fr] md:items-center">
@@ -105,6 +183,44 @@ const Home: React.FC = () => {
                 First chat & quote: free, no obligation
               </span>
             </div>
+
+            {/* ATS-FRIENDLY RESUME HIGHLIGHT CARD */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mt-5 max-w-xl rounded-xl border border-emerald-500/70 bg-emerald-900/25 p-4 text-xs text-emerald-50 shadow-lg shadow-emerald-500/20"
+            >
+              <div className="mb-2 flex items-center justify-between gap-3">
+                <motion.div
+                  animate={{
+                    boxShadow: [
+                      "0 0 0px rgba(16,185,129,0)",
+                      "0 0 20px rgba(16,185,129,0.8)",
+                      "0 0 0px rgba(16,185,129,0)"
+                    ]
+                  }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-950"
+                >
+                  <span>📄</span>
+                  <span>ATS friendly resume</span>
+                </motion.div>
+                <span className="text-[10px] font-medium text-emerald-200/90">
+                  New for placements 2026
+                </span>
+              </div>
+
+              <p className="text-[11px] font-semibold text-emerald-100">
+                Make sure your resume actually passes ATS filters before a human recruiter
+                sees it.
+              </p>
+              <p className="mt-1 text-[11px] leading-relaxed text-emerald-100/90">
+                Clean, single‑column layout • role‑specific keywords • bullet points aligned
+                with your projects so tracking systems can parse skills, tech stack, and
+                impact correctly.
+              </p>
+            </motion.div>
           </div>
 
           {/* Right-side summary card */}
@@ -124,7 +240,11 @@ const Home: React.FC = () => {
 
         {/* PROBLEM / HIGHLIGHTS */}
         <section className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {["Empty or messy GitHub", "No story on LinkedIn", "College paperwork still needed"].map((title, i) => (
+          {[
+            "Empty or messy GitHub",
+            "No story on LinkedIn",
+            "College paperwork still needed"
+          ].map((title, i) => (
             <motion.div
               key={i}
               whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
@@ -200,7 +320,9 @@ const Home: React.FC = () => {
               whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
               className="flex flex-col gap-3 rounded-2xl border border-neutral-800 bg-neutral-875 p-4 text-sm shadow-sm"
             >
-              <div className="text-xs font-semibold text-neutral-300">How pricing works</div>
+              <div className="text-xs font-semibold text-neutral-300">
+                How pricing works
+              </div>
               <ul className="space-y-1 text-xs text-neutral-300">
                 <li>• Share your idea, semester, and deadline.</li>
                 <li>• We suggest 1–2 project options with effort estimate.</li>
@@ -277,7 +399,9 @@ const Home: React.FC = () => {
                 whileHover={{ y: -3, boxShadow: "0 12px 30px rgba(99,102,241,0.35)" }}
                 className="flex min-w-[180px] flex-col items-center justify-center rounded-2xl border border-neutral-800 bg-neutral-875 p-5 text-center shadow-sm transition-transform duration-150"
               >
-                <div className="text-3xl font-bold text-sky-400">{stat.value}+</div>
+                <div className="text-3xl font-bold text-sky-400">
+                  <StatNumber value={stat.value} />
+                </div>
                 <div className="mt-2 text-sm text-neutral-200">{stat.label}</div>
               </motion.div>
             ))}
@@ -308,7 +432,7 @@ const Home: React.FC = () => {
               href="mailto:praneethreddy0112@example.com"
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-neutral-700 px-4 py-2.5 text-neutral-200 transition duration-150 hover:-translate-y-[1px] hover:border-indigo-400"
             >
-              Email: praneethreddy0112@example.com
+              Email: [praneethreddy0112@example.com](mailto:praneethreddy0112@example.com)
             </motion.a>
           </div>
 
