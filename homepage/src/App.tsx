@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                   New year offer
                 </span>
                 <span className="mt-[2px] text-[11px] sm:text-[12px] font-medium text-neutral-100">
-                  10% off on every project from{" "}
+                  30% off on every project from{" "}
                   <span className="font-semibold">Dec 31 – Jan 5</span>. Lock your slot now.
                 </span>
               </div>
