@@ -102,41 +102,41 @@ const Home: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-neutral-900 text-neutral-100 antialiased">
-      {/* SIDE NEW YEAR OFFER PILL (flashy, larger, slightly higher) */}
+      {/* NEW YEAR OFFER BANNER – responsive (mobile + desktop) */}
       <motion.div
-        initial={{ x: 80, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
-        className="pointer-events-none fixed right-10 top-20 z-30 hidden lg:flex"
+        className="fixed inset-x-0 top-3 z-30 flex justify-center px-2 sm:px-4"
       >
         <motion.div
-          animate={{
-            opacity: [1, 0.25, 1],
-            scale: [1, 1.07, 1]
-          }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-auto"
+          animate={{ opacity: [1, 0.25, 1], scale: [1, 1.03, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-auto w-full max-w-md sm:max-w-xl lg:max-w-2xl"
         >
-          <div className="flex items-center gap-4 rounded-3xl border border-sky-400/70 bg-neutral-900/95 px-6 py-4 text-xs text-neutral-50 shadow-xl shadow-sky-500/35 backdrop-blur-sm">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-sky-500/25 text-lg">
-              🎉
-            </span>
-            <div className="flex flex-col leading-tight max-w-xs">
-              <span className="text-[10px] uppercase tracking-[0.22em] text-sky-300/90">
-                New year offer
+          <div className="flex flex-col items-start gap-3 rounded-2xl border border-sky-400/70 bg-neutral-900/95 px-4 py-3 text-xs text-neutral-50 shadow-xl shadow-sky-500/35 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+            <div className="flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-500/25 text-base sm:text-lg">
+                🎉
               </span>
-              <span className="mt-[2px] text-[12px] font-medium text-neutral-100">
-                30% off on every project from{" "}
-                <span className="font-semibold">Dec 31 – Jan 5</span>. Lock your slot now.
-              </span>
+              <div className="flex flex-col leading-tight">
+                <span className="text-[10px] uppercase tracking-[0.22em] text-sky-300/90">
+                  New year offer
+                </span>
+                <span className="mt-[2px] text-[11px] sm:text-[12px] font-medium text-neutral-100">
+                  30% off on every project from{" "}
+                  <span className="font-semibold">Dec 31 – Jan 5</span>. Lock your slot now.
+                </span>
+              </div>
             </div>
+
             <motion.a
-              whileHover={{ scale: 1.1, y: -1 }}
+              whileHover={{ scale: 1.06, y: -1 }}
               whileTap={{ scale: 0.95 }}
               href={whatsapp}
               target="_blank"
               rel="noreferrer"
-              className="ml-1 rounded-full bg-sky-500 px-4 py-2 text-[11px] font-semibold text-black shadow-md whitespace-nowrap"
+              className="inline-flex w-full justify-center rounded-full bg-sky-500 px-4 py-2 text-[11px] font-semibold text-black shadow-md sm:w-auto whitespace-nowrap"
             >
               Grab 30% off
             </motion.a>
@@ -144,7 +144,7 @@ const Home: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      <div className="mx-auto max-w-6xl px-6 py-10">
+      <div className="mx-auto max-w-6xl px-6 py-16">
         {/* HERO */}
         <header className="grid gap-8 md:grid-cols-[2fr,1.4fr] md:items-center">
           <div>
