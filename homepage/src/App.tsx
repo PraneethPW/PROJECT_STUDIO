@@ -102,48 +102,6 @@ const Home: React.FC = () => {
 
   return (
     <main className="min-h-screen bg-neutral-900 text-neutral-100 antialiased">
-      {/* NEW YEAR OFFER BANNER – responsive (mobile + desktop) */}
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 120, damping: 18 }}
-        className="fixed inset-x-0 top-3 z-30 flex justify-center px-2 sm:px-4"
-      >
-        <motion.div
-          animate={{ opacity: [1, 0.25, 1], scale: [1, 1.03, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-auto w-full max-w-md sm:max-w-xl lg:max-w-2xl"
-        >
-          <div className="flex flex-col items-start gap-3 rounded-2xl border border-sky-400/70 bg-neutral-900/95 px-4 py-3 text-xs text-neutral-50 shadow-xl shadow-sky-500/35 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-500/25 text-base sm:text-lg">
-                🎉
-              </span>
-              <div className="flex flex-col leading-tight">
-                <span className="text-[10px] uppercase tracking-[0.22em] text-sky-300/90">
-                  New year offer
-                </span>
-                <span className="mt-[2px] text-[11px] sm:text-[12px] font-medium text-neutral-100">
-                  30% off on every project from{" "}
-                  <span className="font-semibold">Dec 31 – Jan 5</span>. Lock your slot now.
-                </span>
-              </div>
-            </div>
-
-            <motion.a
-              whileHover={{ scale: 1.06, y: -1 }}
-              whileTap={{ scale: 0.95 }}
-              href={whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex w-full justify-center rounded-full bg-sky-500 px-4 py-2 text-[11px] font-semibold text-black shadow-md sm:w-auto whitespace-nowrap"
-            >
-              Grab 30% off
-            </motion.a>
-          </div>
-        </motion.div>
-      </motion.div>
-
       <div className="mx-auto max-w-6xl px-6 py-16">
         {/* HERO */}
         <header className="grid gap-8 md:grid-cols-[2fr,1.4fr] md:items-center">
@@ -164,7 +122,10 @@ const Home: React.FC = () => {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <motion.a
-                whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+                }}
                 href={whatsapp}
                 target="_blank"
                 rel="noreferrer"
@@ -173,7 +134,10 @@ const Home: React.FC = () => {
                 Share your current profile
               </motion.a>
               <motion.a
-                whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+                }}
                 href="#packages"
                 className="inline-flex items-center gap-2 rounded-md border border-neutral-600 px-4 py-2.5 text-sm text-neutral-200 transition-colors duration-150 hover:border-indigo-400"
               >
@@ -200,7 +164,11 @@ const Home: React.FC = () => {
                       "0 0 0px rgba(16,185,129,0)"
                     ]
                   }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 2.2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
                   className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-950"
                 >
                   <span>📄</span>
@@ -212,13 +180,13 @@ const Home: React.FC = () => {
               </div>
 
               <p className="text-[11px] font-semibold text-emerald-100">
-                Make sure your resume actually passes ATS filters before a human recruiter
-                sees it.
+                Make sure your resume actually passes ATS filters before a human
+                recruiter sees it.
               </p>
               <p className="mt-1 text-[11px] leading-relaxed text-emerald-100/90">
-                Clean, single‑column layout • role‑specific keywords • bullet points aligned
-                with your projects so tracking systems can parse skills, tech stack, and
-                impact correctly.
+                Clean, single‑column layout • role‑specific keywords • bullet
+                points aligned with your projects so tracking systems can parse
+                skills, tech stack, and impact correctly.
               </p>
             </motion.div>
           </div>
@@ -247,7 +215,10 @@ const Home: React.FC = () => {
           ].map((title, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+              whileHover={{
+                y: -2,
+                boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+              }}
               className="rounded-lg bg-neutral-800 p-4 shadow-sm transition-transform duration-150 hover:shadow-lg"
             >
               <div className="text-sm font-medium text-neutral-200">{title}</div>
@@ -270,8 +241,8 @@ const Home: React.FC = () => {
                 Flagship: Portfolio + Project package
               </h2>
               <p className="mt-1 text-sm text-neutral-400">
-                One solid full‑stack project, a clean GitHub repo, and a LinkedIn
-                update that actually shows your work.
+                One solid full‑stack project, a clean GitHub repo, and a
+                LinkedIn update that actually shows your work.
               </p>
             </div>
             <p className="text-xs text-neutral-500">
@@ -281,10 +252,15 @@ const Home: React.FC = () => {
 
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
             <motion.div
-              whileHover={{ y: -3, boxShadow: "0 12px 30px rgba(99,102,241,0.35)" }}
+              whileHover={{
+                y: -3,
+                boxShadow: "0 12px 30px rgba(99,102,241,0.35)"
+              }}
               className="md:col-span-2 rounded-2xl border border-neutral-800 bg-neutral-875 p-6 shadow-md transition-transform duration-150"
             >
-              <h3 className="text-lg font-semibold">Portfolio‑ready project (core)</h3>
+              <h3 className="text-lg font-semibold">
+                Portfolio‑ready project (core)
+              </h3>
               <p className="mt-2 text-sm text-neutral-300">
                 We design and build a project that fits your background and
                 target role—something you can actually explain in interviews.
@@ -305,7 +281,10 @@ const Home: React.FC = () => {
                   college requirements.
                 </span>
                 <motion.a
-                  whileHover={{ y: -1, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+                  whileHover={{
+                    y: -1,
+                    boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+                  }}
                   href={whatsapp}
                   target="_blank"
                   rel="noreferrer"
@@ -317,7 +296,10 @@ const Home: React.FC = () => {
             </motion.div>
 
             <motion.aside
-              whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+              whileHover={{
+                y: -2,
+                boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+              }}
               className="flex flex-col gap-3 rounded-2xl border border-neutral-800 bg-neutral-875 p-4 text-sm shadow-sm"
             >
               <div className="text-xs font-semibold text-neutral-300">
@@ -337,14 +319,18 @@ const Home: React.FC = () => {
         <section className="mt-14">
           <h2 className="text-xl font-semibold">Services & add‑ons</h2>
           <p className="mt-1 text-sm text-neutral-400">
-            Everything is built around one goal: a stronger GitHub + LinkedIn story before placements.
+            Everything is built around one goal: a stronger GitHub + LinkedIn
+            story before placements.
           </p>
 
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((card) => (
               <motion.article
                 key={card.title}
-                whileHover={{ y: -2, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+                whileHover={{
+                  y: -2,
+                  boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+                }}
                 className="flex flex-col rounded-xl border border-neutral-800 bg-neutral-875 p-5 text-sm shadow-sm transition-transform duration-150"
               >
                 <h4 className="font-medium text-neutral-100">{card.title}</h4>
@@ -362,14 +348,18 @@ const Home: React.FC = () => {
         <section className="mt-14">
           <h2 className="text-xl font-semibold">Stacks we usually work with</h2>
           <p className="mt-1 text-sm text-neutral-400">
-            We can align with what your college prefers or what your target companies use.
+            We can align with what your college prefers or what your target
+            companies use.
           </p>
 
           <div className="mt-4 grid grid-cols-3 gap-3 text-xs sm:grid-cols-6">
             {techStack.map((t) => (
               <motion.div
                 key={t.name}
-                whileHover={{ y: -1, boxShadow: "0 8px 25px rgba(99,102,241,0.3)" }}
+                whileHover={{
+                  y: -1,
+                  boxShadow: "0 8px 25px rgba(99,102,241,0.3)"
+                }}
                 className="flex flex-col items-center justify-center gap-1 rounded-md border border-neutral-800 bg-neutral-875 px-3 py-2 text-center text-neutral-200 shadow-sm transition-all duration-150 hover:border-indigo-400"
               >
                 <div className="text-xl">{t.icon}</div>
@@ -396,7 +386,10 @@ const Home: React.FC = () => {
             ].map((stat, i) => (
               <motion.div
                 key={i}
-                whileHover={{ y: -3, boxShadow: "0 12px 30px rgba(99,102,241,0.35)" }}
+                whileHover={{
+                  y: -3,
+                  boxShadow: "0 12px 30px rgba(99,102,241,0.35)"
+                }}
                 className="flex min-w-[180px] flex-col items-center justify-center rounded-2xl border border-neutral-800 bg-neutral-875 p-5 text-center shadow-sm transition-transform duration-150"
               >
                 <div className="text-3xl font-bold text-sky-400">
@@ -419,7 +412,10 @@ const Home: React.FC = () => {
 
           <div className="mt-4 flex flex-col gap-3 text-sm sm:flex-row">
             <motion.a
-              whileHover={{ y: -1, boxShadow: "0 8px 25px rgba(99,102,241,0.35)" }}
+              whileHover={{
+                y: -1,
+                boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
+              }}
               href={whatsapp}
               target="_blank"
               rel="noreferrer"
@@ -428,11 +424,14 @@ const Home: React.FC = () => {
               WhatsApp – get quote
             </motion.a>
             <motion.a
-              whileHover={{ y: -1, boxShadow: "0 8px 25px rgba(99,102,241,0.2)" }}
+              whileHover={{
+                y: -1,
+                boxShadow: "0 8px 25px rgba(99,102,241,0.2)"
+              }}
               href="mailto:praneethreddy0112@example.com"
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-neutral-700 px-4 py-2.5 text-neutral-200 transition duration-150 hover:-translate-y-[1px] hover:border-indigo-400"
             >
-              Email: [praneethreddy0112@example.com](mailto:praneethreddy0112@example.com)
+              Email: (mailto:praneethreddy0112@example.com)
             </motion.a>
           </div>
 
@@ -443,8 +442,7 @@ const Home: React.FC = () => {
 
         {/* FOOTER */}
         <footer className="mt-10 border-t border-neutral-800 pt-4 text-center text-xs text-neutral-500">
-          © {new Date().getFullYear()} Praneeth. Built with React & Tailwind,
-          deployed on Vercel.
+          © {new Date().getFullYear()} Praneeth. 
         </footer>
       </div>
     </main>
