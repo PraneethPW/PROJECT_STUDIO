@@ -431,7 +431,7 @@ const Home: React.FC = () => {
               href="mailto:praneethreddy0112@example.com"
               className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-neutral-700 px-4 py-2.5 text-neutral-200 transition duration-150 hover:-translate-y-[1px] hover:border-indigo-400"
             >
-              Email: (mailto:praneethreddy0112@example.com)
+              Email: (mailto:praneethreddy0112@gmail.com)
             </motion.a>
           </div>
 
