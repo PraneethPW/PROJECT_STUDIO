@@ -2,12 +2,194 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/LogoStudio.svg" /> <!-- updated logo -->
+    <!-- Updated favicon linking to your custom SVG logo -->
+    <link rel="icon" type="image/svg+xml" href="/LogoStudio.svg" />
+    <!-- Additional favicon formats for broader support -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Praneeth's Project Studio</title> <!-- updated title -->
+    <title>Praneeth's Project Studio</title>
+    
+    <!-- SEO & Social Media Meta Tags -->
+    <meta name="description" content="Portfolio-ready projects for pre-placement students. GitHub repos, LinkedIn profiles, and college documentation." />
+    <meta property="og:title" content="Praneeth's Project Studio" />
+    <meta property="og:description" content="Get portfolio-ready projects before placements hit" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Praneeth's Project Studio" />
+    <meta name="twitter:description" content="Portfolio-ready projects for pre-placement students" />
+    <meta name="twitter:image" content="/og-image.png" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Enhanced Loading Screen with Your Logo -->
+    <div id="loading" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #18181b 0%, #27272a 50%, #1e1e1e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    ">
+      <!-- Logo Container -->
+      <div style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        animation: float 3s ease-in-out infinite;
+      ">
+        <!-- Your Custom SVG Logo (scaled appropriately) -->
+        <div style="
+          width: 90px;
+          height: 90px;
+          filter: drop-shadow(0 12px 30px rgba(99, 102, 241, 0.4));
+          animation: logoPulse 2s infinite ease-in-out;
+        ">
+          <img 
+            src="/LogoStudio.svg" 
+            alt="Praneeth's Project Studio" 
+            style="width: 100%; height: 100%; object-fit: contain;"
+            draggable="false"
+          />
+        </div>
+        
+        <!-- Studio Branding -->
+        <div style="
+          text-align: center;
+          color: #a1a1aa;
+          font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        ">
+          <div>Praneeth's</div>
+          <div style="font-size: 20px; background: linear-gradient(135deg, #6366f1, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800;">
+            Project Studio
+          </div>
+        </div>
+      </div>
+      
+      <!-- Enhanced Loading Dots -->
+      <div style="
+        display: flex;
+        gap: 10px;
+        margin-top: 2.5rem;
+        padding: 20px;
+      ">
+        <div style="width: 10px; height: 10px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out;"></div>
+        <div style="width: 10px; height: 10px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out 0.2s;"></div>
+        <div style="width: 10px; height: 10px; background: linear-gradient(135deg, #6366f1, #3b82f6); border-radius: 50%; animation: pulse 1.4s infinite ease-in-out 0.4s;"></div>
+      </div>
+    </div>
+
+    <!-- App Container -->
+    <div id="root" style="
+      opacity: 0; 
+      transition: opacity 0.4s ease-in-out;
+      min-height: 100vh;
+    "></div>
+
+    <style>
+      /* Smooth animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) scale(1); }
+        50% { transform: translateY(-12px) scale(1.02); }
+      }
+      
+      @keyframes logoPulse {
+        0%, 100% { transform: scale(1); filter: drop-shadow(0 12px 30px rgba(99, 102, 241, 0.4)); }
+        50% { transform: scale(1.05); filter: drop-shadow(0 20px 40px rgba(99, 102, 241, 0.6)); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { 
+          opacity: 1; 
+          transform: scale(1); 
+        }
+        50% { 
+          opacity: 0.3; 
+          transform: scale(1.3); 
+        }
+      }
+      
+      /* Ensure smooth transitions */
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+    </style>
+
+    <script type="module">
+      // Advanced loading handler
+      let loadTimeout;
+      
+      // Hide loading when DOM is ready AND React has mounted
+      const hideLoading = () => {
+        const loading = document.getElementById('loading');
+        const root = document.getElementById('root');
+        
+        if (loading && root) {
+          loading.style.opacity = '0';
+          loading.style.transform = 'scale(0.95)';
+          
+          setTimeout(() => {
+            loading.style.display = 'none';
+            root.style.opacity = '1';
+            document.body.style.overflow = 'auto';
+          }, 500);
+          
+          clearTimeout(loadTimeout);
+        }
+      };
+      
+      // Method 1: When window fully loads
+      window.addEventListener('load', hideLoading);
+      
+      // Method 2: When React root has content (more reliable)
+      const rootObserver = new MutationObserver((mutations) => {
+        const root = document.getElementById('root');
+        if (root && root.children.length > 0 && root.children[0].children.length > 0) {
+          hideLoading();
+        }
+      });
+      
+      // Start observing root element
+      const rootElement = document.getElementById('root');
+      if (rootElement) {
+        rootObserver.observe(rootElement, { 
+          childList: true, 
+          subtree: true,
+          attributes: false 
+        });
+      }
+      
+      // Method 3: Fallback timeout (max 5 seconds)
+      loadTimeout = setTimeout(hideLoading, 5000);
+      
+      // Preload critical resources
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.href = '/LogoStudio.svg';
+      link.as = 'image';
+      document.head.appendChild(link);
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
