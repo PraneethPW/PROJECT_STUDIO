@@ -550,24 +550,84 @@ const HeroReel: React.FC = () => {
 };
 
 const MobileHeroReel: React.FC = () => {
+  const launchSteps = [
+    {
+      title: "Share the brief",
+      desc: "Your idea, timeline, and college or client requirements."
+    },
+    {
+      title: "Build the stack",
+      desc: "UI, logic, README, deployment, and clean project files."
+    },
+    {
+      title: "Launch polished",
+      desc: "GitHub, LinkedIn, and viva-ready delivery material."
+    }
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
-      className="mt-8 overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-4 shadow-2xl shadow-black/35 backdrop-blur-3xl lg:hidden"
+      className="mx-auto mt-8 w-full max-w-[36rem] overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-4 shadow-2xl shadow-black/35 backdrop-blur-3xl lg:hidden"
     >
-      <div className="rounded-[22px] border border-orange-200/12 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.26),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.22)_72%)] p-4">
-        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-orange-100/75">
-          <span className="inline-flex items-center gap-2">
+      <div className="rounded-[22px] border border-orange-200/12 bg-[radial-gradient(circle_at_50%_14%,rgba(255,148,53,0.28),rgba(255,148,53,0.08)_28%,rgba(0,0,0,0.22)_72%)] p-4 sm:p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="max-w-[18rem]">
+            <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-orange-100/75">
+              <BlinkDot tone="amber" />
+              project path
+            </div>
+            <h3 className="mt-3 text-xl font-semibold text-white">Idea to launch</h3>
+            <p className="mt-2 text-sm leading-6 text-white/58">
+              We turn a rough brief into a clean repo, sharp UI, polished docs, and a profile-ready launch.
+            </p>
+          </div>
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-white/12 bg-black/28 text-orange-200">
+            <Rocket className="h-5 w-5" />
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-[20px] border border-white/12 bg-black/25 p-3">
+          <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.22em] text-white/55">
             <BlinkDot tone="amber" />
-            motion reel
-          </span>
-          <Move3d className="h-4 w-4 text-orange-200" />
+            <span>launch stack</span>
+            <span className="text-orange-100/80">GitHub / LinkedIn / Docs</span>
+          </div>
+
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/8">
+            <motion.div
+              animate={{ x: ["-8%", "108%", "-8%"] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              className="h-full w-1/2 rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+            />
+          </div>
         </div>
 
         <div className="mt-4 grid gap-3">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_32%,rgba(0,0,0,0.25)_72%)]">
+          <div className="grid gap-3 sm:grid-cols-3">
+            {launchSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.12 + index * 0.08 }}
+                className="rounded-2xl border border-white/10 bg-black/22 p-3"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-orange-100/70">
+                    0{index + 1}
+                  </span>
+                  <ArrowRight className="h-3.5 w-3.5 text-orange-200/70" />
+                </div>
+                <p className="mt-3 text-sm font-semibold text-white">{step.title}</p>
+                <p className="mt-1 text-xs leading-5 text-white/48">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="relative overflow-hidden rounded-[20px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_32%,rgba(0,0,0,0.25)_72%)] aspect-[16/10]">
             <motion.div
               animate={{ backgroundPositionX: ["0%", "100%"] }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -575,14 +635,18 @@ const MobileHeroReel: React.FC = () => {
             />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(255,255,255,0.1),transparent_20%)]" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/18 bg-black/35 backdrop-blur-xl">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl">
                 <Play className="h-6 w-6 fill-white text-white" />
               </div>
             </div>
             <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-white/55">
+              <span>repo preview</span>
+              <span>launch ready</span>
+            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid gap-2 sm:grid-cols-3">
             {["README", "Deploy", "Viva"].map((item, index) => (
               <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
                 <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
