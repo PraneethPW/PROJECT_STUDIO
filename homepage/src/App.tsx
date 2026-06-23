@@ -64,7 +64,7 @@ type ServiceCard = {
 };
 
 const whatsapp =
-  "https://wa.me/918374606752?text=Hi%20Praneeth%2C%20I%20need%20a%20project";
+  "https://wa.me/917396704622?text=Hi%20Praneeth%2C%20I%20need%20a%20project";
 
 const toneStyles: Record<
   Tone,
