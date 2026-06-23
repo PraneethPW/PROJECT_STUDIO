@@ -258,8 +258,9 @@ const CardFrame: React.FC<{
   className?: string;
 }> = ({ tone, children, className = "" }) => (
   <motion.article
-    whileHover={{ y: -8, scale: 1.01, rotateX: 5, rotateY: -4 }}
-    transition={{ type: "spring", stiffness: 280, damping: 20 }}
+    whileHover={{ y: -10, scale: 1.015, rotateX: 6, rotateY: -5 }}
+    whileTap={{ scale: 0.995 }}
+    transition={{ type: "spring", stiffness: 260, damping: 18 }}
     className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] shadow-2xl backdrop-blur-2xl transform-gpu ${toneStyles[tone].glow} ${className}`}
   >
     <div
@@ -269,14 +270,19 @@ const CardFrame: React.FC<{
     <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/35 to-transparent opacity-40" />
     <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.11),transparent_24%,transparent_76%,rgba(255,255,255,0.08))] opacity-0 transition duration-300 group-hover:opacity-100" />
     <motion.div
-      animate={{ opacity: [0.18, 0.85, 0.24, 0.9, 0.2], scale: [0.9, 1.15, 0.95, 1.12, 0.9] }}
-      transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      animate={{ opacity: [0.16, 0.88, 0.22, 0.9, 0.18], scale: [0.92, 1.18, 0.96, 1.12, 0.92] }}
+      transition={{ duration: 2.1, repeat: Infinity, ease: "easeInOut" }}
       className="absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-orange-300 shadow-[0_0_18px_rgba(251,146,60,0.75)]"
     />
     <motion.div
-      animate={{ x: ["-20%", "120%", "-20%"], opacity: [0, 0.75, 0] }}
-      transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
+      animate={{ x: ["-20%", "120%", "-20%"], opacity: [0, 0.85, 0] }}
+      transition={{ duration: 4.3, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"
+    />
+    <motion.div
+      animate={{ opacity: [0, 0.7, 0], y: [0, 6, 0] }}
+      transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute inset-x-4 bottom-4 h-10 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,167,76,0.12),transparent_72%)]"
     />
     <div className="relative">{children}</div>
   </motion.article>
@@ -306,14 +312,15 @@ const ScrollStage: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const reduceMotion = useReducedMotion();
 
-  const driftLeft = useTransform(scrollYProgress, [0, 1], [0, -180]);
-  const driftRight = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const driftCenter = useTransform(scrollYProgress, [0, 1], [0, -260]);
-  const tiltLeft = useTransform(scrollYProgress, [0, 1], [-10, 8]);
-  const tiltRight = useTransform(scrollYProgress, [0, 1], [8, -6]);
+  const driftLeft = useTransform(scrollYProgress, [0, 1], [0, -220]);
+  const driftRight = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const driftCenter = useTransform(scrollYProgress, [0, 1], [0, -320]);
+  const tiltLeft = useTransform(scrollYProgress, [0, 1], [-12, 7]);
+  const tiltRight = useTransform(scrollYProgress, [0, 1], [10, -8]);
   const tiltCenter = useTransform(scrollYProgress, [0, 1], [2, -4]);
-  const spineGlow = useTransform(scrollYProgress, [0, 1], [0.18, 0.36]);
-  const ribbon = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const spineGlow = useTransform(scrollYProgress, [0, 1], [0.18, 0.42]);
+  const ribbon = useTransform(scrollYProgress, [0, 1], [0, -220]);
+  const pulse = useTransform(scrollYProgress, [0, 1], [0.28, 0.68]);
 
   if (reduceMotion) {
     return <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden scene-grid opacity-24" />;
@@ -322,28 +329,40 @@ const ScrollStage: React.FC = () => {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-[#050505]" />
-      <div className="absolute inset-0 scene-grid opacity-22" />
+      <div className="absolute inset-0 scene-grid opacity-18" />
+      <motion.div
+        style={{ opacity: pulse }}
+        className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-orange-300/10 to-transparent"
+      />
       <motion.div
         animate={{ opacity: [0.05, 0.35, 0.08, 0.4, 0.05] }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-[8vw] top-[18vh] h-[1px] w-[28vw] bg-gradient-to-r from-transparent via-orange-200/70 to-transparent"
+        className="absolute left-[6vw] top-[16vh] h-[1px] w-[30vw] bg-gradient-to-r from-transparent via-orange-200/70 to-transparent"
       />
       <motion.div
         style={{ x: driftLeft, y: driftCenter, rotate: tiltLeft }}
         animate={{ opacity: [0.35, 0.65, 0.35], scale: [0.98, 1.03, 0.98] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-[-10vw] top-[12vh] h-[36rem] w-[46vw] rounded-[3rem] border border-orange-200/10 bg-[linear-gradient(135deg,rgba(255,132,46,0.12),rgba(255,255,255,0.05)_44%,rgba(255,255,255,0.02))] shadow-[0_0_120px_rgba(255,132,46,0.12)] backdrop-blur-3xl"
+        className="absolute left-[-12vw] top-[10vh] hidden h-[40rem] w-[48vw] rounded-[3rem] border border-orange-200/10 bg-[linear-gradient(135deg,rgba(255,132,46,0.12),rgba(255,255,255,0.05)_44%,rgba(255,255,255,0.02))] shadow-[0_0_120px_rgba(255,132,46,0.12)] backdrop-blur-3xl md:block"
       />
       <motion.div
         style={{ x: driftRight, y: driftLeft, rotate: tiltRight }}
         animate={{ opacity: [0.2, 0.42, 0.2], scale: [0.96, 1.05, 0.96] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-[-8vw] top-[18vh] h-[32rem] w-[30vw] rounded-[3rem] border border-amber-200/10 bg-[linear-gradient(215deg,rgba(255,185,88,0.12),rgba(255,255,255,0.05)_40%,rgba(255,133,55,0.05))] shadow-[0_0_110px_rgba(255,171,77,0.12)] backdrop-blur-3xl"
+        className="absolute right-[-10vw] top-[16vh] hidden h-[34rem] w-[28vw] rounded-[3rem] border border-amber-200/10 bg-[linear-gradient(215deg,rgba(255,185,88,0.12),rgba(255,255,255,0.05)_40%,rgba(255,133,55,0.05))] shadow-[0_0_110px_rgba(255,171,77,0.12)] backdrop-blur-3xl lg:block"
       />
       <motion.div
         style={{ y: ribbon, rotate: tiltCenter, opacity: spineGlow }}
         className="absolute left-1/2 top-[8vh] h-[84vh] w-[1px] -translate-x-1/2 bg-gradient-to-b from-transparent via-white/20 to-transparent"
       />
+      <motion.div
+        style={{ y: driftCenter, rotate: tiltCenter }}
+        className="absolute left-1/2 top-[10vh] hidden h-[72vh] w-[34vw] -translate-x-1/2 rounded-[2.8rem] border border-white/8 bg-white/[0.035] backdrop-blur-3xl lg:block"
+      >
+        <div className="absolute inset-0 depth-bars opacity-16" />
+        <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+        <div className="absolute inset-x-6 bottom-6 h-px bg-gradient-to-r from-transparent via-orange-200/40 to-transparent" />
+      </motion.div>
       <motion.div
         animate={{ opacity: [0.15, 0.9, 0.2, 0.85, 0.15], scale: [0.88, 1.12, 0.95, 1.06, 0.88] }}
         transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
@@ -359,14 +378,30 @@ const ScrollStage: React.FC = () => {
         <BlinkDot tone="amber" />
       </motion.div>
       <motion.div
+        animate={{ opacity: [0.08, 0.45, 0.12, 0.48, 0.08], x: [0, 10, 0] }}
+        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        className="absolute bottom-[18vh] left-1/2 h-px w-[52vw] -translate-x-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+      />
+      <motion.div
+        animate={{ opacity: [0.12, 0.65, 0.18, 0.7, 0.12] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+        className="absolute left-4 top-[16vh] h-[1px] w-[18vw] bg-gradient-to-r from-orange-300/0 via-orange-300/60 to-orange-300/0 md:hidden"
+      />
+      <motion.div
+        animate={{ opacity: [0.1, 0.7, 0.15, 0.6, 0.1], x: [0, 8, 0] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.25 }}
+        className="absolute right-3 top-[22vh] h-[26rem] w-[1px] bg-gradient-to-b from-transparent via-orange-200/60 to-transparent md:hidden"
+      />
+      <motion.div
         style={{ y: ribbon }}
-        className="absolute left-[13vw] top-[10vh] hidden h-[28rem] w-[24vw] rounded-[2.4rem] border border-white/10 bg-white/[0.045] backdrop-blur-2xl lg:block"
+        className="absolute left-[13vw] top-[10vh] hidden h-[28rem] w-[24vw] rounded-[2.4rem] border border-white/10 bg-white/[0.045] backdrop-blur-2xl xl:block"
       >
         <div className="absolute inset-0 depth-bars opacity-20" />
         <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
       </motion.div>
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.92),rgba(5,5,5,0.82)_24%,rgba(5,5,5,0.9)_72%,rgba(5,5,5,0.98))]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(255,167,76,0.08),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.04),transparent_24%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/40 to-transparent md:hidden" />
     </div>
   );
 };
