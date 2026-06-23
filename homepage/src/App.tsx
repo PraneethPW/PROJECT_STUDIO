@@ -355,6 +355,42 @@ const ScrollStage: React.FC = () => {
         style={{ y: ribbon, rotate: tiltCenter, opacity: spineGlow }}
         className="absolute left-1/2 top-[8vh] h-[84vh] w-[1px] -translate-x-1/2 bg-gradient-to-b from-transparent via-white/20 to-transparent"
       />
+      <div className="absolute inset-x-0 top-[8vh] md:hidden">
+        <motion.div
+          style={{ x: driftLeft, y: driftCenter, rotate: tiltLeft }}
+          animate={{ opacity: [0.28, 0.56, 0.28], scale: [0.96, 1.03, 0.96] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[-16vw] top-0 h-[15rem] w-[72vw] rounded-[2rem] border border-orange-200/10 bg-[linear-gradient(135deg,rgba(255,132,46,0.14),rgba(255,255,255,0.05)_44%,rgba(255,255,255,0.02))] shadow-[0_0_80px_rgba(255,132,46,0.12)] backdrop-blur-3xl"
+        />
+        <motion.div
+          style={{ x: driftRight, y: driftLeft, rotate: tiltRight }}
+          animate={{ opacity: [0.18, 0.42, 0.18], scale: [0.95, 1.04, 0.95] }}
+          transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-[-18vw] top-[8rem] h-[13rem] w-[58vw] rounded-[2rem] border border-amber-200/10 bg-[linear-gradient(215deg,rgba(255,185,88,0.12),rgba(255,255,255,0.05)_40%,rgba(255,133,55,0.05))] shadow-[0_0_70px_rgba(255,171,77,0.12)] backdrop-blur-3xl"
+        />
+        <motion.div
+          style={{ y: ribbon, rotate: tiltCenter }}
+          className="absolute left-1/2 top-[9rem] h-[18rem] w-[82vw] -translate-x-1/2 rounded-[2rem] border border-white/8 bg-white/[0.03] backdrop-blur-3xl"
+        >
+          <div className="absolute inset-0 depth-bars opacity-12" />
+          <div className="absolute inset-x-4 top-4 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+          <div className="absolute inset-x-4 bottom-4 h-px bg-gradient-to-r from-transparent via-orange-200/35 to-transparent" />
+        </motion.div>
+        <motion.div
+          animate={{ opacity: [0.12, 0.7, 0.15, 0.8, 0.12], scale: [0.88, 1.14, 0.92, 1.08, 0.88] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-4 top-8"
+        >
+          <BlinkDot tone="orange" />
+        </motion.div>
+        <motion.div
+          animate={{ opacity: [0.1, 0.6, 0.12, 0.7, 0.1], scale: [0.88, 1.12, 0.9, 1.06, 0.88] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+          className="absolute right-5 top-[11rem]"
+        >
+          <BlinkDot tone="amber" />
+        </motion.div>
+      </div>
       <motion.div
         style={{ y: driftCenter, rotate: tiltCenter }}
         className="absolute left-1/2 top-[10vh] hidden h-[72vh] w-[34vw] -translate-x-1/2 rounded-[2.8rem] border border-white/8 bg-white/[0.035] backdrop-blur-3xl lg:block"
@@ -513,6 +549,60 @@ const HeroReel: React.FC = () => {
   );
 };
 
+const MobileHeroReel: React.FC = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.1 }}
+      className="mt-8 overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-4 shadow-2xl shadow-black/35 backdrop-blur-3xl lg:hidden"
+    >
+      <div className="rounded-[22px] border border-orange-200/12 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.26),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.22)_72%)] p-4">
+        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-orange-100/75">
+          <span className="inline-flex items-center gap-2">
+            <BlinkDot tone="amber" />
+            motion reel
+          </span>
+          <Move3d className="h-4 w-4 text-orange-200" />
+        </div>
+
+        <div className="mt-4 grid gap-3">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[20px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_32%,rgba(0,0,0,0.25)_72%)]">
+            <motion.div
+              animate={{ backgroundPositionX: ["0%", "100%"] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-60"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(255,255,255,0.1),transparent_20%)]" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/18 bg-black/35 backdrop-blur-xl">
+                <Play className="h-6 w-6 fill-white text-white" />
+              </div>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            {["README", "Deploy", "Viva"].map((item, index) => (
+              <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
+                <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    animate={{ width: [`${55 + index * 8}%`, `${72 + index * 6}%`, `${55 + index * 8}%`] }}
+                    transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.15 }}
+                    className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                  />
+                </div>
+                <p className="text-xs font-semibold text-white">{item}</p>
+                <p className="mt-1 text-[10px] text-white/45">ready</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const Home: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050505] text-neutral-100 antialiased">
@@ -643,6 +733,7 @@ const Home: React.FC = () => {
           </motion.div>
 
           <HeroReel />
+          <MobileHeroReel />
         </section>
 
         <motion.section
