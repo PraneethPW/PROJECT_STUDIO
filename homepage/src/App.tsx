@@ -1,543 +1,920 @@
-"use client";
-
-import React, { useEffect, useState, useRef } from "react";
-import { motion, animate, useInView } from "framer-motion";
-import { FaReact, FaNodeJs, FaAws, FaDocker } from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  SiSpringboot,
-  SiTypescript,
-  SiNextdotjs,
-  SiMongodb,
-  SiPostgresql,
-  SiMysql,
-  SiPrisma,
-  SiTailwindcss,
-  SiVercel,
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform
+} from "framer-motion";
+import {
+  ArrowRight,
+  BadgeCheck,
+  BookOpenCheck,
+  BriefcaseBusiness,
+  Check,
+  Code2,
+  FileText,
+  Github,
+  Globe2,
+  Layers3,
+  Linkedin,
+  MessageCircle,
+  Move3d,
+  Play,
+  Rocket,
+  ScanLine,
+  ShieldCheck,
+  Sparkles,
+  Waypoints,
+  Zap
+} from "lucide-react";
+import { FaAws, FaDocker, FaNodeJs, FaReact } from "react-icons/fa";
+import {
+  SiCloudflare,
   SiGraphql,
   SiLangchain,
-  SiCloudflare
+  SiMongodb,
+  SiMysql,
+  SiNextdotjs,
+  SiPostgresql,
+  SiPrisma,
+  SiSpringboot,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel
 } from "react-icons/si";
-import type { JSX } from "react/jsx-runtime";
+import type { IconType } from "react-icons";
 
-const Home: React.FC = () => {
-  const whatsapp: string =
-    "https://wa.me/918374606752?text=Hi%20Praneeth%2C%20I%20need%20a%20project";
+type TechItem = {
+  name: string;
+  icon?: IconType;
+};
 
-  const techStack: { name: string; icon?: JSX.Element }[] = [
-    { name: "Java" },
-    { name: "Spring Boot", icon: <SiSpringboot /> },
-    { name: "React", icon: <FaReact /> },
-    { name: "Next.js", icon: <SiNextdotjs /> },
-    { name: "Node.js", icon: <FaNodeJs /> },
-    { name: "Express" },
-    { name: "TypeScript", icon: <SiTypescript /> },
-    { name: "MongoDB", icon: <SiMongodb /> },
-    { name: "Postgres", icon: <SiPostgresql /> },
-    { name: "MySQL", icon: <SiMysql /> },
-    { name: "Prisma", icon: <SiPrisma /> },
-    { name: "Tailwind", icon: <SiTailwindcss /> },
-    { name: "Vercel", icon: <SiVercel /> },
-    { name: "Docker", icon: <FaDocker /> },
-    { name: "GraphQL", icon: <SiGraphql /> },
-    { name: "LangChain", icon: <SiLangchain /> },
-    { name: "AWS", icon: <FaAws /> },
-    { name: "Cloudflare", icon: <SiCloudflare /> }
-  ];
+type Tone = "ember" | "gold" | "copper" | "smoke" | "ash" | "sun";
 
-  const services = [
-    {
-      title: "Second / backup project",
-      desc: "An additional, smaller project so your profile shows more than one serious repo.",
-      note: "Good when you are applying to multiple roles or companies."
-    },
-    {
-      title: "Mini full‑stack build",
-      desc: "Compact app with CRUD + auth + UI—useful as a mini‑project or internship highlight.",
-      note: "We keep the scope small but real so you can recall it easily."
-    },
-    {
-      title: "Documentation bundle",
-      desc: "SRS, UML/ER, and report draft aligned with your college format.",
-      note: "Shared as editable files so you can adjust with your guide."
-    },
-    {
-      title: "Slides + viva prep",
-      desc: "Clean slide deck and a set of expected viva / panel questions.",
-      note: "Helps you talk about the project without memorising a script."
-    },
-    {
-      title: "Profile & copy support",
-      desc: "Short CV bullets, LinkedIn about/experience lines, and a project post.",
-      note: "Focused on sounding like you, not like a template."
-    },
-    {
-      title: "Custom requirements",
-      desc: "Anything slightly different—migration of an existing project, refactor, extra features.",
-      note: "We'll scope it quickly on WhatsApp before quoting."
+type ServiceCard = {
+  title: string;
+  desc: string;
+  note: string;
+  icon: React.ElementType;
+  tone: Tone;
+};
+
+const whatsapp =
+  "https://wa.me/918374606752?text=Hi%20Praneeth%2C%20I%20need%20a%20project";
+
+const toneStyles: Record<
+  Tone,
+  {
+    badge: string;
+    accent: string;
+    glow: string;
+    button: string;
+  }
+> = {
+  ember: {
+    badge: "border-orange-300/20 bg-orange-300/10 text-orange-100",
+    accent: "from-orange-400/22 via-transparent to-transparent",
+    glow: "shadow-orange-500/20",
+    button: "from-orange-400 via-amber-300 to-yellow-200"
+  },
+  gold: {
+    badge: "border-amber-300/20 bg-amber-300/10 text-amber-100",
+    accent: "from-amber-300/22 via-transparent to-transparent",
+    glow: "shadow-amber-500/20",
+    button: "from-amber-300 via-orange-200 to-rose-200"
+  },
+  copper: {
+    badge: "border-rose-300/20 bg-rose-300/10 text-rose-100",
+    accent: "from-rose-300/22 via-transparent to-transparent",
+    glow: "shadow-rose-500/20",
+    button: "from-rose-300 via-orange-200 to-amber-200"
+  },
+  smoke: {
+    badge: "border-white/10 bg-white/5 text-white/75",
+    accent: "from-white/10 via-transparent to-transparent",
+    glow: "shadow-black/35",
+    button: "from-neutral-300 via-white to-orange-100"
+  },
+  ash: {
+    badge: "border-white/10 bg-white/6 text-white/72",
+    accent: "from-white/8 via-transparent to-transparent",
+    glow: "shadow-black/30",
+    button: "from-white via-orange-100 to-amber-100"
+  },
+  sun: {
+    badge: "border-orange-300/18 bg-orange-300/8 text-orange-50",
+    accent: "from-orange-200/18 via-transparent to-transparent",
+    glow: "shadow-orange-400/15",
+    button: "from-orange-500 via-amber-400 to-orange-200"
+  }
+};
+
+const techStack: TechItem[] = [
+  { name: "Java" },
+  { name: "Spring Boot", icon: SiSpringboot },
+  { name: "React", icon: FaReact },
+  { name: "Next.js", icon: SiNextdotjs },
+  { name: "Node.js", icon: FaNodeJs },
+  { name: "Express" },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "MongoDB", icon: SiMongodb },
+  { name: "Postgres", icon: SiPostgresql },
+  { name: "MySQL", icon: SiMysql },
+  { name: "Prisma", icon: SiPrisma },
+  { name: "Tailwind", icon: SiTailwindcss },
+  { name: "Vercel", icon: SiVercel },
+  { name: "Docker", icon: FaDocker },
+  { name: "GraphQL", icon: SiGraphql },
+  { name: "LangChain", icon: SiLangchain },
+  { name: "AWS", icon: FaAws },
+  { name: "Cloudflare", icon: SiCloudflare }
+];
+
+const services: ServiceCard[] = [
+  {
+    title: "Second / backup project",
+    desc: "A compact, credible repo that gives your profile more than one serious proof point.",
+    note: "Useful when you are applying to multiple roles or companies.",
+    icon: Layers3,
+    tone: "ember"
+  },
+  {
+    title: "Mini full-stack build",
+    desc: "A focused app with auth, CRUD, UI states, and a deployable demo.",
+    note: "Small enough to explain, real enough to defend.",
+    icon: Code2,
+    tone: "gold"
+  },
+  {
+    title: "Documentation bundle",
+    desc: "SRS, UML/ER diagrams, report draft, and project notes aligned to your college format.",
+    note: "Delivered as editable files for guide feedback.",
+    icon: FileText,
+    tone: "copper"
+  },
+  {
+    title: "Slides + viva prep",
+    desc: "A clean slide deck plus expected viva and panel questions.",
+    note: "Helps you talk naturally instead of memorising a script.",
+    icon: BookOpenCheck,
+    tone: "smoke"
+  },
+  {
+    title: "Profile copy support",
+    desc: "CV bullets, LinkedIn experience lines, and a launch post for your finished project.",
+    note: "Written to sound like your work, not a template.",
+    icon: Linkedin,
+    tone: "ash"
+  },
+  {
+    title: "Custom requirements",
+    desc: "Existing project refactors, extra features, migrations, or college-specific changes.",
+    note: "Scoped quickly on WhatsApp before quoting.",
+    icon: Waypoints,
+    tone: "sun"
+  }
+];
+
+const businessServices: ServiceCard[] = [
+  {
+    title: "Business Websites",
+    desc: "Responsive, sharp websites for local businesses, founders, and service teams that need a trustworthy online presence.",
+    note: "Custom UI and conversion flow, SEO-ready structure, contact forms, and fast launch.",
+    icon: Globe2,
+    tone: "sun"
+  },
+  {
+    title: "Web Applications",
+    desc: "Full-stack systems for teams that need dashboards, booking flows, inventory tools, internal portals, or admin panels.",
+    note: "Auth, secure APIs, admin workflows, deployment docs, and handoff support.",
+    icon: BriefcaseBusiness,
+    tone: "ember"
+  }
+];
+
+const stats = [
+  { label: "Projects Delivered", value: 120 },
+  { label: "GitHub Repos Updated", value: 95 },
+  { label: "LinkedIn Posts", value: 80 },
+  { label: "SRS / UMLs Created", value: 110 },
+  { label: "Mini Builds", value: 75 }
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 }
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08
     }
-  ];
+  }
+};
 
-  // Business services cards data
-  const businessServices = [
-    {
-      title: "Website Building",
-      desc: "Clean, responsive business websites for small and mid‑range companies that want to look professional online.",
-      bullets: [
-        "Custom business‑oriented design & UX",
-        "SEO‑ready structure and metadata", 
-        "Contact forms + basic CMS (blog/news)",
-        "Fast hosting (Vercel/Netlify)"
-      ],
-      icon: "🌐",
-      gradient: "from-sky-500 to-cyan-500",
-      borderColor: "border-sky-500/20",
-      hoverBorder: "hover:border-sky-400/50",
-      iconColor: "text-sky-400",
-      dotColor: "bg-sky-400",
-      shadowColor: "rgb(56 189 248 / 0.4)"
-    },
-    {
-      title: "Web Application Building",
-      desc: "End‑to‑end web apps for startups & SMEs: admin dashboards, booking systems, inventory management.",
-      bullets: [
-        "Full‑stack (React/Node or Next.js + DB)",
-        "User authentication & role‑based access",
-        "Database design + secure APIs",
-        "Production deployment + docs"
-      ],
-      icon: "⚡",
-      gradient: "from-emerald-500 to-sky-500",
-      borderColor: "border-emerald-500/20",
-      hoverBorder: "hover:border-emerald-400/50",
-      iconColor: "text-emerald-400",
-      dotColor: "bg-emerald-400",
-      shadowColor: "rgb(16 185 129 / 0.4)"
-    }
-  ];
+const SectionLabel: React.FC<{ tone?: Tone; children: React.ReactNode }> = ({
+  tone = "ember",
+  children
+}) => (
+  <div
+    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-[0.22em] ${toneStyles[tone].badge}`}
+  >
+    <Sparkles className="h-3.5 w-3.5" />
+    {children}
+  </div>
+);
 
-  // Rolling stat number
-  const StatNumber: React.FC<{ value: number }> = ({ value }) => {
-    const ref = useRef<HTMLSpanElement | null>(null);
-    const isInView = useInView(ref, { amount: 0.5 });
-    const [current, setCurrent] = useState(0);
-
-    useEffect(() => {
-      if (isInView) {
-        const controls = animate(0, value, {
-         duration: 1.4,
-         onUpdate(latest) {
-           setCurrent(Math.floor(latest));
-         }
-        });
-        return () => controls.stop();
-      } else {
-        setCurrent(0);
-      }
-    }, [isInView, value]);
-
-    return <span ref={ref}>{current}+</span>;
-  };
+const BlinkDot: React.FC<{
+  className?: string;
+  tone?: "orange" | "amber" | "white";
+  delay?: number;
+}> = ({ className = "", tone = "orange", delay = 0 }) => {
+  const toneClass =
+    tone === "white"
+      ? "bg-white shadow-[0_0_18px_rgba(255,255,255,0.65)]"
+      : tone === "amber"
+      ? "bg-amber-200 shadow-[0_0_18px_rgba(252,211,77,0.65)]"
+      : "bg-orange-300 shadow-[0_0_18px_rgba(251,146,60,0.65)]";
 
   return (
-    <main className="min-h-screen bg-neutral-900 text-neutral-100 antialiased">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        {/* HERO */}
-        <header className="grid gap-8 md:grid-cols-[2fr,1.4fr] md:items-center">
-         <div>
-           <p className="text-xs uppercase tracking-[0.25em] text-neutral-500">
-             GitHub & LinkedIn project studio
-           </p>
-           <h1 className="mt-3 text-3xl font-semibold leading-snug sm:text-4xl md:text-[2.6rem]">
-             Get <span className="text-sky-400">portfolio‑ready projects</span>{" "}
-             before placements hit.
-           </h1>
-           <p className="mt-4 max-w-xl text-sm text-neutral-300">
-             For 3rd and 4th year BTech students who never had time to ship
-             good repos: we help you land{" "}
-             <strong>realistic full‑stack projects</strong> with clean code,
-             live demos, and profiles that do not look empty in interviews.
-           </p>
+    <motion.span
+      aria-hidden
+      animate={{ opacity: [0.25, 1, 0.35, 1, 0.2], scale: [0.82, 1.1, 0.9, 1.08, 0.82] }}
+      transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay }}
+      className={`inline-block h-2 w-2 rounded-full ${toneClass} ${className}`}
+    />
+  );
+};
 
-           <div className="mt-6 flex flex-wrap items-center gap-3">
-             <motion.a
-               whileHover={{
-                 y: -2,
-                 boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-               }}
-               href={whatsapp}
-               target="_blank"
-               rel="noreferrer"
-               className="inline-flex items-center gap-2 rounded-md bg-sky-500 px-4 py-2.5 text-sm font-medium text-black shadow-sm transition-colors duration-150 hover:bg-sky-400"
-             >
-               Share your current profile
-             </motion.a>
-             <motion.a
-               whileHover={{
-                 y: -2,
-                 boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-               }}
-               href="#packages"
-               className="inline-flex items-center gap-2 rounded-md border border-neutral-600 px-4 py-2.5 text-sm text-neutral-200 transition-colors duration-150 hover:border-indigo-400"
-             >
-               View services
-             </motion.a>
-             <span className="ml-2 text-xs text-neutral-500">
-               First chat & quote: free, no obligation
-             </span>
-           </div>
+const CardFrame: React.FC<{
+  tone: Tone;
+  children: React.ReactNode;
+  className?: string;
+}> = ({ tone, children, className = "" }) => (
+  <motion.article
+    whileHover={{ y: -8, scale: 1.01, rotateX: 5, rotateY: -4 }}
+    transition={{ type: "spring", stiffness: 280, damping: 20 }}
+    className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] shadow-2xl backdrop-blur-2xl transform-gpu ${toneStyles[tone].glow} ${className}`}
+  >
+    <div
+      className={`absolute inset-0 bg-gradient-to-br ${toneStyles[tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
+    />
+    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent opacity-50" />
+    <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-white/35 to-transparent opacity-40" />
+    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.11),transparent_24%,transparent_76%,rgba(255,255,255,0.08))] opacity-0 transition duration-300 group-hover:opacity-100" />
+    <motion.div
+      animate={{ opacity: [0.18, 0.85, 0.24, 0.9, 0.2], scale: [0.9, 1.15, 0.95, 1.12, 0.9] }}
+      transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute right-4 top-4 h-2.5 w-2.5 rounded-full bg-orange-300 shadow-[0_0_18px_rgba(251,146,60,0.75)]"
+    />
+    <motion.div
+      animate={{ x: ["-20%", "120%", "-20%"], opacity: [0, 0.75, 0] }}
+      transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
+    />
+    <div className="relative">{children}</div>
+  </motion.article>
+);
 
-           {/* ATS-FRIENDLY RESUME HIGHLIGHT CARD */}
-           <motion.div
-             initial={{ opacity: 0, y: 8 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.3 }}
-             className="mt-5 max-w-xl rounded-xl border border-emerald-500/70 bg-emerald-900/25 p-4 text-xs text-emerald-50 shadow-lg shadow-emerald-500/20"
-           >
-             <div className="mb-2 flex items-center justify-between gap-3">
-               <motion.div
-                 animate={{
-                   boxShadow: [
-                     "0 0 0px rgba(16,185,129,0)",
-                     "0 0 20px rgba(16,185,129,0.8)",
-                     "0 0 0px rgba(16,185,129,0)"
-                   ]
-                 }}
-                 transition={{
-                   duration: 2.2,
-                   repeat: Infinity,
-                   ease: "easeInOut"
-                 }}
-                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-950"
-               >
-                 <span>📄</span>
-                 <span>ATS friendly resume</span>
-               </motion.div>
-               <span className="text-[10px] font-medium text-emerald-200/90">
-                 New for placements 2026
-               </span>
-             </div>
+const StatNumber: React.FC<{ value: number }> = ({ value }) => {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { amount: 0.6, once: true });
+  const [current, setCurrent] = useState(0);
 
-             <p className="text-[11px] font-semibold text-emerald-100">
-               Make sure your resume actually passes ATS filters before a human
-               recruiter sees it.
-             </p>
-             <p className="mt-1 text-[11px] leading-relaxed text-emerald-100/90">
-               Clean, single‑column layout • role‑specific keywords • bullet
-               points aligned with your projects so tracking systems can parse
-               skills, tech stack, and impact correctly.
-             </p>
-           </motion.div>
-         </div>
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(0, value, {
+      duration: 1.35,
+      ease: "easeOut",
+      onUpdate(latest) {
+        setCurrent(Math.floor(latest));
+      }
+    });
+    return () => controls.stop();
+  }, [isInView, value]);
 
-         {/* Right-side summary card */}
-         <div className="hidden rounded-xl bg-neutral-800/70 p-4 text-sm shadow-sm md:block">
-           <p className="font-medium text-neutral-100">
-             Built for pre‑placement students:
-           </p>
-           <ul className="mt-3 space-y-1.5 text-neutral-300">
-             <li>• 1–3 solid projects instead of random half‑done repos</li>
-             <li>• Tech picked to match your target roles</li>
-             <li>• Clean GitHub history and proper README</li>
-             <li>• A LinkedIn post that does not feel fake</li>
-             <li>• Optional docs to satisfy college rubrics</li>
-           </ul>
-         </div>
-        </header>
+  return <span ref={ref}>{current}+</span>;
+};
 
-        {/* PROBLEM / HIGHLIGHTS */}
-        <section className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
-         {[
-           "Empty or messy GitHub",
-           "No story on LinkedIn",
-           "College paperwork still needed"
-         ].map((title, i) => (
-           <motion.div
-             key={i}
-             whileHover={{
-               y: -2,
-               boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-             }}
-             className="rounded-lg bg-neutral-800 p-4 shadow-sm transition-transform duration-150 hover:shadow-lg"
-           >
-             <div className="text-sm font-medium text-neutral-200">{title}</div>
-             <div className="mt-1 text-xs text-neutral-400">
-               {i === 0
-                 ? "Most final‑year students have classroom code or cloned repos, not projects they can confidently walk through."
-                 : i === 1
-                 ? "Recruiters scan your profile in seconds—one good project with a clear summary helps a lot."
-                 : "We add SRS, diagrams, and PPT on top so your guide and panel are also satisfied."}
-             </div>
-           </motion.div>
-         ))}
-        </section>
+const ScrollStage: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  const reduceMotion = useReducedMotion();
 
-        {/* MAIN PACKAGE */}
-        <section id="packages" className="mt-14">
-         <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-           <div>
-             <h2 className="text-xl font-semibold">
-               Flagship: Portfolio + Project package
-             </h2>
-             <p className="mt-1 text-sm text-neutral-400">
-               One solid full‑stack project, a clean GitHub repo, and a
-               LinkedIn update that actually shows your work.
-             </p>
-           </div>
-           <p className="text-xs text-neutral-500">
-             Pricing is customised after a quick look at your profile & topic
-           </p>
-         </div>
+  const driftLeft = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const driftRight = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const driftCenter = useTransform(scrollYProgress, [0, 1], [0, -260]);
+  const tiltLeft = useTransform(scrollYProgress, [0, 1], [-10, 8]);
+  const tiltRight = useTransform(scrollYProgress, [0, 1], [8, -6]);
+  const tiltCenter = useTransform(scrollYProgress, [0, 1], [2, -4]);
+  const spineGlow = useTransform(scrollYProgress, [0, 1], [0.18, 0.36]);
+  const ribbon = useTransform(scrollYProgress, [0, 1], [0, -180]);
 
-         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
-           <motion.div
-             whileHover={{
-               y: -3,
-               boxShadow: "0 12px 30px rgba(99,102,241,0.35)"
-             }}
-             className="md:col-span-2 rounded-2xl border border-neutral-800 bg-neutral-875 p-6 shadow-md transition-transform duration-150"
-           >
-             <h3 className="text-lg font-semibold">
-               Portfolio‑ready project (core)
-             </h3>
-             <p className="mt-2 text-sm text-neutral-300">
-               We design and build a project that fits your background and
-               target role—something you can actually explain in interviews.
-             </p>
+  if (reduceMotion) {
+    return <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden scene-grid opacity-24" />;
+  }
 
-             <div className="mt-4 grid gap-2 text-xs text-neutral-200 sm:grid-cols-2">
-               <p>✔ Modern stack (React/Node/TS or Java/Spring + DB)</p>
-               <p>✔ GitHub repo with clear commits & README</p>
-               <p>✔ Deployed demo (Vercel / Render / similar)</p>
-               <p>✔ Short walkthrough: features + trade‑offs</p>
-               <p>✔ LinkedIn launch post + 1–2 CV bullets</p>
-               <p>✔ Basic SRS + UML/ER for college use</p>
-             </div>
+  return (
+    <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden">
+      <div className="absolute inset-0 bg-[#050505]" />
+      <div className="absolute inset-0 scene-grid opacity-22" />
+      <motion.div
+        animate={{ opacity: [0.05, 0.35, 0.08, 0.4, 0.05] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[8vw] top-[18vh] h-[1px] w-[28vw] bg-gradient-to-r from-transparent via-orange-200/70 to-transparent"
+      />
+      <motion.div
+        style={{ x: driftLeft, y: driftCenter, rotate: tiltLeft }}
+        animate={{ opacity: [0.35, 0.65, 0.35], scale: [0.98, 1.03, 0.98] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[-10vw] top-[12vh] h-[36rem] w-[46vw] rounded-[3rem] border border-orange-200/10 bg-[linear-gradient(135deg,rgba(255,132,46,0.12),rgba(255,255,255,0.05)_44%,rgba(255,255,255,0.02))] shadow-[0_0_120px_rgba(255,132,46,0.12)] backdrop-blur-3xl"
+      />
+      <motion.div
+        style={{ x: driftRight, y: driftLeft, rotate: tiltRight }}
+        animate={{ opacity: [0.2, 0.42, 0.2], scale: [0.96, 1.05, 0.96] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-[-8vw] top-[18vh] h-[32rem] w-[30vw] rounded-[3rem] border border-amber-200/10 bg-[linear-gradient(215deg,rgba(255,185,88,0.12),rgba(255,255,255,0.05)_40%,rgba(255,133,55,0.05))] shadow-[0_0_110px_rgba(255,171,77,0.12)] backdrop-blur-3xl"
+      />
+      <motion.div
+        style={{ y: ribbon, rotate: tiltCenter, opacity: spineGlow }}
+        className="absolute left-1/2 top-[8vh] h-[84vh] w-[1px] -translate-x-1/2 bg-gradient-to-b from-transparent via-white/20 to-transparent"
+      />
+      <motion.div
+        animate={{ opacity: [0.15, 0.9, 0.2, 0.85, 0.15], scale: [0.88, 1.12, 0.95, 1.06, 0.88] }}
+        transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-[9vw] top-[25vh]"
+      >
+        <BlinkDot tone="orange" />
+      </motion.div>
+      <motion.div
+        animate={{ opacity: [0.12, 0.7, 0.15, 0.82, 0.12], scale: [0.88, 1.1, 0.92, 1.05, 0.88] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.35 }}
+        className="absolute right-[10vw] top-[58vh]"
+      >
+        <BlinkDot tone="amber" />
+      </motion.div>
+      <motion.div
+        style={{ y: ribbon }}
+        className="absolute left-[13vw] top-[10vh] hidden h-[28rem] w-[24vw] rounded-[2.4rem] border border-white/10 bg-white/[0.045] backdrop-blur-2xl lg:block"
+      >
+        <div className="absolute inset-0 depth-bars opacity-20" />
+        <div className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent" />
+      </motion.div>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.92),rgba(5,5,5,0.82)_24%,rgba(5,5,5,0.9)_72%,rgba(5,5,5,0.98))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(255,167,76,0.08),transparent_22%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.04),transparent_24%)]" />
+    </div>
+  );
+};
 
-             <div className="mt-6 flex flex-wrap items-center gap-3">
-               <span className="text-xs text-neutral-500">
-                 No fixed price shown here to keep it fair for different
-                 college requirements.
-               </span>
-               <motion.a
-                 whileHover={{
-                   y: -1,
-                   boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-                 }}
-                 href={whatsapp}
-                 target="_blank"
-                 rel="noreferrer"
-                 className="ml-auto inline-flex items-center justify-center rounded-md bg-sky-500 px-4 py-2 text-sm font-medium text-black transition-colors duration-150 hover:bg-sky-400"
-               >
-                 Get a custom quote on WhatsApp
-               </motion.a>
-             </div>
-           </motion.div>
+const HeroReel: React.FC = () => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const smoothX = useSpring(x, { stiffness: 120, damping: 18 });
+  const smoothY = useSpring(y, { stiffness: 120, damping: 18 });
+  const rotateX = useTransform(smoothY, [-90, 90], [10, -10]);
+  const rotateY = useTransform(smoothX, [-90, 90], [-12, 12]);
 
-           <motion.aside
-             whileHover={{
-               y: -2,
-               boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-             }}
-             className="flex flex-col gap-3 rounded-2xl border border-neutral-800 bg-neutral-875 p-4 text-sm shadow-sm"
-           >
-             <div className="text-xs font-semibold text-neutral-300">
-               How pricing works
-             </div>
-             <ul className="space-y-1 text-xs text-neutral-300">
-               <li>• Share your idea, semester, and deadline.</li>
-               <li>• We suggest 1–2 project options with effort estimate.</li>
-               <li>• You get a clear quote before anything starts.</li>
-               <li>• No charge if you decide not to go ahead.</li>
-             </ul>
-           </motion.aside>
-         </div>
-        </section>
+  return (
+    <motion.div
+      style={{ rotateX, rotateY, perspective: 1800 }}
+      onMouseMove={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        x.set(event.clientX - rect.left - rect.width / 2);
+        y.set(event.clientY - rect.top - rect.height / 2);
+      }}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+      className="relative hidden min-h-[520px] overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/35 backdrop-blur-3xl transform-gpu lg:block"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,149,58,0.18),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)_30%,rgba(255,255,255,0.06))]" />
+      <div className="absolute inset-0 film-noise" />
+      <motion.div
+        animate={{ opacity: [0.65, 1, 0.65], scale: [1, 1.02, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-x-6 top-6 rounded-[28px] border border-orange-200/14 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.34),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.18)_70%)] p-5"
+      >
+        <div className="absolute inset-0 video-scan opacity-40" />
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-orange-100/80">
+            <BlinkDot tone="amber" />
+            motion reel
+          </span>
+          <Move3d className="h-4 w-4 text-orange-200" />
+        </div>
 
-        {/* SERVICES & ADD‑ONS */}
-        <section className="mt-14">
-         <h2 className="text-xl font-semibold">Services & add‑ons</h2>
-         <p className="mt-1 text-sm text-neutral-400">
-           Everything is built around one goal: a stronger GitHub + LinkedIn
-           story before placements.
-         </p>
+        <div className="mt-5 grid gap-3">
+          <div className="relative h-56 overflow-hidden rounded-[26px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_28%,rgba(0,0,0,0.25)_72%)]">
+            <motion.div
+              animate={{ backgroundPositionX: ["0%", "100%"] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-55"
+            />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(255,255,255,0.1),transparent_20%)]" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl">
+                <Play className="h-6 w-6 fill-white text-white" />
+              </div>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-white/55">
+              <span>video layer</span>
+              <span>looping light</span>
+            </div>
+          </div>
 
-         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-           {services.map((card) => (
-             <motion.article
-               key={card.title}
-               whileHover={{
-                 y: -2,
-                 boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-               }}
-               className="flex flex-col rounded-xl border border-neutral-800 bg-neutral-875 p-5 text-sm shadow-sm transition-transform duration-150"
-             >
-               <h4 className="font-medium text-neutral-100">{card.title}</h4>
-               <p className="mt-2 text-xs text-neutral-300">{card.desc}</p>
-               <p className="mt-1 text-[11px] text-neutral-500">{card.note}</p>
-               <div className="mt-4 text-xs font-medium text-sky-300">
-                 Tap WhatsApp, mention this service, and get a tailored quote.
-               </div>
-             </motion.article>
-           ))}
-         </div>
-        </section>
+          <div className="grid grid-cols-3 gap-3">
+            {["README", "Deploy", "Viva"].map((item, index) => (
+              <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
+                <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${58 + index * 10}%` }}
+                    transition={{ duration: 1.4, delay: 0.18 + index * 0.12 }}
+                    className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                  />
+                </div>
+                <p className="text-sm font-semibold text-white">{item}</p>
+                <p className="mt-1 text-xs text-white/45">ready</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
-        {/* BUSINESS SERVICES - NEW SECTION WITH TWO CARDS SIDE BY SIDE */}
-        <section className="mt-14">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-2xl font-bold bg-gradient-to-r from-sky-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent text-center mb-4"
+      <motion.div
+        animate={{ x: [0, 12, 0], y: [0, -10, 0], rotate: [0, 1.5, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-28 right-7 w-52 rounded-[24px] border border-white/12 bg-black/35 p-4 backdrop-blur-2xl"
+      >
+        <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white">
+          <ScanLine className="h-4 w-4 text-orange-300" />
+          motion reel
+        </div>
+        <div className="space-y-2">
+          {["Light pass", "Depth pass", "Launch pass"].map((item, index) => (
+            <div key={item} className="flex items-center gap-2 text-xs text-white/70">
+              <BlinkDot tone={index === 1 ? "amber" : "orange"} delay={index * 0.2} className="h-1.5 w-1.5" />
+              {item}
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      <motion.div
+        animate={{ scale: [1, 1.04, 1], opacity: [0.85, 1, 0.85] }}
+        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-8 rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-orange-100"
+      >
+        placement ready
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const Home: React.FC = () => {
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-[#050505] text-neutral-100 antialiased">
+      <ScrollStage />
+
+      <div className="relative mx-auto max-w-7xl px-5 py-5 sm:px-6 lg:px-8">
+        <motion.nav
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="sticky top-4 z-30 mx-auto flex max-w-6xl items-center justify-between rounded-[24px] border border-white/10 bg-black/55 px-4 py-3 shadow-2xl shadow-black/35 backdrop-blur-3xl"
+        >
+          <a href="#" className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10">
+              <Rocket className="h-5 w-5 text-orange-300" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold tracking-wide text-white">Project Studio</p>
+              <p className="text-[11px] text-white/45">GitHub + LinkedIn launch lab</p>
+            </div>
+          </a>
+          <div className="hidden items-center gap-6 text-sm text-white/62 md:flex">
+            <a className="transition hover:text-white" href="#packages">
+              Packages
+            </a>
+            <a className="transition hover:text-white" href="#services">
+              Services
+            </a>
+            <a className="transition hover:text-white" href="#business">
+              Business
+            </a>
+            <a className="transition hover:text-white" href="#contact">
+              Contact
+            </a>
+          </div>
+          <a
+            href={whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-white px-3 text-sm font-semibold text-black transition hover:bg-orange-100"
           >
-            🚀 Business Solutions
-          </motion.h2>
-          <p className="text-sm text-neutral-400 text-center max-w-2xl mx-auto mb-12">
-            Professional websites and custom web applications for small businesses, startups, and SMEs. Get online fast with modern design and full-stack power.
-          </p>
+            <MessageCircle className="h-4 w-4" />
+            <span className="hidden sm:inline">WhatsApp</span>
+          </a>
+        </motion.nav>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-            {businessServices.map((service, index) => (
-              <motion.article
-                key={service.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.02, 
-                  boxShadow: `0 25px 50px -12px ${service.shadowColor}` 
-                }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className={`group rounded-2xl border-2 ${service.borderColor} bg-gradient-to-br from-neutral-900/80 to-neutral-950/50 p-8 text-sm shadow-2xl backdrop-blur-sm ${service.hoverBorder}`}
+        <section className="grid min-h-[calc(100vh-92px)] items-center gap-10 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
+          <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-3xl">
+            <motion.div variants={fadeUp}>
+              <SectionLabel tone="ember">Portfolio-ready projects before placements</SectionLabel>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mt-7 flex items-end gap-4">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.05 }}
+                className="text-5xl font-semibold leading-none text-orange-400 sm:text-6xl lg:text-7xl"
               >
-                <div className={`text-4xl ${service.iconColor} mb-4`}>{service.icon}</div>
-                <h3 className={`text-2xl font-bold text-white mb-3 group-hover:${service.iconColor === 'text-sky-400' ? 'text-sky-400' : 'text-emerald-400'} transition-colors`}>
-                  {service.title}
-                </h3>
-                <p className="text-neutral-300 mb-6">{service.desc}</p>
-                <ul className="space-y-2 mb-6">
-                  {service.bullets.map((bullet, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-neutral-200">
-                      <div className={`w-2 h-2 ${service.dotColor} rounded-full`} />
-                      {bullet}
-                    </li>
+                <StatNumber value={120} />
+              </motion.div>
+              <div className="pb-1 text-left text-xs uppercase tracking-[0.22em] text-white/45">
+                projects shipped
+              </div>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUp}
+              className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-normal text-white sm:text-6xl lg:text-7xl"
+            >
+              Build the project story your profile is missing.
+            </motion.h1>
+
+            <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
+              For 3rd and 4th year BTech students who need clean repos, live demos,
+              documentation, resume bullets, and a LinkedIn launch that feels credible in interviews.
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <motion.a
+                whileHover={{ y: -3, scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                href={whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                className={`inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r px-5 py-3 text-sm font-bold text-slate-950 shadow-2xl ${toneStyles.sun.button}`}
+              >
+                Share your current profile
+                <ArrowRight className="h-4 w-4" />
+              </motion.a>
+              <motion.a
+                whileHover={{ y: -3 }}
+                href="#packages"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white backdrop-blur-xl transition hover:border-white/24"
+              >
+                View services
+              </motion.a>
+              <span className="text-xs text-white/45 sm:pl-2">First chat and quote are free.</span>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
+              {[
+                ["1-3", "serious repos"],
+                ["Live", "demo + README"],
+                ["ATS", "resume support"]
+              ].map(([value, label]) => (
+                <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl">
+                  <p className="text-2xl font-semibold text-white">{value}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/45">{label}</p>
+                </div>
+              ))}
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-4 text-sm text-white/60">
+              <span className="inline-flex items-center gap-2">
+                <Github className="h-4 w-4 text-orange-300" />
+                GitHub-ready
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Linkedin className="h-4 w-4 text-orange-300" />
+                LinkedIn-ready
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-orange-300" />
+                Placement-ready
+              </span>
+            </motion.div>
+          </motion.div>
+
+          <HeroReel />
+        </section>
+
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="grid grid-cols-1 gap-4 py-6 sm:grid-cols-3"
+        >
+          {[
+            ["Empty or messy GitHub", "Turn classroom code and half-built repos into a cleaner project trail."],
+            ["No story on LinkedIn", "Launch with crisp visuals, copy, and a short explanation recruiters can scan."],
+            ["College paperwork needed", "Add SRS, diagrams, slides, and viva prep without losing the real product work."]
+          ].map(([title, desc], index) => (
+            <motion.article
+              key={title}
+              variants={fadeUp}
+              whileHover={{ y: -8, rotateX: 4, rotateY: -4 }}
+              className={`group rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl transform-gpu ${[
+                "shadow-orange-500/10",
+                "shadow-amber-500/10",
+                "shadow-rose-500/10"
+              ][index]}`}
+            >
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-orange-200 transition group-hover:bg-orange-300 group-hover:text-slate-950">
+                <BadgeCheck className="h-5 w-5" />
+              </div>
+              <h3 className="text-base font-semibold text-white">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-white/55">{desc}</p>
+            </motion.article>
+          ))}
+        </motion.section>
+
+        <section id="packages" className="py-16">
+          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <SectionLabel tone="ember">Flagship package</SectionLabel>
+              <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Portfolio + Project system</h2>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-white/50">
+              Pricing is customised after a quick look at your deadline, current profile, and college requirements.
+            </p>
+          </div>
+
+          <div className="grid gap-5 lg:grid-cols-[1.7fr_0.85fr]">
+            <CardFrame tone="ember" className="p-6 sm:p-8">
+              <div className="relative">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1 text-xs font-semibold text-amber-100">
+                    Core build
+                  </span>
+                  <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs text-white/55">
+                    React / Node / Java / DB
+                  </span>
+                </div>
+                <h3 className="mt-5 text-2xl font-semibold text-white">A project you can actually explain.</h3>
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-white/62">
+                  We design and build a project that fits your target role, then package it with GitHub hygiene,
+                  deployment, documentation, and profile-ready copy.
+                </p>
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Modern stack with database-backed features",
+                    "GitHub repo with clean README and structure",
+                    "Deployed demo on Vercel, Render, or similar",
+                    "Feature walkthrough and trade-off notes",
+                    "LinkedIn launch post and CV bullets",
+                    "Basic SRS plus UML / ER material"
+                  ].map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-start gap-3 rounded-2xl border border-white/8 bg-black/20 p-3 text-sm text-white/70"
+                    >
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-orange-300" />
+                      {item}
+                    </div>
                   ))}
-                </ul>
-                <motion.a
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                </div>
+
+                <a
                   href={whatsapp}
                   target="_blank"
                   rel="noreferrer"
-                  className={`inline-flex items-center gap-2 rounded-lg bg-gradient-to-r ${service.gradient} px-6 py-3 text-sm font-semibold text-black shadow-lg hover:shadow-${service.iconColor === 'text-sky-400' ? 'sky-500/25' : 'emerald-500/25'} transition-all duration-300`}
+                  className={`mt-7 inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r px-5 py-3 text-sm font-bold text-slate-950 ${toneStyles.sun.button}`}
                 >
-                  {service.iconColor === 'text-sky-400' ? 'Get Quote Now →' : 'Start Your App →'}
-                </motion.a>
-              </motion.article>
-            ))}
+                  Get a custom quote
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </CardFrame>
+
+            <CardFrame tone="smoke" className="p-6">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/55">
+                How pricing works
+              </h3>
+              <div className="mt-5 space-y-4">
+                {[
+                  "Share your idea, semester, and deadline.",
+                  "Get 1-2 project options with effort estimate.",
+                  "Approve a clear quote before work starts.",
+                  "Skip it freely if it does not fit."
+                ].map((item, index) => (
+                  <div key={item} className="flex gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-semibold text-orange-100">
+                      {index + 1}
+                    </div>
+                    <p className="pt-1 text-sm leading-6 text-white/62">{item}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.05] p-4">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/55">
+                  <Move3d className="h-4 w-4 text-orange-300" />
+                  motion density
+                </div>
+                <p className="mt-3 text-sm leading-6 text-white/60">
+                  Extra motion, extra depth, and more visual bite without losing the actual message.
+                </p>
+              </div>
+            </CardFrame>
           </div>
         </section>
 
-        {/* TECH STACK */}
-        <section className="mt-14">
-         <h2 className="text-xl font-semibold">Stacks we usually work with</h2>
-         <p className="mt-1 text-sm text-neutral-400">
-           We can align with what your college prefers or what your target
-           companies use.
-         </p>
+        <section id="services" className="py-12">
+          <div className="mb-8">
+            <SectionLabel tone="gold">Services and add-ons</SectionLabel>
+            <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Everything around the project story.</h2>
+          </div>
 
-         <div className="mt-4 grid grid-cols-3 gap-3 text-xs sm:grid-cols-6">
-           {techStack.map((t) => (
-             <motion.div
-               key={t.name}
-               whileHover={{
-                 y: -1,
-                 boxShadow: "0 8px 25px rgba(99,102,241,0.3)"
-               }}
-               className="flex flex-col items-center justify-center gap-1 rounded-md border border-neutral-800 bg-neutral-875 px-3 py-2 text-center text-neutral-200 shadow-sm transition-all duration-150 hover:border-indigo-400"
-             >
-               <div className="text-xl">{t.icon || <div className="h-5 w-5 bg-neutral-700 rounded-sm" />}</div>
-               <span className="text-xs">{t.name}</span>
-             </motion.div>
-           ))}
-         </div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {services.map((card) => {
+              const Icon = card.icon;
+              return (
+                <motion.article
+                  key={card.title}
+                  variants={fadeUp}
+                  whileHover={{ y: -8, scale: 1.02, rotateX: 6, rotateY: -5 }}
+                  transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                  className={`group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl transform-gpu ${toneStyles[card.tone].glow}`}
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${toneStyles[card.tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(140deg,rgba(255,255,255,0.08),transparent_26%,transparent_74%,rgba(255,255,255,0.05))] opacity-0 transition duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/75 to-transparent opacity-40" />
+                  <div className="relative">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-semibold text-white">{card.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/58">{card.desc}</p>
+                    <p className="mt-3 text-xs leading-5 text-white/38">{card.note}</p>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </motion.div>
         </section>
 
-        {/* PROJECT DELIVERABLES / STATS */}
-        <section className="mt-14">
-         <h2 className="text-xl font-semibold">Our Deliverables</h2>
-         <p className="mt-1 text-sm text-neutral-400">
-           See the impact we've created for pre-placement students so far.
-         </p>
+        <section id="business" className="py-16">
+          <div className="mb-8 text-center">
+            <SectionLabel tone="sun">Business solutions</SectionLabel>
+            <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
+              Websites and apps with launch energy.
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-white/52">
+              For small businesses, startups, and SMEs that need a clean online presence or a practical internal tool.
+            </p>
+          </div>
 
-         <div className="mt-6 flex overflow-x-auto gap-4 py-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800">
-           {[
-             { label: "Projects Delivered", value: 120 },
-             { label: "GitHub Repos Updated", value: 95 },
-             { label: "LinkedIn Posts", value: 80 },
-             { label: "SRS / UMLs Created", value: 110 },
-             { label: "Mini Builds", value: 75 }
-           ].map((stat, i) => (
-             <motion.div
-               key={i}
-               whileHover={{
-                 y: -3,
-                 boxShadow: "0 12px 30px rgba(99,102,241,0.35)"
-               }}
-               className="flex min-w-[180px] flex-col items-center justify-center rounded-2xl border border-neutral-800 bg-neutral-875 p-5 text-center shadow-sm transition-transform duration-150"
-             >
-               <div className="text-3xl font-bold text-sky-400">
-                 <StatNumber value={stat.value} />
-               </div>
-               <div className="mt-2 text-sm text-neutral-200">{stat.label}</div>
-             </motion.div>
-           ))}
-         </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {businessServices.map((service) => {
+              const Icon = service.icon;
+              return (
+                <CardFrame key={service.title} tone={service.tone} className="p-6 sm:p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/12 bg-white/10">
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <Zap className="h-5 w-5 text-white/35" />
+                  </div>
+                  <h3 className="mt-6 text-2xl font-semibold text-white">{service.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-white/60">{service.desc}</p>
+                  <p className="mt-3 text-sm leading-6 text-white/45">{service.note}</p>
+                  <a
+                    href={whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-7 inline-flex items-center gap-2 rounded-2xl border border-white/12 bg-white/[0.08] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-black"
+                  >
+                    Start a quote
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </CardFrame>
+              );
+            })}
+          </div>
         </section>
 
-        {/* CONTACT */}
-        <section className="mt-14 rounded-xl border border-neutral-800 bg-neutral-875 p-6 shadow-sm">
-         <h2 className="text-xl font-semibold">Tell me where you are stuck</h2>
-         <p className="mt-2 text-sm text-neutral-300">
-           Send your current GitHub / LinkedIn links, semester, and placement
-           timeline. You'll get suggestions and a quote based on your situation
-           — not a random package.
-         </p>
-
-         <div className="mt-4 flex flex-col gap-3 text-sm sm:flex-row">
-           <motion.a
-             whileHover={{
-               y: -1,
-               boxShadow: "0 8px 25px rgba(99,102,241,0.35)"
-             }}
-             href={whatsapp}
-             target="_blank"
-             rel="noreferrer"
-             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-sky-500 px-4 py-2.5 text-white transition-colors duration-150 hover:bg-sky-400"
-           >
-             WhatsApp – get quote
-           </motion.a>
-           <motion.a
-             whileHover={{
-               y: -1,
-               boxShadow: "0 8px 25px rgba(99,102,241,0.2)"
-             }}
-             href="mailto:praneethreddy0112@example.com"
-             className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border border-neutral-700 px-4 py-2.5 text-neutral-200 transition duration-150 hover:-translate-y-[1px] hover:border-indigo-400"
-           >
-             Email: (mailto:praneethreddy0112@gmail.com)
-           </motion.a>
-         </div>
-
-         <p className="mt-4 text-xs text-neutral-500">
-           GitHub: <span className="font-mono">github.com/PraneethPW</span>
-         </p>
+        <section className="py-12">
+          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <SectionLabel tone="ember">Stack coverage</SectionLabel>
+              <h2 className="mt-3 text-3xl font-semibold text-white">
+                Built with familiar, interview-friendly tech.
+              </h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+            {techStack.map((tech) => {
+              const Icon = tech.icon;
+              return (
+                <motion.div
+                  key={tech.name}
+                  whileHover={{ y: -4, scale: 1.03, rotateX: 7, rotateY: -7 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                  className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.045] p-3 text-center text-white/70 backdrop-blur-xl transform-gpu"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 text-xl text-orange-200">
+                    {Icon ? <Icon /> : <Code2 className="h-5 w-5" />}
+                  </div>
+                  <span className="text-xs font-medium">{tech.name}</span>
+                </motion.div>
+              );
+            })}
+          </div>
         </section>
 
-        {/* FOOTER */}
-        <footer className="mt-10 border-t border-neutral-800 pt-4 text-center text-xs text-neutral-500">
-          © {new Date().getFullYear()} Praneeth. 
+        <section className="py-12">
+          <div className="rounded-[30px] border border-white/10 bg-white/[0.055] p-5 backdrop-blur-2xl sm:p-7">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <SectionLabel tone="copper">Deliverables</SectionLabel>
+                <h2 className="mt-3 text-3xl font-semibold text-white">Numbers with momentum.</h2>
+              </div>
+              <ShieldCheck className="hidden h-9 w-9 text-orange-200/70 sm:block" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  whileHover={{ y: -6, rotateX: 5, rotateY: -5 }}
+                  className={`rounded-2xl border border-white/10 bg-black/24 p-4 text-center shadow-2xl backdrop-blur-xl transform-gpu ${[
+                    "shadow-orange-500/10",
+                    "shadow-amber-500/10",
+                    "shadow-rose-500/10",
+                    "shadow-orange-500/10",
+                    "shadow-amber-500/10"
+                  ][index]}`}
+                >
+                  <div className="text-3xl font-semibold text-orange-100">
+                    <StatNumber value={stat.value} />
+                  </div>
+                  <p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/42">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="py-16">
+          <div className="overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+              <div>
+                <SectionLabel tone="ember">Start here</SectionLabel>
+                <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
+                  Tell me where you are stuck.
+                </h2>
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-white/60">
+            Send your GitHub / LinkedIn links, semester, deadline, and project idea if you have one.
+            You will get suggestions and a quote based on your actual situation.
+          </p>
+              </div>
+              <div className="grid gap-3">
+                <a
+                  href={whatsapp}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r px-5 py-3 text-sm font-bold text-slate-950 shadow-2xl ${toneStyles.sun.button}`}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  WhatsApp - get quote
+                </a>
+                <a
+                  href="mailto:praneethreddy0112@gmail.com"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition hover:border-white/24"
+                >
+                  praneethreddy0112@gmail.com
+                </a>
+                <p className="flex items-center justify-center gap-2 text-xs text-white/40">
+                  <Github className="h-3.5 w-3.5" />
+                  github.com/PraneethPW
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer className="border-t border-white/10 py-8 text-center text-xs text-white/35">
+          &copy; {new Date().getFullYear()} Praneeth. Project Studio.
         </footer>
       </div>
     </main>
