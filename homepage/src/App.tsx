@@ -449,10 +449,14 @@ const HeroReel: React.FC = () => {
   const smoothY = useSpring(y, { stiffness: 120, damping: 18 });
   const rotateX = useTransform(smoothY, [-90, 90], [10, -10]);
   const rotateY = useTransform(smoothX, [-90, 90], [-12, 12]);
+  const { scrollYProgress } = useScroll();
+  const scrollLift = useTransform(scrollYProgress, [0, 1], [0, -18]);
+  const scrollRail = useTransform(scrollYProgress, [0, 0.5, 1], [0.18, 1, 0.55]);
+  const scrollGlow = useTransform(scrollYProgress, [0, 1], [0.45, 0.9]);
 
   return (
     <motion.div
-      style={{ rotateX, rotateY, perspective: 1800 }}
+      style={{ rotateX, rotateY, y: scrollLift, perspective: 1800 }}
       onMouseMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
         x.set(event.clientX - rect.left - rect.width / 2);
@@ -462,89 +466,141 @@ const HeroReel: React.FC = () => {
         x.set(0);
         y.set(0);
       }}
-      className="relative hidden min-h-[520px] overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/35 backdrop-blur-3xl transform-gpu lg:block"
+      className="relative hidden min-h-[680px] overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/35 backdrop-blur-3xl transform-gpu lg:block"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,149,58,0.18),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)_30%,rgba(255,255,255,0.06))]" />
       <div className="absolute inset-0 film-noise" />
       <motion.div
-        animate={{ opacity: [0.65, 1, 0.65], scale: [1, 1.02, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-x-6 top-6 rounded-[28px] border border-orange-200/14 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.34),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.18)_70%)] p-5"
-      >
-        <div className="absolute inset-0 video-scan opacity-40" />
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-orange-100/80">
-            <BlinkDot tone="amber" />
-            motion reel
-          </span>
-          <Move3d className="h-4 w-4 text-orange-200" />
-        </div>
+        style={{ opacity: scrollGlow }}
+        className="absolute inset-x-6 top-6 h-px bg-gradient-to-r from-transparent via-orange-200/60 to-transparent"
+      />
+      <div className="relative z-10 flex h-full flex-col gap-4">
+        <div className="rounded-[28px] border border-orange-200/14 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.3),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.18)_70%)] p-5">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-orange-100/80">
+                <BlinkDot tone="amber" />
+                motion reel
+              </span>
+              <h3 className="mt-3 text-2xl font-semibold text-white">Project flow</h3>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
+                Desktop gets a clearer build lane: the video layer, the delivery checklist, and the launch cues each live in their own block.
+              </p>
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-white/55">
+              <ScanLine className="h-4 w-4 text-orange-300" />
+              Scroll driven
+            </div>
+          </div>
 
-        <div className="mt-5 grid gap-3">
-          <div className="relative h-56 overflow-hidden rounded-[26px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_28%,rgba(0,0,0,0.25)_72%)]">
+          <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
             <motion.div
-              animate={{ backgroundPositionX: ["0%", "100%"] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-55"
+              style={{ scaleX: scrollRail }}
+              className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
             />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(255,255,255,0.1),transparent_20%)]" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl">
-                <Play className="h-6 w-6 fill-white text-white" />
-              </div>
-            </div>
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-white/55">
-              <span>video layer</span>
-              <span>looping light</span>
-            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
-            {["README", "Deploy", "Viva"].map((item, index) => (
-              <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
-                <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <div className="mt-5 grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
+            <div className="rounded-[26px] border border-white/12 bg-black/22 p-4">
+              <div className="relative overflow-hidden rounded-[22px] border border-white/12 aspect-[16/10] bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_28%,rgba(0,0,0,0.25)_72%)]">
+                <motion.div
+                  animate={{ backgroundPositionX: ["0%", "100%"] }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-55"
+                />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_50%_70%,rgba(255,255,255,0.1),transparent_20%)]" />
+                <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${58 + index * 10}%` }}
-                    transition={{ duration: 1.4, delay: 0.18 + index * 0.12 }}
-                    className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
-                  />
+                    animate={{ scale: [1, 1.05, 1], opacity: [0.88, 1, 0.88] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="flex h-16 w-16 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl"
+                  >
+                    <Play className="h-6 w-6 fill-white text-white" />
+                  </motion.div>
                 </div>
-                <p className="text-sm font-semibold text-white">{item}</p>
-                <p className="mt-1 text-xs text-white/45">ready</p>
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-white/55">
+                  <span>video layer</span>
+                  <span>looping light</span>
+                </div>
               </div>
-            ))}
+
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                {["README", "Deploy", "Viva"].map((item, index) => (
+                  <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
+                    <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${58 + index * 10}%` }}
+                        transition={{ duration: 1.4, delay: 0.18 + index * 0.12 }}
+                        className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                      />
+                    </div>
+                    <p className="text-sm font-semibold text-white">{item}</p>
+                    <p className="mt-1 text-xs text-white/45">ready</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              <motion.div
+                animate={{ opacity: [0.82, 1, 0.82], y: [0, -4, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="rounded-[26px] border border-white/12 bg-black/25 p-4 backdrop-blur-2xl"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/55">
+                    Launch sequence
+                  </h4>
+                  <Move3d className="h-4 w-4 text-orange-200" />
+                </div>
+                <div className="mt-4 space-y-3">
+                  {["Brief", "Build", "Launch"].map((item, index) => (
+                    <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-3">
+                      <BlinkDot tone={index === 1 ? "amber" : "orange"} delay={index * 0.2} />
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="text-sm font-semibold text-white">{item}</p>
+                          <span className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+                            phase 0{index + 1}
+                          </span>
+                        </div>
+                        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/8">
+                          <motion.div
+                            style={{ scaleX: scrollRail }}
+                            className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                animate={{ opacity: [0.86, 1, 0.86] }}
+                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
+                className="rounded-[26px] border border-orange-300/18 bg-[linear-gradient(180deg,rgba(255,167,76,0.1),rgba(255,255,255,0.03))] p-4"
+              >
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.22em] text-orange-100/72">
+                  <span>placement ready</span>
+                  <span>scroll to reveal</span>
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/8">
+                    <motion.div
+                      style={{ scaleX: scrollRail }}
+                      className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                    />
+                  </div>
+                  <div className="text-xs text-white/45">GitHub / LinkedIn / Docs</div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
-      </motion.div>
-
-      <motion.div
-        animate={{ x: [0, 12, 0], y: [0, -10, 0], rotate: [0, 1.5, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-28 right-7 w-52 rounded-[24px] border border-white/12 bg-black/35 p-4 backdrop-blur-2xl"
-      >
-        <div className="mb-3 flex items-center gap-2 text-sm font-semibold text-white">
-          <ScanLine className="h-4 w-4 text-orange-300" />
-          motion reel
-        </div>
-        <div className="space-y-2">
-          {["Light pass", "Depth pass", "Launch pass"].map((item, index) => (
-            <div key={item} className="flex items-center gap-2 text-xs text-white/70">
-              <BlinkDot tone={index === 1 ? "amber" : "orange"} delay={index * 0.2} className="h-1.5 w-1.5" />
-              {item}
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      <motion.div
-        animate={{ scale: [1, 1.04, 1], opacity: [0.85, 1, 0.85] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 left-8 rounded-full border border-orange-300/20 bg-orange-300/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-orange-100"
-      >
-        placement ready
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -564,12 +620,16 @@ const MobileHeroReel: React.FC = () => {
       desc: "GitHub, LinkedIn, and viva-ready delivery material."
     }
   ];
+  const { scrollYProgress } = useScroll();
+  const scrollRail = useTransform(scrollYProgress, [0, 0.5, 1], [0.14, 1, 0.46]);
+  const scrollDrift = useTransform(scrollYProgress, [0, 1], [0, -10]);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.1 }}
+      style={{ y: scrollDrift }}
       className="mx-auto mt-8 w-full max-w-[36rem] overflow-hidden rounded-[28px] border border-white/12 bg-white/[0.06] p-4 shadow-2xl shadow-black/35 backdrop-blur-3xl lg:hidden"
     >
       <div className="rounded-[22px] border border-orange-200/12 bg-[radial-gradient(circle_at_50%_14%,rgba(255,148,53,0.28),rgba(255,148,53,0.08)_28%,rgba(0,0,0,0.22)_72%)] p-4 sm:p-5">
@@ -598,9 +658,8 @@ const MobileHeroReel: React.FC = () => {
 
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/8">
             <motion.div
-              animate={{ x: ["-8%", "108%", "-8%"] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="h-full w-1/2 rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+              style={{ scaleX: scrollRail }}
+              className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
             />
           </div>
         </div>
@@ -647,13 +706,12 @@ const MobileHeroReel: React.FC = () => {
           </div>
 
           <div className="grid gap-2 sm:grid-cols-3">
-            {["README", "Deploy", "Viva"].map((item, index) => (
+            {["README", "Deploy", "Viva"].map((item) => (
               <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
                 <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                   <motion.div
-                    animate={{ width: [`${55 + index * 8}%`, `${72 + index * 6}%`, `${55 + index * 8}%`] }}
-                    transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: index * 0.15 }}
-                    className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                    style={{ scaleX: scrollRail }}
+                    className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
                   />
                 </div>
                 <p className="text-xs font-semibold text-white">{item}</p>
