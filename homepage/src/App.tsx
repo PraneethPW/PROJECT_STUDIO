@@ -1175,7 +1175,7 @@ const Home: React.FC = () => {
               variants={fadeUp}
               className="mt-6 max-w-4xl text-[2.65rem] font-semibold leading-[1.03] tracking-normal text-white sm:text-6xl lg:text-7xl"
             >
-              Build the project story your profile is missing.
+              From project idea to profile-ready proof.
             </motion.h1>
 
             <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
