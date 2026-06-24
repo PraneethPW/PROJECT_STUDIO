@@ -46,6 +46,7 @@ import {
   SiPytorch,
   SiScikitlearn,
   SiSpringboot,
+  SiInstagram,
   SiTailwindcss,
   SiTensorflow,
   SiTypescript,
@@ -218,10 +219,10 @@ const businessServices: ServiceCard[] = [
   }
 ];
 
-const resumeDocs: PortfolioDoc[] = [
+const resumeOverviewDocs: PortfolioDoc[] = [
   {
-    title: "Resume 01",
-    subtitle: "Resume screenshot with public details kept minimal.",
+    title: "JANAGAMA PRANEETH REDDY",
+    subtitle: "Your resume, kept as the lead piece in the section.",
     kind: "Resume",
     pageInfo: "1 page",
     tags: ["ATS-friendly", "Profile-ready", "Engineering"],
@@ -231,33 +232,8 @@ const resumeDocs: PortfolioDoc[] = [
     layout: "portrait"
   },
   {
-    title: "Resume 02",
-    subtitle: "Personal details redacted for privacy.",
-    kind: "Resume",
-    pageInfo: "1 page",
-    tags: ["Redacted", "Private", "Full-stack"],
-    tone: "gold",
-    surface: "paper",
-    image: "chandu_resume_redacted.png",
-    layout: "portrait"
-  },
-  {
-    title: "Resume 03",
-    subtitle: "Personal details redacted for privacy.",
-    kind: "Resume",
-    pageInfo: "1 page",
-    tags: ["Redacted", "Private", "Biotech"],
-    tone: "copper",
-    surface: "paper",
-    image: "joshithaa_resume_redacted.png",
-    layout: "portrait"
-  },
-];
-
-const projectDocs: PortfolioDoc[] = [
-  {
     title: "FoodShare AI",
-    subtitle: "Project overview for an AI-powered food donation platform.",
+    subtitle: "Project overview PDF for the food donation platform.",
     kind: "Project overview",
     pageInfo: "2 pages",
     tags: ["AI routing", "3D UI", "Deployment"],
@@ -268,7 +244,7 @@ const projectDocs: PortfolioDoc[] = [
   },
   {
     title: "CephGrow AI",
-    subtitle: "Project overview for orthodontic growth prediction and cephalogram analysis.",
+    subtitle: "Project overview PDF for orthodontic growth prediction.",
     kind: "Project overview",
     pageInfo: "2 pages",
     tags: ["Clinical AI", "3D visuals", "Protected workflow"],
@@ -279,7 +255,7 @@ const projectDocs: PortfolioDoc[] = [
   },
   {
     title: "CivicFlow AI",
-    subtitle: "Project overview for public-service workflows, OCR, and application tracking.",
+    subtitle: "Project overview PDF for civic workflow tracking.",
     kind: "Project overview",
     pageInfo: "2 pages",
     tags: ["Civic tooling", "OCR", "Admin flow"],
@@ -288,6 +264,9 @@ const projectDocs: PortfolioDoc[] = [
     image: "civicflow_overview.png",
     layout: "portrait"
   },
+];
+
+const landingPageDocs: PortfolioDoc[] = [
   {
     title: "QuantumQA",
     subtitle: "Landing page study with a deep tech hero and live node motion.",
@@ -364,6 +343,23 @@ const projectDocs: PortfolioDoc[] = [
     surface: "dark",
     image: "signalflare_landing.png",
     layout: "landscape"
+  }
+];
+
+const socialProfiles = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/praneeth.codes?igsh=MTJ2dHRuZGlnNXA3Zw%3D%3D&utm_source=qr",
+    note: "Daily builds and motion snippets",
+    icon: SiInstagram,
+    glow: "shadow-[0_0_30px_rgba(236,72,153,0.22)]"
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/praneethreddy0112?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+    note: "Profile, projects, and launch updates",
+    icon: Linkedin,
+    glow: "shadow-[0_0_30px_rgba(56,189,248,0.22)]"
   }
 ];
 
@@ -1421,20 +1417,20 @@ const PortfolioVault: React.FC = () => {
         </motion.div>
 
         <MotionRail
-          label="Resumes"
-          title="Left-to-right privacy-safe resume strip"
-          note="The names and personal details on the Chandu and Joshithaa resumes are redacted, while the cards keep breathing across the page."
+          label="Resume + project overviews"
+          title="Your resume with the project briefs beside it"
+          note="This strip keeps your resume first, then folds in the project overview PDFs as one public-facing proof set."
           tone="ember"
-          items={resumeDocs}
+          items={resumeOverviewDocs}
           direction="left"
         />
 
         <MotionRail
-          label="Project pages"
-          title="Right-to-left project overview and landing-page strip"
-          note="The project section now includes the overview PDFs plus the missing landing-page screenshots, all drifting in the opposite direction."
+          label="Landing pages"
+          title="Project landing pages moving in the opposite direction"
+          note="These are the screenshot studies for the project hero pages, kept in a separate motion lane from the documents."
           tone="sun"
-          items={projectDocs}
+          items={landingPageDocs}
           direction="right"
         />
       </div>
@@ -1544,6 +1540,42 @@ const Home: React.FC = () => {
                 View services
               </motion.a>
               <span className="text-xs text-white/45 sm:pl-2">First chat and quote are free.</span>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mt-6 grid gap-3 sm:grid-cols-2">
+              {socialProfiles.map((profile, index) => {
+                const Icon = profile.icon;
+                return (
+                  <motion.a
+                    key={profile.label}
+                    whileHover={{ y: -4, scale: 1.01 }}
+                    whileTap={{ scale: 0.98 }}
+                    href={profile.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-4 text-left backdrop-blur-xl ${profile.glow}`}
+                  >
+                    <motion.div
+                      animate={{ opacity: [0.08, 0.55, 0.08], x: ["-18%", "118%"] }}
+                      transition={{ duration: 4.2 + index * 0.35, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
+                    />
+                    <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_34%,transparent_66%,rgba(255,255,255,0.03))] opacity-0 transition duration-300 group-hover:opacity-100" />
+                    <div className="relative flex items-center gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-black/28 text-white">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold text-white">{profile.label}</span>
+                          <ArrowRight className="h-3.5 w-3.5 text-white/40 transition group-hover:translate-x-1 group-hover:text-white" />
+                        </div>
+                        <p className="mt-1 text-xs leading-5 text-white/50">{profile.note}</p>
+                      </div>
+                    </div>
+                  </motion.a>
+                );
+              })}
             </motion.div>
 
             <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
