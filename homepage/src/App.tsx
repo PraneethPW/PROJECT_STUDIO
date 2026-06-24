@@ -1336,7 +1336,7 @@ const GalleryCard: React.FC<{ item: PortfolioDoc; index: number }> = ({ item, in
 
 const MotionRail: React.FC<{
   label: string;
-  title: string;
+  title?: string;
   tone: Tone;
   items: PortfolioDoc[];
   direction: "left" | "right";
@@ -1349,7 +1349,7 @@ const MotionRail: React.FC<{
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <SectionLabel tone={tone}>{label}</SectionLabel>
-          <h3 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{title}</h3>
+          {title ? <h3 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{title}</h3> : null}
         </div>
       </div>
 
@@ -1425,7 +1425,6 @@ const PortfolioVault: React.FC = () => {
 
         <MotionRail
           label="Landing pages"
-          title="Project hero screenshots"
           tone="sun"
           items={landingPageDocs}
           direction="right"
