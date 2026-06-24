@@ -332,20 +332,21 @@ const contributionCells = Array.from({ length: 91 }, (_, index) => {
 
 const ContributionBackdrop: React.FC = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[30px]">
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_15%,rgba(249,115,22,0.08),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(34,197,94,0.12),transparent_32%)]" />
     <motion.div
-      animate={{ opacity: [0.2, 0.36, 0.24], y: [0, -6, 0] }}
-      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute -right-12 top-5 w-[34rem] rounded-[26px] border border-emerald-200/10 bg-black/18 p-4 shadow-[0_0_80px_rgba(34,197,94,0.12)] backdrop-blur-2xl sm:right-5 sm:top-6"
+      animate={{ opacity: [0.18, 0.34, 0.22], y: [0, -5, 0] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute left-1/2 top-5 w-[92%] max-w-[42rem] -translate-x-1/2 rounded-[24px] border border-emerald-200/10 bg-black/20 p-3 shadow-[0_0_70px_rgba(34,197,94,0.1)] backdrop-blur-2xl sm:left-auto sm:right-6 sm:top-5 sm:w-[38rem] sm:translate-x-0 sm:p-4"
     >
       <div className="mb-3 flex items-center justify-between gap-4">
-        <div className="h-2 w-32 rounded-full bg-white/12" />
-        <div className="flex gap-1">
+        <div className="h-2 w-24 rounded-full bg-white/10 sm:w-32" />
+        <div className="hidden gap-1 sm:flex">
           {[0, 1, 2, 3].map((item) => (
             <span key={item} className="h-2 w-8 rounded-full bg-emerald-300/10" />
           ))}
         </div>
       </div>
-      <div className="grid grid-flow-col grid-rows-7 gap-1">
+      <div className="grid grid-flow-col grid-rows-7 gap-1 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)] sm:[mask-image:none]">
         {contributionCells.map((level, index) => (
           <motion.span
             key={index}
@@ -355,7 +356,7 @@ const ContributionBackdrop: React.FC = () => (
                 : { opacity: [0.18, 0.26, 0.18] }
             }
             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: (index % 13) * 0.035 }}
-            className={`h-3 w-3 rounded-[4px] border border-white/5 ${
+            className={`h-2.5 w-2.5 rounded-[4px] border border-white/5 sm:h-3 sm:w-3 ${
               [
                 "bg-white/[0.035]",
                 "bg-emerald-900/70 shadow-[0_0_10px_rgba(22,163,74,0.25)]",
@@ -367,7 +368,7 @@ const ContributionBackdrop: React.FC = () => (
           />
         ))}
       </div>
-      <div className="mt-3 flex items-center justify-end gap-1 text-[10px] uppercase tracking-[0.2em] text-white/28">
+      <div className="mt-3 hidden items-center justify-end gap-1 text-[10px] uppercase tracking-[0.2em] text-white/28 sm:flex">
         <span>less</span>
         {[1, 2, 3, 4].map((level) => (
           <span
@@ -380,7 +381,7 @@ const ContributionBackdrop: React.FC = () => (
         <span>more</span>
       </div>
     </motion.div>
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(34,197,94,0.1),transparent_34%),linear-gradient(90deg,rgba(5,5,5,0.02),rgba(5,5,5,0.72)_76%)] sm:bg-[radial-gradient(circle_at_78%_24%,rgba(34,197,94,0.12),transparent_34%),linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.54)_70%)]" />
+    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.08),rgba(5,5,5,0.76)_48%,rgba(5,5,5,0.34)),linear-gradient(90deg,rgba(5,5,5,0.22),rgba(5,5,5,0.62)_72%)] sm:bg-[linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.56)_70%),linear-gradient(180deg,rgba(5,5,5,0.08),rgba(5,5,5,0.22))]" />
   </div>
 );
 
@@ -1325,7 +1326,7 @@ const Home: React.FC = () => {
         </section>
 
         <section className="py-12">
-          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] p-5 backdrop-blur-2xl sm:p-7">
+          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] p-5 pt-7 backdrop-blur-2xl sm:p-7">
             <ContributionBackdrop />
             <div className="relative mb-6 flex items-center justify-between gap-4">
               <div>
