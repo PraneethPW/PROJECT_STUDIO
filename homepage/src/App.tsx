@@ -1779,6 +1779,8 @@ const Home: React.FC = () => {
           </div>
         </section>
 
+        <PortfolioVault />
+
         <section className="relative overflow-hidden rounded-[30px] py-12">
           <SectionProfileBackdrop align="right" compact />
           <div className="relative mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
@@ -1841,8 +1843,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </section>
-
-        <PortfolioVault />
 
         <section id="contact" className="py-16">
           <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 lg:p-10">
