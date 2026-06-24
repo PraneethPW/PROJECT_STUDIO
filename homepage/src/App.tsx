@@ -77,6 +77,7 @@ type PortfolioDoc = {
   tone: Tone;
   surface: "paper" | "dark";
   image: string;
+  layout: "portrait" | "landscape";
 };
 
 const whatsapp =
@@ -217,37 +218,43 @@ const businessServices: ServiceCard[] = [
   }
 ];
 
-const portfolioDocs: PortfolioDoc[] = [
+const resumeDocs: PortfolioDoc[] = [
   {
-    title: "JANAGAMA PRANEETH REDDY",
-    subtitle: "Resume with full contact lines, engineering stack, and freelance frontend work.",
+    title: "Resume 01",
+    subtitle: "Resume screenshot with public details kept minimal.",
     kind: "Resume",
     pageInfo: "1 page",
-    tags: ["ATS-friendly", "Visible name", "Engineering profile"],
+    tags: ["ATS-friendly", "Profile-ready", "Engineering"],
     tone: "ember",
     surface: "paper",
-    image: "praneeth_resume.png"
+    image: "praneeth_resume.png",
+    layout: "portrait"
   },
   {
-    title: "POTUPALEPU CHANDU",
-    subtitle: "Resume with event platform work, full-stack skills, and academic history.",
+    title: "Resume 02",
+    subtitle: "Personal details redacted for privacy.",
     kind: "Resume",
     pageInfo: "1 page",
-    tags: ["Project-ready", "Visible name", "Full-stack"],
+    tags: ["Redacted", "Private", "Full-stack"],
     tone: "gold",
     surface: "paper",
-    image: "chandu_resume.png"
+    image: "chandu_resume_redacted.png",
+    layout: "portrait"
   },
   {
-    title: "JOSHITHAA A.P",
-    subtitle: "Resume with biotechnology, lab techniques, and research documentation.",
+    title: "Resume 03",
+    subtitle: "Personal details redacted for privacy.",
     kind: "Resume",
     pageInfo: "1 page",
-    tags: ["Research profile", "Visible name", "Biotech"],
+    tags: ["Redacted", "Private", "Biotech"],
     tone: "copper",
     surface: "paper",
-    image: "joshithaa_resume.png"
+    image: "joshithaa_resume_redacted.png",
+    layout: "portrait"
   },
+];
+
+const projectDocs: PortfolioDoc[] = [
   {
     title: "FoodShare AI",
     subtitle: "Project overview for an AI-powered food donation platform.",
@@ -256,7 +263,8 @@ const portfolioDocs: PortfolioDoc[] = [
     tags: ["AI routing", "3D UI", "Deployment"],
     tone: "smoke",
     surface: "dark",
-    image: "foodshare_overview.png"
+    image: "foodshare_overview.png",
+    layout: "portrait"
   },
   {
     title: "CephGrow AI",
@@ -266,7 +274,8 @@ const portfolioDocs: PortfolioDoc[] = [
     tags: ["Clinical AI", "3D visuals", "Protected workflow"],
     tone: "ash",
     surface: "dark",
-    image: "cephgrow_overview.png"
+    image: "cephgrow_overview.png",
+    layout: "portrait"
   },
   {
     title: "CivicFlow AI",
@@ -276,7 +285,85 @@ const portfolioDocs: PortfolioDoc[] = [
     tags: ["Civic tooling", "OCR", "Admin flow"],
     tone: "sun",
     surface: "dark",
-    image: "civicflow_overview.png"
+    image: "civicflow_overview.png",
+    layout: "portrait"
+  },
+  {
+    title: "QuantumQA",
+    subtitle: "Landing page study with a deep tech hero and live node motion.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["AI", "Motion", "Web"],
+    tone: "ember",
+    surface: "dark",
+    image: "quantumqa_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "FoodShare",
+    subtitle: "Landing page study with a product-led hero and 3D platform card.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Platform", "3D", "Launch"],
+    tone: "gold",
+    surface: "dark",
+    image: "foodshare_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "CephGrow AI",
+    subtitle: "Clinical landing page with strong hierarchy and radiographic focus.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Clinical", "Grid", "Motion"],
+    tone: "copper",
+    surface: "dark",
+    image: "cephgrow_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "TilesKart",
+    subtitle: "Marketplace hero with bold product framing and floating product tiles.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Commerce", "Product", "3D"],
+    tone: "smoke",
+    surface: "dark",
+    image: "tileskart_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "VocaVision AI",
+    subtitle: "Interview platform hero with orbit lines and analytical cards.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Interview", "Orbit", "Analytics"],
+    tone: "ash",
+    surface: "dark",
+    image: "vocavision_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "AttendX",
+    subtitle: "Academic operations hero with a grid-led layout and live session card.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Academic", "QR", "Ops"],
+    tone: "sun",
+    surface: "dark",
+    image: "attendx_landing.png",
+    layout: "landscape"
+  },
+  {
+    title: "SignalFlare",
+    subtitle: "Emergency network hero with luminous globe motion and action cards.",
+    kind: "Landing page",
+    pageInfo: "Hero",
+    tags: ["Emergency", "Network", "Glow"],
+    tone: "ember",
+    surface: "dark",
+    image: "signalflare_landing.png",
+    layout: "landscape"
   }
 ];
 
@@ -1178,69 +1265,123 @@ const SectionProfileBackdrop: React.FC<{
 );
 };
 
-const DocumentCard: React.FC<{ doc: PortfolioDoc; index: number }> = ({ doc, index }) => (
-  <motion.article
-    variants={fadeUp}
-    whileHover={{ y: -8, scale: 1.01, rotateX: 4, rotateY: -4 }}
-    whileTap={{ scale: 0.99 }}
-    transition={{ type: "spring", stiffness: 220, damping: 18 }}
-    className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl transform-gpu"
-  >
-    <div
-      className={`absolute inset-0 bg-gradient-to-br ${toneStyles[doc.tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
-    />
-    <motion.div
-      animate={{ opacity: [0.12, 0.72, 0.2, 0.78, 0.12], x: ["-12%", "112%", "-12%"] }}
-      transition={{ duration: 4.8 + index * 0.25, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
-    />
-    <div className="absolute inset-x-4 bottom-4 h-10 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,167,76,0.12),transparent_72%)]" />
-    <div className="relative">
-      <div className="flex items-center justify-between gap-3">
-        <span
-          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] ${toneStyles[doc.tone].badge}`}
-        >
-          <Sparkles className="h-3.5 w-3.5" />
-          {doc.kind}
-        </span>
-        <span className="text-[10px] uppercase tracking-[0.24em] text-white/38">{doc.pageInfo}</span>
-      </div>
+const GalleryCard: React.FC<{ item: PortfolioDoc; index: number }> = ({ item, index }) => {
+  const isLandscape = item.layout === "landscape";
 
-      <h3 className="mt-4 text-xl font-semibold text-white">{doc.title}</h3>
-      <p className="mt-2 text-sm leading-6 text-white/58">{doc.subtitle}</p>
-
+  return (
+    <motion.article
+      variants={fadeUp}
+      whileHover={{ y: -8, scale: 1.01, rotateX: 4, rotateY: -4 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ type: "spring", stiffness: 220, damping: 18 }}
+      className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl transform-gpu ${
+        isLandscape ? "w-[min(88vw,28rem)] sm:w-[26rem] lg:w-[28rem]" : "w-[min(84vw,22rem)] sm:w-[21rem] lg:w-[22.5rem]"
+      }`}
+    >
       <div
-        className={`mt-4 overflow-hidden rounded-[24px] border ${
-          doc.surface === "paper"
-            ? "border-slate-200/70 bg-[#f5ede1]"
-            : "border-white/10 bg-black/30"
-        }`}
-      >
-        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-white/48">
-          <span>{doc.kind} preview</span>
-          <span>{doc.pageInfo}</span>
+        className={`absolute inset-0 bg-gradient-to-br ${toneStyles[item.tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
+      />
+      <motion.div
+        animate={{ opacity: [0.12, 0.72, 0.2, 0.78, 0.12], x: ["-12%", "112%", "-12%"] }}
+        transition={{ duration: 4.8 + index * 0.25, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
+      />
+      <div className="absolute inset-x-4 bottom-4 h-10 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,167,76,0.12),transparent_72%)]" />
+      <div className="relative">
+        <div className="flex items-center justify-between gap-3">
+          <span
+            className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] ${toneStyles[item.tone].badge}`}
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            {item.kind}
+          </span>
+          <span className="text-[10px] uppercase tracking-[0.24em] text-white/38">{item.pageInfo}</span>
         </div>
-        <div className="relative aspect-[3/4] overflow-hidden">
-          <img
-            src={`/deliverables/${doc.image}`}
-            alt={doc.title}
-            className={`h-full w-full object-contain ${doc.surface === "paper" ? "bg-[#f5ede1]" : "bg-black/40"}`}
-            loading="lazy"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent_18%,transparent_74%,rgba(0,0,0,0.14))]" />
+
+        <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
+        <p className="mt-2 text-sm leading-6 text-white/58">{item.subtitle}</p>
+
+        <div
+          className={`mt-4 overflow-hidden rounded-[24px] border ${
+            item.surface === "paper"
+              ? "border-slate-200/70 bg-[#f5ede1]"
+              : "border-white/10 bg-black/30"
+          }`}
+        >
+          <div className="flex items-center justify-between border-b border-white/8 px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-white/48">
+            <span>{item.kind} preview</span>
+            <span>{item.pageInfo}</span>
+          </div>
+          <div className={`relative overflow-hidden ${isLandscape ? "aspect-[16/9]" : "aspect-[3/4]"}`}>
+            <img
+              src={`/deliverables/${item.image}`}
+              alt={item.title}
+              className={`h-full w-full ${isLandscape ? "object-cover" : "object-contain"} ${
+                item.surface === "paper" ? "bg-[#f5ede1]" : "bg-black/40"
+              }`}
+              loading="lazy"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent_18%,transparent_74%,rgba(0,0,0,0.14))]" />
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {item.tags.map((tag) => (
+            <span key={tag} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/56">
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
+    </motion.article>
+  );
+};
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        {doc.tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/56">
-            {tag}
-          </span>
-        ))}
+const MotionRail: React.FC<{
+  label: string;
+  title: string;
+  note: string;
+  tone: Tone;
+  items: PortfolioDoc[];
+  direction: "left" | "right";
+}> = ({ label, title, note, tone, items, direction }) => {
+  const reduceMotion = useReducedMotion();
+  const trackItems = [...items, ...items];
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <SectionLabel tone={tone}>{label}</SectionLabel>
+          <h3 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{title}</h3>
+        </div>
+        <p className="max-w-xl text-sm leading-6 text-white/52">{note}</p>
+      </div>
+
+      <div className="relative overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.03] py-2">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#050505] to-transparent sm:w-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#050505] to-transparent sm:w-20" />
+        <motion.div
+          className="flex w-max gap-4 px-4"
+          animate={
+            reduceMotion
+              ? undefined
+              : { x: direction === "left" ? ["-50%", "0%"] : ["0%", "-50%"] }
+          }
+          transition={{
+            duration: Math.max(24, items.length * 7),
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        >
+          {trackItems.map((item, index) => (
+            <GalleryCard key={`${item.title}-${index}`} item={item} index={index} />
+          ))}
+        </motion.div>
       </div>
     </div>
-  </motion.article>
-);
+  );
+};
 
 const PortfolioVault: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -1263,12 +1404,12 @@ const PortfolioVault: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,154,61,0.08),transparent_24%),radial-gradient(circle_at_90%_0%,rgba(255,255,255,0.05),transparent_22%)]" />
       <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <div className="relative space-y-6">
-        <motion.div variants={fadeUp} className="flex items-end justify-between gap-4">
+      <div className="relative space-y-10">
+        <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <SectionLabel tone="gold">Original screenshots</SectionLabel>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              Resumes and project deliverables, shown exactly as they are.
+              Keep the resumes and project pages moving, not parked.
             </h2>
           </div>
           <div className="hidden h-2 w-40 overflow-hidden rounded-full bg-white/8 md:block">
@@ -1279,11 +1420,23 @@ const PortfolioVault: React.FC = () => {
           </div>
         </motion.div>
 
-        <motion.div variants={stagger} className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {portfolioDocs.map((doc, index) => (
-            <DocumentCard key={doc.title} doc={doc} index={index} />
-          ))}
-        </motion.div>
+        <MotionRail
+          label="Resumes"
+          title="Left-to-right privacy-safe resume strip"
+          note="The names and personal details on the Chandu and Joshithaa resumes are redacted, while the cards keep breathing across the page."
+          tone="ember"
+          items={resumeDocs}
+          direction="left"
+        />
+
+        <MotionRail
+          label="Project pages"
+          title="Right-to-left project overview and landing-page strip"
+          note="The project section now includes the overview PDFs plus the missing landing-page screenshots, all drifting in the opposite direction."
+          tone="sun"
+          items={projectDocs}
+          direction="right"
+        />
       </div>
     </motion.section>
   );
