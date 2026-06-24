@@ -73,10 +73,10 @@ type PortfolioDoc = {
   subtitle: string;
   kind: string;
   pageInfo: string;
-  preview: string[];
   tags: string[];
   tone: Tone;
   surface: "paper" | "dark";
+  image: string;
 };
 
 const whatsapp =
@@ -223,90 +223,60 @@ const portfolioDocs: PortfolioDoc[] = [
     subtitle: "Resume with full contact lines, engineering stack, and freelance frontend work.",
     kind: "Resume",
     pageInfo: "1 page",
-    preview: [
-      "Email: praneethreddy0112@gmail.com",
-      "GitHub: PraneethPW",
-      "Java, TypeScript, Spring Boot, React",
-      "Freelance Frontend Developer | Spanbucks"
-    ],
     tags: ["ATS-friendly", "Visible name", "Engineering profile"],
     tone: "ember",
-    surface: "paper"
+    surface: "paper",
+    image: "praneeth_resume.png"
   },
   {
     title: "POTUPALEPU CHANDU",
     subtitle: "Resume with event platform work, full-stack skills, and academic history.",
     kind: "Resume",
     pageInfo: "1 page",
-    preview: [
-      "Email: potupalepuchandu414@gmail.com",
-      "GitHub: Chandu",
-      "NodeJS, TypeScript, ReactJS, Prisma",
-      "EVENT-EASE | LINK | LIVE"
-    ],
     tags: ["Project-ready", "Visible name", "Full-stack"],
     tone: "gold",
-    surface: "paper"
+    surface: "paper",
+    image: "chandu_resume.png"
   },
   {
     title: "JOSHITHAA A.P",
     subtitle: "Resume with biotechnology, lab techniques, and research documentation.",
     kind: "Resume",
     pageInfo: "1 page",
-    preview: [
-      "Email: newgenbtech@gmail.com",
-      "Mobile: +91 9994421205",
-      "Biotechnology & Life Sciences",
-      "PCR, chromatography, gel electrophoresis"
-    ],
     tags: ["Research profile", "Visible name", "Biotech"],
     tone: "copper",
-    surface: "paper"
+    surface: "paper",
+    image: "joshithaa_resume.png"
   },
   {
     title: "FoodShare AI",
     subtitle: "Project overview for an AI-powered food donation platform.",
     kind: "Project overview",
     pageInfo: "2 pages",
-    preview: [
-      "React.js, TypeScript, Vite",
-      "Node.js, Express.js, PostgreSQL",
-      "OpenRouter AI, Recharts, Three.js",
-      "Donor and receiver dashboards"
-    ],
     tags: ["AI routing", "3D UI", "Deployment"],
     tone: "smoke",
-    surface: "dark"
+    surface: "dark",
+    image: "foodshare_overview.png"
   },
   {
     title: "CephGrow AI",
     subtitle: "Project overview for orthodontic growth prediction and cephalogram analysis.",
     kind: "Project overview",
     pageInfo: "2 pages",
-    preview: [
-      "React.js, Node.js, Prisma ORM",
-      "Neon PostgreSQL, OpenRouter API",
-      "Three.js, React Three Fiber, Drei",
-      "Clinical decision support"
-    ],
     tags: ["Clinical AI", "3D visuals", "Protected workflow"],
     tone: "ash",
-    surface: "dark"
+    surface: "dark",
+    image: "cephgrow_overview.png"
   },
   {
     title: "CivicFlow AI",
     subtitle: "Project overview for public-service workflows, OCR, and application tracking.",
     kind: "Project overview",
     pageInfo: "2 pages",
-    preview: [
-      "React, TypeScript, Tailwind CSS",
-      "Node.js, Express.js, Neon PostgreSQL",
-      "JWT, OCR verification, multilingual UI",
-      "Citizen dashboard and complaint flows"
-    ],
     tags: ["Civic tooling", "OCR", "Admin flow"],
     tone: "sun",
-    surface: "dark"
+    surface: "dark",
+    image: "civicflow_overview.png"
   }
 ];
 
@@ -316,13 +286,6 @@ const stats = [
   { label: "LinkedIn Posts", value: 80 },
   { label: "SRS / UMLs Created", value: 110 },
   { label: "Mini Builds", value: 75 }
-];
-
-const archiveStats = [
-  { label: "Resumes", value: 3 },
-  { label: "Project Briefs", value: 3 },
-  { label: "Readable Fields", value: 100 },
-  { label: "Motion Layers", value: 6 }
 ];
 
 const fadeUp = {
@@ -1249,31 +1212,22 @@ const DocumentCard: React.FC<{ doc: PortfolioDoc; index: number }> = ({ doc, ind
       <div
         className={`mt-4 overflow-hidden rounded-[24px] border ${
           doc.surface === "paper"
-            ? "border-slate-200/70 bg-[linear-gradient(180deg,rgba(255,249,243,0.98),rgba(255,239,224,0.94))] text-slate-950"
-            : "border-white/10 bg-black/28 text-white"
-        } p-4`}
+            ? "border-slate-200/70 bg-[#f5ede1]"
+            : "border-white/10 bg-black/30"
+        }`}
       >
-        <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.22em] opacity-60">
-          <span>preview</span>
+        <div className="flex items-center justify-between border-b border-white/8 px-4 py-3 text-[10px] uppercase tracking-[0.22em] text-white/48">
+          <span>{doc.kind} preview</span>
           <span>{doc.pageInfo}</span>
         </div>
-        <div className="mt-3 space-y-2">
-          {doc.preview.map((line, lineIndex) => (
-            <div
-              key={line}
-              className={`rounded-2xl px-3 py-2 text-sm leading-5 ${
-                doc.surface === "paper"
-                  ? lineIndex === 0
-                    ? "bg-white/85 font-semibold text-slate-950"
-                    : "bg-white/60 text-slate-700"
-                  : lineIndex === 0
-                  ? "bg-white/8 font-semibold text-white"
-                  : "bg-white/[0.04] text-white/72"
-              }`}
-            >
-              {line}
-            </div>
-          ))}
+        <div className="relative aspect-[3/4] overflow-hidden">
+          <img
+            src={`/deliverables/${doc.image}`}
+            alt={doc.title}
+            className={`h-full w-full object-contain ${doc.surface === "paper" ? "bg-[#f5ede1]" : "bg-black/40"}`}
+            loading="lazy"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.02),transparent_18%,transparent_74%,rgba(0,0,0,0.14))]" />
         </div>
       </div>
 
@@ -1295,12 +1249,11 @@ const PortfolioVault: React.FC = () => {
     offset: ["start end", "end start"]
   });
   const rail = useTransform(scrollYProgress, [0, 1], [0.18, 1]);
-  const glow = useTransform(scrollYProgress, [0, 1], [0.2, 0.75]);
 
   return (
     <motion.section
       ref={sectionRef}
-      id="archive"
+      id="deliverables"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
@@ -1310,46 +1263,20 @@ const PortfolioVault: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,154,61,0.08),transparent_24%),radial-gradient(circle_at_90%_0%,rgba(255,255,255,0.05),transparent_22%)]" />
       <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-      <div className="relative grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-        <motion.div
-          variants={fadeUp}
-          className="lg:sticky lg:top-24"
-        >
-          <SectionLabel tone="gold">Resume + documentation vault</SectionLabel>
-          <h2 className="mt-4 max-w-xl text-3xl font-semibold text-white sm:text-4xl">
-            Clear documents, visible names, and a clean motion system.
-          </h2>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-white/58">
-            This archive keeps each resume and project brief readable. Names, contact details, project titles, and the core story stay in the open while the surrounding glass and motion stay restrained.
-          </p>
-
-          <div className="mt-8 grid max-w-xl grid-cols-2 gap-3">
-            {archiveStats.map((item) => (
-              <div key={item.label} className="rounded-[24px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-2xl">
-                <p className="text-3xl font-semibold text-white">
-                  {item.value}
-                  {item.label === "Readable Fields" ? "%" : "+"}
-                </p>
-                <p className="mt-2 text-xs uppercase tracking-[0.16em] text-white/45">{item.label}</p>
-              </div>
-            ))}
+      <div className="relative space-y-6">
+        <motion.div variants={fadeUp} className="flex items-end justify-between gap-4">
+          <div>
+            <SectionLabel tone="gold">Original screenshots</SectionLabel>
+            <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
+              Resumes and project deliverables, shown exactly as they are.
+            </h2>
           </div>
-
-          <motion.div
-            style={{ opacity: glow }}
-            className="mt-8 overflow-hidden rounded-[28px] border border-orange-300/18 bg-[linear-gradient(180deg,rgba(255,167,76,0.12),rgba(255,255,255,0.03))] p-4"
-          >
-            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-orange-100/72">
-              <span>scroll cue</span>
-              <span>clear reading</span>
-            </div>
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
-              <motion.div
-                style={{ scaleX: rail }}
-                className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
-              />
-            </div>
-          </motion.div>
+          <div className="hidden h-2 w-40 overflow-hidden rounded-full bg-white/8 md:block">
+            <motion.div
+              style={{ scaleX: rail }}
+              className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+            />
+          </div>
         </motion.div>
 
         <motion.div variants={stagger} className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -1384,8 +1311,8 @@ const Home: React.FC = () => {
             </div>
           </a>
           <div className="hidden items-center gap-6 text-sm text-white/62 md:flex">
-            <a className="transition hover:text-white" href="#archive">
-              Archive
+            <a className="transition hover:text-white" href="#deliverables">
+              Deliverables
             </a>
             <a className="transition hover:text-white" href="#packages">
               Packages
@@ -1500,8 +1427,6 @@ const Home: React.FC = () => {
             <MobileHeroReel />
           </div>
         </section>
-
-        <PortfolioVault />
 
         <motion.section
           initial="hidden"
@@ -1771,6 +1696,8 @@ const Home: React.FC = () => {
             </div>
           </div>
         </section>
+
+        <PortfolioVault />
 
         <section id="contact" className="py-16">
           <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 lg:p-10">
