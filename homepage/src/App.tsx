@@ -1404,7 +1404,7 @@ const PortfolioVault: React.FC = () => {
           <div>
             <SectionLabel tone="gold">Portfolio assets</SectionLabel>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              Resume, project overviews, and landing pages.
+              Resume, project overviews, and AI full-stack project showcases.
             </h2>
           </div>
           <div className="hidden h-2 w-40 overflow-hidden rounded-full bg-white/8 md:block">
@@ -1424,7 +1424,7 @@ const PortfolioVault: React.FC = () => {
         />
 
         <MotionRail
-          label="Landing pages"
+          label="AI full-stack projects"
           tone="sun"
           items={landingPageDocs}
           direction="right"
