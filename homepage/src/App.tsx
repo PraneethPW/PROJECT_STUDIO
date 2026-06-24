@@ -1336,11 +1336,10 @@ const GalleryCard: React.FC<{ item: PortfolioDoc; index: number }> = ({ item, in
 const MotionRail: React.FC<{
   label: string;
   title: string;
-  note: string;
   tone: Tone;
   items: PortfolioDoc[];
   direction: "left" | "right";
-}> = ({ label, title, note, tone, items, direction }) => {
+}> = ({ label, title, tone, items, direction }) => {
   const reduceMotion = useReducedMotion();
   const trackItems = [...items, ...items];
 
@@ -1351,7 +1350,6 @@ const MotionRail: React.FC<{
           <SectionLabel tone={tone}>{label}</SectionLabel>
           <h3 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">{title}</h3>
         </div>
-        <p className="max-w-xl text-sm leading-6 text-white/52">{note}</p>
       </div>
 
       <div className="relative overflow-hidden rounded-[32px] border border-white/8 bg-white/[0.03] py-2">
@@ -1403,9 +1401,9 @@ const PortfolioVault: React.FC = () => {
       <div className="relative space-y-10">
         <motion.div variants={fadeUp} className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <SectionLabel tone="gold">Original screenshots</SectionLabel>
+            <SectionLabel tone="gold">Portfolio assets</SectionLabel>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              Keep the resumes and project pages moving, not parked.
+              Resume, project overviews, and landing pages.
             </h2>
           </div>
           <div className="hidden h-2 w-40 overflow-hidden rounded-full bg-white/8 md:block">
@@ -1417,9 +1415,8 @@ const PortfolioVault: React.FC = () => {
         </motion.div>
 
         <MotionRail
-          label="Resume + project overviews"
-          title="Your resume with the project briefs beside it"
-          note="This strip keeps your resume first, then folds in the project overview PDFs as one public-facing proof set."
+          label="Documents"
+          title="Resume and project overview PDFs"
           tone="ember"
           items={resumeOverviewDocs}
           direction="left"
@@ -1427,8 +1424,7 @@ const PortfolioVault: React.FC = () => {
 
         <MotionRail
           label="Landing pages"
-          title="Project landing pages moving in the opposite direction"
-          note="These are the screenshot studies for the project hero pages, kept in a separate motion lane from the documents."
+          title="Project hero screenshots"
           tone="sun"
           items={landingPageDocs}
           direction="right"
