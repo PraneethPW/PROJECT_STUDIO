@@ -68,6 +68,17 @@ type ServiceCard = {
   tone: Tone;
 };
 
+type PortfolioDoc = {
+  title: string;
+  subtitle: string;
+  kind: string;
+  pageInfo: string;
+  preview: string[];
+  tags: string[];
+  tone: Tone;
+  surface: "paper" | "dark";
+};
+
 const whatsapp =
   "https://wa.me/917396704622?text=Hi%20Praneeth%2C%20I%20need%20a%20project";
 
@@ -206,12 +217,112 @@ const businessServices: ServiceCard[] = [
   }
 ];
 
+const portfolioDocs: PortfolioDoc[] = [
+  {
+    title: "JANAGAMA PRANEETH REDDY",
+    subtitle: "Resume with full contact lines, engineering stack, and freelance frontend work.",
+    kind: "Resume",
+    pageInfo: "1 page",
+    preview: [
+      "Email: praneethreddy0112@gmail.com",
+      "GitHub: PraneethPW",
+      "Java, TypeScript, Spring Boot, React",
+      "Freelance Frontend Developer | Spanbucks"
+    ],
+    tags: ["ATS-friendly", "Visible name", "Engineering profile"],
+    tone: "ember",
+    surface: "paper"
+  },
+  {
+    title: "POTUPALEPU CHANDU",
+    subtitle: "Resume with event platform work, full-stack skills, and academic history.",
+    kind: "Resume",
+    pageInfo: "1 page",
+    preview: [
+      "Email: potupalepuchandu414@gmail.com",
+      "GitHub: Chandu",
+      "NodeJS, TypeScript, ReactJS, Prisma",
+      "EVENT-EASE | LINK | LIVE"
+    ],
+    tags: ["Project-ready", "Visible name", "Full-stack"],
+    tone: "gold",
+    surface: "paper"
+  },
+  {
+    title: "JOSHITHAA A.P",
+    subtitle: "Resume with biotechnology, lab techniques, and research documentation.",
+    kind: "Resume",
+    pageInfo: "1 page",
+    preview: [
+      "Email: newgenbtech@gmail.com",
+      "Mobile: +91 9994421205",
+      "Biotechnology & Life Sciences",
+      "PCR, chromatography, gel electrophoresis"
+    ],
+    tags: ["Research profile", "Visible name", "Biotech"],
+    tone: "copper",
+    surface: "paper"
+  },
+  {
+    title: "FoodShare AI",
+    subtitle: "Project overview for an AI-powered food donation platform.",
+    kind: "Project overview",
+    pageInfo: "2 pages",
+    preview: [
+      "React.js, TypeScript, Vite",
+      "Node.js, Express.js, PostgreSQL",
+      "OpenRouter AI, Recharts, Three.js",
+      "Donor and receiver dashboards"
+    ],
+    tags: ["AI routing", "3D UI", "Deployment"],
+    tone: "smoke",
+    surface: "dark"
+  },
+  {
+    title: "CephGrow AI",
+    subtitle: "Project overview for orthodontic growth prediction and cephalogram analysis.",
+    kind: "Project overview",
+    pageInfo: "2 pages",
+    preview: [
+      "React.js, Node.js, Prisma ORM",
+      "Neon PostgreSQL, OpenRouter API",
+      "Three.js, React Three Fiber, Drei",
+      "Clinical decision support"
+    ],
+    tags: ["Clinical AI", "3D visuals", "Protected workflow"],
+    tone: "ash",
+    surface: "dark"
+  },
+  {
+    title: "CivicFlow AI",
+    subtitle: "Project overview for public-service workflows, OCR, and application tracking.",
+    kind: "Project overview",
+    pageInfo: "2 pages",
+    preview: [
+      "React, TypeScript, Tailwind CSS",
+      "Node.js, Express.js, Neon PostgreSQL",
+      "JWT, OCR verification, multilingual UI",
+      "Citizen dashboard and complaint flows"
+    ],
+    tags: ["Civic tooling", "OCR", "Admin flow"],
+    tone: "sun",
+    surface: "dark"
+  }
+];
+
 const stats = [
   { label: "Projects Delivered", value: 120 },
   { label: "GitHub Repos Updated", value: 95 },
   { label: "LinkedIn Posts", value: 80 },
   { label: "SRS / UMLs Created", value: 110 },
   { label: "Mini Builds", value: 75 }
+];
+
+const archiveStats = [
+  { label: "Resumes", value: 3 },
+  { label: "Project Briefs", value: 3 },
+  { label: "Readable Fields", value: 100 },
+  { label: "Motion Layers", value: 6 }
 ];
 
 const fadeUp = {
@@ -1101,6 +1212,153 @@ const SectionProfileBackdrop: React.FC<{
       </motion.div>
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06),rgba(5,5,5,0.74)_52%,rgba(5,5,5,0.18)),linear-gradient(90deg,rgba(5,5,5,0.1),rgba(5,5,5,0.56)_76%)] sm:bg-[linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.52)_72%),linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.18))]" />
     </div>
+);
+};
+
+const DocumentCard: React.FC<{ doc: PortfolioDoc; index: number }> = ({ doc, index }) => (
+  <motion.article
+    variants={fadeUp}
+    whileHover={{ y: -8, scale: 1.01, rotateX: 4, rotateY: -4 }}
+    whileTap={{ scale: 0.99 }}
+    transition={{ type: "spring", stiffness: 220, damping: 18 }}
+    className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl transform-gpu"
+  >
+    <div
+      className={`absolute inset-0 bg-gradient-to-br ${toneStyles[doc.tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
+    />
+    <motion.div
+      animate={{ opacity: [0.12, 0.72, 0.2, 0.78, 0.12], x: ["-12%", "112%", "-12%"] }}
+      transition={{ duration: 4.8 + index * 0.25, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
+    />
+    <div className="absolute inset-x-4 bottom-4 h-10 rounded-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,167,76,0.12),transparent_72%)]" />
+    <div className="relative">
+      <div className="flex items-center justify-between gap-3">
+        <span
+          className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] ${toneStyles[doc.tone].badge}`}
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          {doc.kind}
+        </span>
+        <span className="text-[10px] uppercase tracking-[0.24em] text-white/38">{doc.pageInfo}</span>
+      </div>
+
+      <h3 className="mt-4 text-xl font-semibold text-white">{doc.title}</h3>
+      <p className="mt-2 text-sm leading-6 text-white/58">{doc.subtitle}</p>
+
+      <div
+        className={`mt-4 overflow-hidden rounded-[24px] border ${
+          doc.surface === "paper"
+            ? "border-slate-200/70 bg-[linear-gradient(180deg,rgba(255,249,243,0.98),rgba(255,239,224,0.94))] text-slate-950"
+            : "border-white/10 bg-black/28 text-white"
+        } p-4`}
+      >
+        <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.22em] opacity-60">
+          <span>preview</span>
+          <span>{doc.pageInfo}</span>
+        </div>
+        <div className="mt-3 space-y-2">
+          {doc.preview.map((line, lineIndex) => (
+            <div
+              key={line}
+              className={`rounded-2xl px-3 py-2 text-sm leading-5 ${
+                doc.surface === "paper"
+                  ? lineIndex === 0
+                    ? "bg-white/85 font-semibold text-slate-950"
+                    : "bg-white/60 text-slate-700"
+                  : lineIndex === 0
+                  ? "bg-white/8 font-semibold text-white"
+                  : "bg-white/[0.04] text-white/72"
+              }`}
+            >
+              {line}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {doc.tags.map((tag) => (
+          <span key={tag} className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/56">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </motion.article>
+);
+
+const PortfolioVault: React.FC = () => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+  const rail = useTransform(scrollYProgress, [0, 1], [0.18, 1]);
+  const glow = useTransform(scrollYProgress, [0, 1], [0.2, 0.75]);
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      id="archive"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={stagger}
+      className="relative py-16 sm:py-20"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(255,154,61,0.08),transparent_24%),radial-gradient(circle_at_90%_0%,rgba(255,255,255,0.05),transparent_22%)]" />
+      <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="relative grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+        <motion.div
+          variants={fadeUp}
+          className="lg:sticky lg:top-24"
+        >
+          <SectionLabel tone="gold">Resume + documentation vault</SectionLabel>
+          <h2 className="mt-4 max-w-xl text-3xl font-semibold text-white sm:text-4xl">
+            Clear documents, visible names, and a clean motion system.
+          </h2>
+          <p className="mt-4 max-w-xl text-sm leading-7 text-white/58">
+            This archive keeps each resume and project brief readable. Names, contact details, project titles, and the core story stay in the open while the surrounding glass and motion stay restrained.
+          </p>
+
+          <div className="mt-8 grid max-w-xl grid-cols-2 gap-3">
+            {archiveStats.map((item) => (
+              <div key={item.label} className="rounded-[24px] border border-white/10 bg-white/[0.055] p-4 backdrop-blur-2xl">
+                <p className="text-3xl font-semibold text-white">
+                  {item.value}
+                  {item.label === "Readable Fields" ? "%" : "+"}
+                </p>
+                <p className="mt-2 text-xs uppercase tracking-[0.16em] text-white/45">{item.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <motion.div
+            style={{ opacity: glow }}
+            className="mt-8 overflow-hidden rounded-[28px] border border-orange-300/18 bg-[linear-gradient(180deg,rgba(255,167,76,0.12),rgba(255,255,255,0.03))] p-4"
+          >
+            <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-orange-100/72">
+              <span>scroll cue</span>
+              <span>clear reading</span>
+            </div>
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/8">
+              <motion.div
+                style={{ scaleX: rail }}
+                className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div variants={stagger} className="grid auto-rows-fr gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {portfolioDocs.map((doc, index) => (
+            <DocumentCard key={doc.title} doc={doc} index={index} />
+          ))}
+        </motion.div>
+      </div>
+    </motion.section>
   );
 };
 
@@ -1126,6 +1384,9 @@ const Home: React.FC = () => {
             </div>
           </a>
           <div className="hidden items-center gap-6 text-sm text-white/62 md:flex">
+            <a className="transition hover:text-white" href="#archive">
+              Archive
+            </a>
             <a className="transition hover:text-white" href="#packages">
               Packages
             </a>
@@ -1239,6 +1500,8 @@ const Home: React.FC = () => {
             <MobileHeroReel />
           </div>
         </section>
+
+        <PortfolioVault />
 
         <motion.section
           initial="hidden"
