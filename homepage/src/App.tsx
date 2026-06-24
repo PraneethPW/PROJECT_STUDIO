@@ -878,9 +878,6 @@ const HeroReel: React.FC = () => {
                 motion reel
               </span>
               <h3 className="mt-3 text-2xl font-semibold text-white">Project flow</h3>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-white/58">
-                Desktop gets a clearer build lane: the video layer, the delivery checklist, and the launch cues each live in their own block.
-              </p>
             </div>
             <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-white/55">
               <ScanLine className="h-4 w-4 text-orange-300" />
@@ -1260,7 +1257,7 @@ const SectionProfileBackdrop: React.FC<{
           ))}
         </div>
       </motion.div>
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06),rgba(5,5,5,0.74)_52%,rgba(5,5,5,0.18)),linear-gradient(90deg,rgba(5,5,5,0.1),rgba(5,5,5,0.56)_76%)] sm:bg-[linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.52)_72%),linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.18))]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06),rgba(5,5,5,0.74)_52%,rgba(5,5,5,0.18)),linear-gradient(90deg,rgba(5,5,5,0.1),rgba(5,5,5,0.56)_76%)] sm:bg-[linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.52)_72%),linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.18))]" />
     </div>
 );
 };
@@ -1578,34 +1575,6 @@ const Home: React.FC = () => {
                 );
               })}
             </motion.div>
-
-            <motion.div variants={fadeUp} className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-3">
-              {[
-                ["1-3", "serious repos"],
-                ["Live", "demo + README"],
-                ["ATS", "resume support"]
-              ].map(([value, label]) => (
-                <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.055] p-4 backdrop-blur-xl">
-                  <p className="text-2xl font-semibold text-white">{value}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.16em] text-white/45">{label}</p>
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-4 text-sm text-white/60">
-              <span className="inline-flex items-center gap-2">
-                <Github className="h-4 w-4 text-orange-300" />
-                GitHub-ready
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <Linkedin className="h-4 w-4 text-orange-300" />
-                LinkedIn-ready
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-orange-300" />
-                Placement-ready
-              </span>
-            </motion.div>
           </motion.div>
 
           <div className="relative z-10">
@@ -1723,15 +1692,6 @@ const Home: React.FC = () => {
                     <p className="pt-1 text-sm leading-6 text-white/62">{item}</p>
                   </div>
                 ))}
-              </div>
-              <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.05] p-4">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/55">
-                  <Move3d className="h-4 w-4 text-orange-300" />
-                  motion density
-                </div>
-                <p className="mt-3 text-sm leading-6 text-white/60">
-                  Extra motion, extra depth, and more visual bite without losing the actual message.
-                </p>
               </div>
             </CardFrame>
           </div>
