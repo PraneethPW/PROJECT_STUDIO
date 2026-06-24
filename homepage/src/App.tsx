@@ -32,6 +32,7 @@ import {
   Zap
 } from "lucide-react";
 import { FaAws, FaDocker, FaNodeJs, FaReact } from "react-icons/fa";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import {
   SiCloudflare,
   SiGraphql,
@@ -46,7 +47,6 @@ import {
   SiPytorch,
   SiScikitlearn,
   SiSpringboot,
-  SiInstagram,
   SiTailwindcss,
   SiTensorflow,
   SiTypescript,
@@ -351,15 +351,19 @@ const socialProfiles = [
     label: "Instagram",
     href: "https://www.instagram.com/praneeth.codes?igsh=MTJ2dHRuZGlnNXA3Zw%3D%3D&utm_source=qr",
     note: "Daily builds and motion snippets",
-    icon: SiInstagram,
-    glow: "shadow-[0_0_30px_rgba(236,72,153,0.22)]"
+    icon: FaInstagram,
+    glow: "shadow-[0_0_34px_rgba(236,72,153,0.22)]",
+    ring: "from-pink-500/40 via-fuchsia-400/15 to-orange-300/20",
+    accent: "text-pink-200"
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/praneethreddy0112?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
     note: "Profile, projects, and launch updates",
-    icon: Linkedin,
-    glow: "shadow-[0_0_30px_rgba(56,189,248,0.22)]"
+    icon: FaLinkedinIn,
+    glow: "shadow-[0_0_34px_rgba(56,189,248,0.22)]",
+    ring: "from-sky-500/40 via-cyan-400/15 to-white/15",
+    accent: "text-sky-200"
   }
 ];
 
@@ -1551,6 +1555,7 @@ const Home: React.FC = () => {
                     rel="noreferrer"
                     className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-4 text-left backdrop-blur-xl ${profile.glow}`}
                   >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${profile.ring} opacity-0 transition duration-300 group-hover:opacity-100`} />
                     <motion.div
                       animate={{ opacity: [0.08, 0.55, 0.08], x: ["-18%", "118%"] }}
                       transition={{ duration: 4.2 + index * 0.35, repeat: Infinity, ease: "easeInOut" }}
@@ -1559,7 +1564,7 @@ const Home: React.FC = () => {
                     <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_34%,transparent_66%,rgba(255,255,255,0.03))] opacity-0 transition duration-300 group-hover:opacity-100" />
                     <div className="relative flex items-center gap-3">
                       <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-black/28 text-white">
-                        <Icon className="h-5 w-5" />
+                        <Icon className={`h-5 w-5 ${profile.accent}`} />
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
