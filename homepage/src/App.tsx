@@ -326,6 +326,7 @@ const ScrollStage: React.FC = () => {
   const rightScout = useTransform(scrollYProgress, [0, 1], ["84vh", "12vh"]);
   const scanShift = useTransform(scrollYProgress, [0, 1], [0, -160]);
   const levelGlow = useTransform(scrollYProgress, [0, 0.45, 1], [0.2, 0.72, 0.38]);
+  const sideFlash = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0.35, 0.95, 0.5, 1, 0.62]);
 
   if (reduceMotion) {
     return <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden scene-grid opacity-24" />;
@@ -339,47 +340,92 @@ const ScrollStage: React.FC = () => {
         style={{ opacity: pulse }}
         className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-orange-300/10 to-transparent"
       />
-      <div className="absolute inset-y-0 left-0 hidden w-24 overflow-hidden lg:block">
-        <div className="absolute inset-y-0 left-8 w-px bg-gradient-to-b from-transparent via-white/16 to-transparent" />
+      <div className="absolute inset-y-0 left-0 z-20 hidden w-40 overflow-hidden mix-blend-screen lg:block">
+        <motion.div
+          style={{ opacity: sideFlash }}
+          animate={{ x: [-18, 0, -18] }}
+          transition={{ duration: 2.1, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-y-0 left-0 w-36 bg-[radial-gradient(circle_at_28%_50%,rgba(251,146,60,0.78),transparent_52%)] blur-2xl"
+        />
+        <motion.div
+          animate={{ opacity: [0.15, 1, 0.22, 0.95, 0.15], y: ["90vh", "-18vh"] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
+          className="absolute left-0 h-40 w-32 bg-gradient-to-b from-transparent via-white/65 to-transparent blur-xl"
+        />
+        <div className="absolute inset-y-0 left-8 w-[2px] bg-gradient-to-b from-transparent via-white/24 to-transparent" />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute bottom-[8vh] left-8 h-[74vh] w-px origin-bottom bg-gradient-to-t from-orange-300 via-amber-200 to-white shadow-[0_0_22px_rgba(251,146,60,0.8)]"
+          className="absolute bottom-[8vh] left-8 h-[74vh] w-[5px] origin-bottom rounded-full bg-gradient-to-t from-orange-500 via-amber-100 to-white shadow-[0_0_22px_rgba(255,255,255,1),0_0_52px_rgba(251,191,36,1),0_0_110px_rgba(249,115,22,0.9),0_0_180px_rgba(249,115,22,0.55)]"
+        />
+        <motion.div
+          style={{ scaleY: sideProgress, opacity: sideFlash }}
+          className="absolute bottom-[8vh] left-[1.35rem] h-[74vh] w-9 origin-bottom rounded-full bg-orange-300/65 blur-lg"
         />
         <motion.div
           style={{ top: leftScout }}
-          animate={{ boxShadow: ["0 0 16px rgba(251,146,60,0.45)", "0 0 34px rgba(251,191,36,0.85)", "0 0 16px rgba(251,146,60,0.45)"] }}
-          transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-[1.38rem] h-5 w-5 -translate-y-1/2 rotate-45 rounded-[6px] border border-orange-100/70 bg-orange-300/20 backdrop-blur-xl"
+          animate={{
+            boxShadow: [
+              "0 0 18px rgba(251,146,60,0.9), 0 0 42px rgba(251,146,60,0.65)",
+              "0 0 34px rgba(255,255,255,0.95), 0 0 80px rgba(251,191,36,0.9)",
+              "0 0 18px rgba(251,146,60,0.9), 0 0 42px rgba(251,146,60,0.65)"
+            ],
+            scale: [0.92, 1.24, 0.92]
+          }}
+          transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[1rem] h-9 w-9 -translate-y-1/2 rotate-45 rounded-[10px] border-2 border-white bg-orange-300/70 backdrop-blur-xl"
         />
         <motion.div
           style={{ y: scanShift, opacity: levelGlow }}
-          className="absolute left-12 top-[12vh] h-[64vh] w-10"
+          className="absolute left-14 top-[12vh] h-[64vh] w-12"
         >
           {["01", "02", "03", "04", "05"].map((level, index) => (
             <div
               key={level}
-              className="absolute left-0 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35"
+              className="absolute left-0 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-orange-100/70 drop-shadow-[0_0_10px_rgba(251,191,36,0.9)]"
               style={{ top: `${index * 24}%` }}
             >
-              <span className="h-px w-5 bg-orange-200/45" />
+              <span className="h-[2px] w-6 rounded-full bg-orange-200 shadow-[0_0_14px_rgba(251,191,36,0.9)]" />
               {level}
             </div>
           ))}
         </motion.div>
       </div>
-      <div className="absolute inset-y-0 right-0 hidden w-28 overflow-hidden lg:block">
-        <div className="absolute inset-y-0 right-8 w-px bg-gradient-to-b from-transparent via-amber-200/16 to-transparent" />
+      <div className="absolute inset-y-0 right-0 z-20 hidden w-44 overflow-hidden mix-blend-screen lg:block">
+        <motion.div
+          style={{ opacity: sideFlash }}
+          animate={{ x: [18, 0, 18] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-y-0 right-0 w-40 bg-[radial-gradient(circle_at_72%_50%,rgba(251,191,36,0.8),transparent_52%)] blur-2xl"
+        />
+        <motion.div
+          animate={{ opacity: [0.18, 1, 0.24, 0.95, 0.18], y: ["-18vh", "90vh"] }}
+          transition={{ duration: 2.15, repeat: Infinity, ease: "linear", delay: 0.35 }}
+          className="absolute right-0 h-40 w-36 bg-gradient-to-b from-transparent via-white/70 to-transparent blur-xl"
+        />
+        <div className="absolute inset-y-0 right-8 w-[2px] bg-gradient-to-b from-transparent via-amber-100/24 to-transparent" />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute right-8 top-[8vh] h-[74vh] w-px origin-top bg-gradient-to-b from-white via-amber-200 to-orange-400 shadow-[0_0_24px_rgba(251,191,36,0.72)]"
+          className="absolute right-8 top-[8vh] h-[74vh] w-[5px] origin-top rounded-full bg-gradient-to-b from-white via-amber-100 to-orange-500 shadow-[0_0_24px_rgba(255,255,255,1),0_0_56px_rgba(251,191,36,1),0_0_120px_rgba(249,115,22,0.88),0_0_190px_rgba(249,115,22,0.52)]"
+        />
+        <motion.div
+          style={{ scaleY: sideProgress, opacity: sideFlash }}
+          className="absolute right-[1.35rem] top-[8vh] h-[74vh] w-9 origin-top rounded-full bg-amber-200/65 blur-lg"
         />
         <motion.div
           style={{ top: rightScout }}
-          animate={{ rotate: [0, 180, 360], opacity: [0.72, 1, 0.72] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
-          className="absolute right-[1.18rem] h-6 w-6 -translate-y-1/2 rounded-lg border border-amber-100/65 bg-amber-200/14 backdrop-blur-xl"
+          animate={{
+            rotate: [0, 180, 360],
+            opacity: [0.9, 1, 0.9],
+            boxShadow: [
+              "0 0 20px rgba(251,191,36,0.75), 0 0 46px rgba(249,115,22,0.55)",
+              "0 0 34px rgba(255,255,255,0.95), 0 0 82px rgba(251,191,36,0.9)",
+              "0 0 20px rgba(251,191,36,0.75), 0 0 46px rgba(249,115,22,0.55)"
+            ]
+          }}
+          transition={{ duration: 2.35, repeat: Infinity, ease: "linear" }}
+          className="absolute right-[0.82rem] h-10 w-10 -translate-y-1/2 rounded-2xl border-2 border-white bg-amber-200/55 backdrop-blur-xl"
         >
-          <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-100" />
+          <div className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_18px_rgba(255,255,255,1)]" />
         </motion.div>
         <motion.div
           style={{ y: scanShift }}
@@ -388,31 +434,61 @@ const ScrollStage: React.FC = () => {
           {[0, 1, 2, 3, 4].map((item) => (
             <motion.span
               key={item}
-              animate={{ opacity: [0.18, 0.72, 0.18], x: [0, -7, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: item * 0.18 }}
-              className="block h-px w-10 bg-gradient-to-l from-amber-200/70 to-transparent"
+              animate={{ opacity: [0.32, 1, 0.32], x: [0, -13, 0] }}
+              transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut", delay: item * 0.14 }}
+              className="block h-[2px] w-14 rounded-full bg-gradient-to-l from-white via-amber-200 to-transparent shadow-[0_0_18px_rgba(251,191,36,0.85)]"
             />
           ))}
         </motion.div>
       </div>
-      <div className="absolute inset-y-0 left-0 w-8 overflow-hidden md:hidden">
+      <div className="absolute inset-y-0 left-0 z-20 w-16 overflow-hidden mix-blend-screen md:hidden">
+        <motion.div
+          style={{ opacity: sideFlash }}
+          className="absolute inset-y-0 left-0 w-16 bg-[radial-gradient(circle_at_18%_50%,rgba(251,146,60,0.9),transparent_62%)] blur-xl"
+        />
+        <motion.div
+          animate={{ opacity: [0.2, 1, 0.2], y: ["92vh", "-14vh"] }}
+          transition={{ duration: 2.1, repeat: Infinity, ease: "linear" }}
+          className="absolute left-0 h-32 w-16 bg-gradient-to-b from-transparent via-white/70 to-transparent blur-lg"
+        />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute bottom-[10vh] left-3 h-[62vh] w-px origin-bottom bg-gradient-to-t from-orange-300/20 via-orange-200/70 to-white/50"
+          className="absolute bottom-[10vh] left-3 h-[62vh] w-[5px] origin-bottom rounded-full bg-gradient-to-t from-orange-500 via-amber-100 to-white shadow-[0_0_24px_rgba(255,255,255,1),0_0_52px_rgba(251,191,36,0.95),0_0_110px_rgba(249,115,22,0.75)]"
+        />
+        <motion.div
+          style={{ scaleY: sideProgress, opacity: sideFlash }}
+          className="absolute bottom-[10vh] left-1 h-[62vh] w-8 origin-bottom rounded-full bg-orange-300/60 blur-md"
         />
         <motion.div
           style={{ top: leftScout }}
-          className="absolute left-1.5 h-3.5 w-3.5 -translate-y-1/2 rotate-45 rounded-[4px] border border-orange-100/50 bg-orange-300/20"
+          animate={{ scale: [0.9, 1.28, 0.9], opacity: [0.78, 1, 0.78] }}
+          transition={{ duration: 1.25, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-0 h-8 w-8 -translate-y-1/2 rotate-45 rounded-[9px] border-2 border-white bg-orange-300/70 shadow-[0_0_34px_rgba(255,255,255,0.9),0_0_70px_rgba(251,146,60,0.95)]"
         />
       </div>
-      <div className="absolute inset-y-0 right-0 w-8 overflow-hidden md:hidden">
+      <div className="absolute inset-y-0 right-0 z-20 w-16 overflow-hidden mix-blend-screen md:hidden">
+        <motion.div
+          style={{ opacity: sideFlash }}
+          className="absolute inset-y-0 right-0 w-16 bg-[radial-gradient(circle_at_82%_50%,rgba(251,191,36,0.92),transparent_62%)] blur-xl"
+        />
+        <motion.div
+          animate={{ opacity: [0.2, 1, 0.2], y: ["-14vh", "92vh"] }}
+          transition={{ duration: 1.95, repeat: Infinity, ease: "linear", delay: 0.3 }}
+          className="absolute right-0 h-32 w-16 bg-gradient-to-b from-transparent via-white/70 to-transparent blur-lg"
+        />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute right-3 top-[12vh] h-[58vh] w-px origin-top bg-gradient-to-b from-white/45 via-amber-200/65 to-orange-300/20"
+          className="absolute right-3 top-[12vh] h-[58vh] w-[5px] origin-top rounded-full bg-gradient-to-b from-white via-amber-100 to-orange-500 shadow-[0_0_24px_rgba(255,255,255,1),0_0_54px_rgba(251,191,36,0.98),0_0_115px_rgba(249,115,22,0.76)]"
+        />
+        <motion.div
+          style={{ scaleY: sideProgress, opacity: sideFlash }}
+          className="absolute right-1 top-[12vh] h-[58vh] w-8 origin-top rounded-full bg-amber-200/62 blur-md"
         />
         <motion.div
           style={{ top: rightScout }}
-          className="absolute right-1.5 h-3.5 w-3.5 -translate-y-1/2 rounded-[5px] border border-amber-100/50 bg-amber-200/16"
+          animate={{ scale: [0.92, 1.3, 0.92], opacity: [0.78, 1, 0.78] }}
+          transition={{ duration: 1.35, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-0 h-8 w-8 -translate-y-1/2 rounded-[10px] border-2 border-white bg-amber-200/64 shadow-[0_0_34px_rgba(255,255,255,0.92),0_0_74px_rgba(251,191,36,0.98)]"
         />
       </div>
       <motion.div
