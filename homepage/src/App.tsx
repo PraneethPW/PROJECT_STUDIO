@@ -321,6 +321,11 @@ const ScrollStage: React.FC = () => {
   const spineGlow = useTransform(scrollYProgress, [0, 1], [0.18, 0.42]);
   const ribbon = useTransform(scrollYProgress, [0, 1], [0, -220]);
   const pulse = useTransform(scrollYProgress, [0, 1], [0.28, 0.68]);
+  const sideProgress = useTransform(scrollYProgress, [0, 1], [0.08, 1]);
+  const leftScout = useTransform(scrollYProgress, [0, 1], ["8vh", "82vh"]);
+  const rightScout = useTransform(scrollYProgress, [0, 1], ["84vh", "12vh"]);
+  const scanShift = useTransform(scrollYProgress, [0, 1], [0, -160]);
+  const levelGlow = useTransform(scrollYProgress, [0, 0.45, 1], [0.2, 0.72, 0.38]);
 
   if (reduceMotion) {
     return <div aria-hidden className="pointer-events-none fixed inset-0 overflow-hidden scene-grid opacity-24" />;
@@ -334,6 +339,82 @@ const ScrollStage: React.FC = () => {
         style={{ opacity: pulse }}
         className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-orange-300/10 to-transparent"
       />
+      <div className="absolute inset-y-0 left-0 hidden w-24 overflow-hidden lg:block">
+        <div className="absolute inset-y-0 left-8 w-px bg-gradient-to-b from-transparent via-white/16 to-transparent" />
+        <motion.div
+          style={{ scaleY: sideProgress }}
+          className="absolute bottom-[8vh] left-8 h-[74vh] w-px origin-bottom bg-gradient-to-t from-orange-300 via-amber-200 to-white shadow-[0_0_22px_rgba(251,146,60,0.8)]"
+        />
+        <motion.div
+          style={{ top: leftScout }}
+          animate={{ boxShadow: ["0 0 16px rgba(251,146,60,0.45)", "0 0 34px rgba(251,191,36,0.85)", "0 0 16px rgba(251,146,60,0.45)"] }}
+          transition={{ duration: 1.7, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-[1.38rem] h-5 w-5 -translate-y-1/2 rotate-45 rounded-[6px] border border-orange-100/70 bg-orange-300/20 backdrop-blur-xl"
+        />
+        <motion.div
+          style={{ y: scanShift, opacity: levelGlow }}
+          className="absolute left-12 top-[12vh] h-[64vh] w-10"
+        >
+          {["01", "02", "03", "04", "05"].map((level, index) => (
+            <div
+              key={level}
+              className="absolute left-0 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/35"
+              style={{ top: `${index * 24}%` }}
+            >
+              <span className="h-px w-5 bg-orange-200/45" />
+              {level}
+            </div>
+          ))}
+        </motion.div>
+      </div>
+      <div className="absolute inset-y-0 right-0 hidden w-28 overflow-hidden lg:block">
+        <div className="absolute inset-y-0 right-8 w-px bg-gradient-to-b from-transparent via-amber-200/16 to-transparent" />
+        <motion.div
+          style={{ scaleY: sideProgress }}
+          className="absolute right-8 top-[8vh] h-[74vh] w-px origin-top bg-gradient-to-b from-white via-amber-200 to-orange-400 shadow-[0_0_24px_rgba(251,191,36,0.72)]"
+        />
+        <motion.div
+          style={{ top: rightScout }}
+          animate={{ rotate: [0, 180, 360], opacity: [0.72, 1, 0.72] }}
+          transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
+          className="absolute right-[1.18rem] h-6 w-6 -translate-y-1/2 rounded-lg border border-amber-100/65 bg-amber-200/14 backdrop-blur-xl"
+        >
+          <div className="absolute left-1/2 top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-100" />
+        </motion.div>
+        <motion.div
+          style={{ y: scanShift }}
+          className="absolute right-12 top-[16vh] flex h-[58vh] flex-col justify-between"
+        >
+          {[0, 1, 2, 3, 4].map((item) => (
+            <motion.span
+              key={item}
+              animate={{ opacity: [0.18, 0.72, 0.18], x: [0, -7, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut", delay: item * 0.18 }}
+              className="block h-px w-10 bg-gradient-to-l from-amber-200/70 to-transparent"
+            />
+          ))}
+        </motion.div>
+      </div>
+      <div className="absolute inset-y-0 left-0 w-8 overflow-hidden md:hidden">
+        <motion.div
+          style={{ scaleY: sideProgress }}
+          className="absolute bottom-[10vh] left-3 h-[62vh] w-px origin-bottom bg-gradient-to-t from-orange-300/20 via-orange-200/70 to-white/50"
+        />
+        <motion.div
+          style={{ top: leftScout }}
+          className="absolute left-1.5 h-3.5 w-3.5 -translate-y-1/2 rotate-45 rounded-[4px] border border-orange-100/50 bg-orange-300/20"
+        />
+      </div>
+      <div className="absolute inset-y-0 right-0 w-8 overflow-hidden md:hidden">
+        <motion.div
+          style={{ scaleY: sideProgress }}
+          className="absolute right-3 top-[12vh] h-[58vh] w-px origin-top bg-gradient-to-b from-white/45 via-amber-200/65 to-orange-300/20"
+        />
+        <motion.div
+          style={{ top: rightScout }}
+          className="absolute right-1.5 h-3.5 w-3.5 -translate-y-1/2 rounded-[5px] border border-amber-100/50 bg-amber-200/16"
+        />
+      </div>
       <motion.div
         animate={{ opacity: [0.05, 0.35, 0.08, 0.4, 0.05] }}
         transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
@@ -799,7 +880,7 @@ const Home: React.FC = () => {
             </motion.h1>
 
             <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-7 text-white/68 sm:text-lg">
-              For 3rd and 4th year BTech students who need clean repos, live demos,
+              For 3rd year, 4th year, and passed-out BTech students who need clean repos, live demos,
               documentation, resume bullets, and a LinkedIn launch that feels credible in interviews.
             </motion.p>
 
