@@ -959,6 +959,106 @@ const MobileHeroReel: React.FC = () => {
   );
 };
 
+const ProfileLaunchBackdrop: React.FC = () => (
+  <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <motion.div
+      animate={{ opacity: [0.18, 0.32, 0.2], y: [0, -8, 0], rotate: [-5, -4, -5] }}
+      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute -right-16 top-8 hidden w-[31rem] rounded-[28px] border border-white/10 bg-black/22 p-5 shadow-[0_0_90px_rgba(255,145,65,0.1)] backdrop-blur-2xl lg:block"
+    >
+      <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/8 text-orange-200">
+            <Github className="h-5 w-5" />
+          </div>
+          <div>
+            <div className="h-2.5 w-36 rounded-full bg-white/22" />
+            <div className="mt-2 h-2 w-24 rounded-full bg-white/10" />
+          </div>
+        </div>
+        <div className="rounded-full border border-emerald-300/18 bg-emerald-300/8 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-100/70">
+          repo ready
+        </div>
+      </div>
+      <div className="space-y-4">
+        {["README story", "Project stack", "Live demo", "Viva notes"].map((item, index) => (
+          <div key={item} className="rounded-2xl border border-white/8 bg-white/[0.035] p-3">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-white/45">{item}</span>
+              <span className="h-2 w-2 rounded-full bg-orange-200 shadow-[0_0_14px_rgba(251,191,36,0.8)]" />
+            </div>
+            <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
+              <motion.div
+                animate={{ scaleX: [0.52, 0.86, 0.62] }}
+                transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: index * 0.16 }}
+                className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-emerald-300"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+
+    <motion.div
+      animate={{ opacity: [0.16, 0.3, 0.18], y: [0, 7, 0], rotate: [6, 5, 6] }}
+      transition={{ duration: 8.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+      className="absolute left-[44%] top-[5.5rem] hidden w-[24rem] rounded-[26px] border border-sky-200/10 bg-white/[0.035] p-4 shadow-[0_0_80px_rgba(56,189,248,0.08)] backdrop-blur-2xl lg:block"
+    >
+      <div className="h-20 rounded-[20px] border border-white/8 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(56,189,248,0.08),rgba(255,145,65,0.08))]" />
+      <div className="-mt-7 flex items-end justify-between px-3">
+        <div className="flex items-end gap-3">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-black/40 bg-gradient-to-br from-sky-300/35 via-white/20 to-orange-300/35 text-white shadow-[0_0_36px_rgba(56,189,248,0.18)]">
+            <Linkedin className="h-7 w-7" />
+          </div>
+          <div className="pb-1">
+            <div className="h-2.5 w-32 rounded-full bg-white/24" />
+            <div className="mt-2 h-2 w-44 rounded-full bg-white/10" />
+          </div>
+        </div>
+        <ShieldCheck className="h-5 w-5 text-orange-200/55" />
+      </div>
+      <div className="mt-5 grid gap-2">
+        {["Profile headline", "Skills alignment", "Launch post"].map((item) => (
+          <div key={item} className="flex items-center justify-between rounded-2xl border border-white/8 bg-black/18 px-3 py-2">
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/45">{item}</span>
+            <Check className="h-3.5 w-3.5 text-emerald-200/70" />
+          </div>
+        ))}
+      </div>
+    </motion.div>
+
+    <motion.div
+      animate={{ opacity: [0.18, 0.3, 0.2], y: [0, -5, 0] }}
+      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute left-1/2 top-[13rem] w-[21rem] -translate-x-1/2 rounded-[24px] border border-white/8 bg-black/20 p-4 shadow-[0_0_70px_rgba(255,145,65,0.08)] backdrop-blur-2xl lg:hidden"
+    >
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Github className="h-4 w-4 text-orange-200/80" />
+          <Linkedin className="h-4 w-4 text-sky-200/80" />
+          <span className="text-[10px] uppercase tracking-[0.22em] text-white/45">profile launch</span>
+        </div>
+        <span className="h-2 w-2 rounded-full bg-emerald-200 shadow-[0_0_14px_rgba(110,231,183,0.8)]" />
+      </div>
+      <div className="space-y-2">
+        {["README", "LinkedIn", "Resume"].map((item, index) => (
+          <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.035] p-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/8 text-orange-100">
+              {index === 1 ? <Linkedin className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="h-2 w-4/5 rounded-full bg-white/18" />
+              <div className="mt-2 h-1.5 w-3/5 rounded-full bg-white/8" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(255,145,65,0.08),transparent_26%),radial-gradient(circle_at_52%_22%,rgba(56,189,248,0.06),transparent_22%),linear-gradient(180deg,rgba(5,5,5,0.08),transparent_36%,rgba(5,5,5,0.14))]" />
+  </div>
+);
+
 const Home: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050505] text-neutral-100 antialiased">
@@ -1005,8 +1105,9 @@ const Home: React.FC = () => {
           </a>
         </motion.nav>
 
-        <section className="grid min-h-[calc(100vh-84px)] items-center gap-8 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
-          <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-3xl">
+        <section className="relative grid min-h-[calc(100vh-84px)] items-center gap-8 overflow-hidden py-10 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
+          <ProfileLaunchBackdrop />
+          <motion.div variants={stagger} initial="hidden" animate="visible" className="relative z-10 max-w-3xl">
             <motion.div variants={fadeUp}>
               <SectionLabel tone="ember">Portfolio-ready projects before placements</SectionLabel>
             </motion.div>
@@ -1088,8 +1189,10 @@ const Home: React.FC = () => {
             </motion.div>
           </motion.div>
 
-          <HeroReel />
-          <MobileHeroReel />
+          <div className="relative z-10">
+            <HeroReel />
+            <MobileHeroReel />
+          </div>
         </section>
 
         <motion.section
