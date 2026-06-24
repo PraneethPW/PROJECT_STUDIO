@@ -465,15 +465,6 @@ const ScrollStage: React.FC = () => {
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute left-3 h-7 w-7 -translate-y-1/2 rotate-45 rounded-[9px] border border-orange-50 bg-orange-300/58 shadow-[0_0_30px_rgba(251,146,60,0.9)]"
         />
-        {[18, 36, 56, 76].map((top, index) => (
-          <motion.span
-            key={top}
-            animate={{ opacity: [0.28, 1, 0.36], scale: [0.85, 1.35, 0.85] }}
-            transition={{ duration: 1.55, repeat: Infinity, ease: "easeInOut", delay: index * 0.22 }}
-            className="absolute left-[1.15rem] h-2.5 w-2.5 rounded-full bg-orange-100 shadow-[0_0_16px_rgba(255,237,213,0.95),0_0_34px_rgba(251,146,60,0.85)]"
-            style={{ top: `${top}vh` }}
-          />
-        ))}
       </div>
       <div className="absolute inset-y-0 right-0 z-20 w-20 overflow-hidden md:hidden">
         <motion.div
@@ -499,15 +490,6 @@ const ScrollStage: React.FC = () => {
           transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
           className="absolute right-3 h-7 w-7 -translate-y-1/2 rounded-[9px] border border-amber-50 bg-amber-200/58 shadow-[0_0_30px_rgba(251,191,36,0.92)]"
         />
-        {[22, 42, 62, 82].map((top, index) => (
-          <motion.span
-            key={top}
-            animate={{ opacity: [0.28, 1, 0.36], scale: [0.85, 1.35, 0.85] }}
-            transition={{ duration: 1.65, repeat: Infinity, ease: "easeInOut", delay: 0.15 + index * 0.22 }}
-            className="absolute right-[1.15rem] h-2.5 w-2.5 rounded-full bg-amber-100 shadow-[0_0_16px_rgba(255,237,213,0.95),0_0_34px_rgba(251,191,36,0.85)]"
-            style={{ top: `${top}vh` }}
-          />
-        ))}
       </div>
       <motion.div
         animate={{ opacity: [0.05, 0.35, 0.08, 0.4, 0.05] }}
