@@ -364,6 +364,15 @@ const socialProfiles = [
     glow: "shadow-[0_0_34px_rgba(56,189,248,0.22)]",
     ring: "from-sky-500/40 via-cyan-400/15 to-white/15",
     accent: "text-sky-200"
+  },
+  {
+    label: "GitHub",
+    href: "https://github.com/PraneethPW",
+    note: "Code, repositories, and builds",
+    icon: Github,
+    glow: "shadow-[0_0_34px_rgba(148,163,184,0.18)]",
+    ring: "from-white/25 via-white/10 to-slate-400/10",
+    accent: "text-white/80"
   }
 ];
 
@@ -1538,7 +1547,7 @@ const Home: React.FC = () => {
               <span className="text-xs text-white/45 sm:pl-2">First chat and quote are free.</span>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-6 grid gap-3 sm:grid-cols-2">
+            <motion.div variants={fadeUp} className="mt-6 grid gap-3 sm:grid-cols-3">
               {socialProfiles.map((profile, index) => {
                 const Icon = profile.icon;
                 return (
