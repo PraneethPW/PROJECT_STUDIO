@@ -441,55 +441,73 @@ const ScrollStage: React.FC = () => {
           ))}
         </motion.div>
       </div>
-      <div className="absolute inset-y-0 left-0 z-20 w-16 overflow-hidden mix-blend-screen md:hidden">
+      <div className="absolute inset-y-0 left-0 z-20 w-20 overflow-hidden md:hidden">
         <motion.div
           style={{ opacity: sideFlash }}
-          className="absolute inset-y-0 left-0 w-14 bg-[radial-gradient(circle_at_18%_50%,rgba(251,146,60,0.58),transparent_64%)] blur-xl"
+          className="absolute inset-y-0 left-0 w-16 bg-[radial-gradient(circle_at_18%_50%,rgba(251,146,60,0.62),transparent_64%)] blur-xl"
         />
         <motion.div
           animate={{ opacity: [0.1, 0.56, 0.1], y: ["92vh", "-14vh"] }}
           transition={{ duration: 3.2, repeat: Infinity, ease: "linear" }}
-          className="absolute left-0 h-32 w-14 bg-gradient-to-b from-transparent via-amber-100/48 to-transparent blur-lg"
+          className="absolute left-0 h-32 w-16 bg-gradient-to-b from-transparent via-amber-100/48 to-transparent blur-lg"
         />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute bottom-[10vh] left-3 h-[62vh] w-[3px] origin-bottom rounded-full bg-gradient-to-t from-orange-500 via-amber-200 to-white shadow-[0_0_18px_rgba(251,191,36,0.82),0_0_54px_rgba(249,115,22,0.5)]"
+          className="absolute bottom-[10vh] left-5 h-[62vh] w-[3px] origin-bottom rounded-full bg-gradient-to-t from-orange-500 via-amber-200 to-white shadow-[0_0_20px_rgba(251,191,36,0.92),0_0_58px_rgba(249,115,22,0.58)]"
         />
         <motion.div
           style={{ scaleY: sideProgress, opacity: sideFlash }}
-          className="absolute bottom-[10vh] left-1.5 h-[62vh] w-6 origin-bottom rounded-full bg-orange-300/34 blur-md"
+          className="absolute bottom-[10vh] left-3 h-[62vh] w-7 origin-bottom rounded-full bg-orange-300/42 blur-md"
         />
         <motion.div
           style={{ top: leftScout }}
-          animate={{ scale: [0.94, 1.12, 0.94], opacity: [0.72, 1, 0.72] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute left-1 h-6 w-6 -translate-y-1/2 rotate-45 rounded-[8px] border border-orange-50/80 bg-orange-300/42 shadow-[0_0_26px_rgba(251,146,60,0.7)]"
+          animate={{ scale: [0.94, 1.14, 0.94], opacity: [0.82, 1, 0.82] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-3 h-7 w-7 -translate-y-1/2 rotate-45 rounded-[9px] border border-orange-50 bg-orange-300/58 shadow-[0_0_30px_rgba(251,146,60,0.9)]"
         />
+        {[18, 36, 56, 76].map((top, index) => (
+          <motion.span
+            key={top}
+            animate={{ opacity: [0.28, 1, 0.36], scale: [0.85, 1.35, 0.85] }}
+            transition={{ duration: 1.55, repeat: Infinity, ease: "easeInOut", delay: index * 0.22 }}
+            className="absolute left-[1.15rem] h-2.5 w-2.5 rounded-full bg-orange-100 shadow-[0_0_16px_rgba(255,237,213,0.95),0_0_34px_rgba(251,146,60,0.85)]"
+            style={{ top: `${top}vh` }}
+          />
+        ))}
       </div>
-      <div className="absolute inset-y-0 right-0 z-20 w-16 overflow-hidden mix-blend-screen md:hidden">
+      <div className="absolute inset-y-0 right-0 z-20 w-20 overflow-hidden md:hidden">
         <motion.div
           style={{ opacity: sideFlash }}
-          className="absolute inset-y-0 right-0 w-14 bg-[radial-gradient(circle_at_82%_50%,rgba(251,191,36,0.58),transparent_64%)] blur-xl"
+          className="absolute inset-y-0 right-0 w-16 bg-[radial-gradient(circle_at_82%_50%,rgba(251,191,36,0.62),transparent_64%)] blur-xl"
         />
         <motion.div
           animate={{ opacity: [0.1, 0.56, 0.1], y: ["-14vh", "92vh"] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.3 }}
-          className="absolute right-0 h-32 w-14 bg-gradient-to-b from-transparent via-amber-100/48 to-transparent blur-lg"
+          className="absolute right-0 h-32 w-16 bg-gradient-to-b from-transparent via-amber-100/48 to-transparent blur-lg"
         />
         <motion.div
           style={{ scaleY: sideProgress }}
-          className="absolute right-3 top-[12vh] h-[58vh] w-[3px] origin-top rounded-full bg-gradient-to-b from-white via-amber-200 to-orange-500 shadow-[0_0_18px_rgba(251,191,36,0.82),0_0_54px_rgba(249,115,22,0.52)]"
+          className="absolute right-5 top-[12vh] h-[58vh] w-[3px] origin-top rounded-full bg-gradient-to-b from-white via-amber-200 to-orange-500 shadow-[0_0_20px_rgba(251,191,36,0.92),0_0_58px_rgba(249,115,22,0.58)]"
         />
         <motion.div
           style={{ scaleY: sideProgress, opacity: sideFlash }}
-          className="absolute right-1.5 top-[12vh] h-[58vh] w-6 origin-top rounded-full bg-amber-200/34 blur-md"
+          className="absolute right-3 top-[12vh] h-[58vh] w-7 origin-top rounded-full bg-amber-200/42 blur-md"
         />
         <motion.div
           style={{ top: rightScout }}
-          animate={{ scale: [0.94, 1.12, 0.94], opacity: [0.72, 1, 0.72] }}
-          transition={{ duration: 2.1, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-1 h-6 w-6 -translate-y-1/2 rounded-[8px] border border-amber-50/80 bg-amber-200/42 shadow-[0_0_26px_rgba(251,191,36,0.72)]"
+          animate={{ scale: [0.94, 1.14, 0.94], opacity: [0.82, 1, 0.82] }}
+          transition={{ duration: 1.9, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute right-3 h-7 w-7 -translate-y-1/2 rounded-[9px] border border-amber-50 bg-amber-200/58 shadow-[0_0_30px_rgba(251,191,36,0.92)]"
         />
+        {[22, 42, 62, 82].map((top, index) => (
+          <motion.span
+            key={top}
+            animate={{ opacity: [0.28, 1, 0.36], scale: [0.85, 1.35, 0.85] }}
+            transition={{ duration: 1.65, repeat: Infinity, ease: "easeInOut", delay: 0.15 + index * 0.22 }}
+            className="absolute right-[1.15rem] h-2.5 w-2.5 rounded-full bg-amber-100 shadow-[0_0_16px_rgba(255,237,213,0.95),0_0_34px_rgba(251,191,36,0.85)]"
+            style={{ top: `${top}vh` }}
+          />
+        ))}
       </div>
       <motion.div
         animate={{ opacity: [0.05, 0.35, 0.08, 0.4, 0.05] }}
@@ -887,12 +905,12 @@ const Home: React.FC = () => {
     <main className="relative min-h-screen overflow-hidden bg-[#050505] text-neutral-100 antialiased">
       <ScrollStage />
 
-      <div className="relative mx-auto max-w-7xl px-5 py-5 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-6 py-4 sm:px-6 sm:py-5 lg:px-8">
         <motion.nav
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="sticky top-4 z-30 mx-auto flex max-w-6xl items-center justify-between rounded-[24px] border border-white/10 bg-black/55 px-4 py-3 shadow-2xl shadow-black/35 backdrop-blur-3xl"
+          className="sticky top-3 z-30 mx-auto flex max-w-6xl items-center justify-between rounded-[20px] border border-white/10 bg-black/60 px-3.5 py-3 shadow-2xl shadow-black/35 backdrop-blur-3xl sm:top-4 sm:rounded-[24px] sm:px-4"
         >
           <a href="#" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/10">
@@ -928,7 +946,7 @@ const Home: React.FC = () => {
           </a>
         </motion.nav>
 
-        <section className="grid min-h-[calc(100vh-92px)] items-center gap-10 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
+        <section className="grid min-h-[calc(100vh-84px)] items-center gap-8 py-10 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
           <motion.div variants={stagger} initial="hidden" animate="visible" className="max-w-3xl">
             <motion.div variants={fadeUp}>
               <SectionLabel tone="ember">Portfolio-ready projects before placements</SectionLabel>
@@ -950,7 +968,7 @@ const Home: React.FC = () => {
 
             <motion.h1
               variants={fadeUp}
-              className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-normal text-white sm:text-6xl lg:text-7xl"
+              className="mt-6 max-w-4xl text-[2.65rem] font-semibold leading-[1.03] tracking-normal text-white sm:text-6xl lg:text-7xl"
             >
               Build the project story your profile is missing.
             </motion.h1>
