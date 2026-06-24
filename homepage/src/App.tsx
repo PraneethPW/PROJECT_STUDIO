@@ -266,12 +266,12 @@ const resumeOverviewDocs: PortfolioDoc[] = [
   },
 ];
 
-const landingPageDocs: PortfolioDoc[] = [
+const showcaseDocs: PortfolioDoc[] = [
   {
     title: "QuantumQA",
-    subtitle: "Landing page study with a deep tech hero and live node motion.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "AI reasoning dashboard with live node motion.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["AI", "Motion", "Web"],
     tone: "ember",
     surface: "dark",
@@ -280,9 +280,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "FoodShare",
-    subtitle: "Landing page study with a product-led hero and 3D platform card.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Platform demo with a product-led 3D interface.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Platform", "3D", "Launch"],
     tone: "gold",
     surface: "dark",
@@ -291,9 +291,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "CephGrow AI",
-    subtitle: "Clinical landing page with strong hierarchy and radiographic focus.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Clinical AI showcase with strong hierarchy and imaging focus.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Clinical", "Grid", "Motion"],
     tone: "copper",
     surface: "dark",
@@ -302,9 +302,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "TilesKart",
-    subtitle: "Marketplace hero with bold product framing and floating product tiles.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Commerce demo with bold product framing and floating tile motion.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Commerce", "Product", "3D"],
     tone: "smoke",
     surface: "dark",
@@ -313,9 +313,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "VocaVision AI",
-    subtitle: "Interview platform hero with orbit lines and analytical cards.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Interview intelligence showcase with orbit lines and analytics cards.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Interview", "Orbit", "Analytics"],
     tone: "ash",
     surface: "dark",
@@ -324,9 +324,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "AttendX",
-    subtitle: "Academic operations hero with a grid-led layout and live session card.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Academic operations showcase with a grid-led interface and live session card.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Academic", "QR", "Ops"],
     tone: "sun",
     surface: "dark",
@@ -335,9 +335,9 @@ const landingPageDocs: PortfolioDoc[] = [
   },
   {
     title: "SignalFlare",
-    subtitle: "Emergency network hero with luminous globe motion and action cards.",
-    kind: "Landing page",
-    pageInfo: "Hero",
+    subtitle: "Emergency network showcase with luminous globe motion and action cards.",
+    kind: "Showcase",
+    pageInfo: "Demo",
     tags: ["Emergency", "Network", "Glow"],
     tone: "ember",
     surface: "dark",
@@ -1404,7 +1404,7 @@ const PortfolioVault: React.FC = () => {
           <div>
             <SectionLabel tone="gold">Portfolio assets</SectionLabel>
             <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">
-              Resume, project overviews, and AI full-stack project showcases.
+              Resume, project overviews, and AI product showcases.
             </h2>
           </div>
           <div className="hidden h-2 w-40 overflow-hidden rounded-full bg-white/8 md:block">
@@ -1424,9 +1424,9 @@ const PortfolioVault: React.FC = () => {
         />
 
         <MotionRail
-          label="AI full-stack projects"
+          label="AI projects and demos"
           tone="sun"
-          items={landingPageDocs}
+          items={showcaseDocs}
           direction="right"
         />
       </div>
