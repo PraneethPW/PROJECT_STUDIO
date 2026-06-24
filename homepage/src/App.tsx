@@ -318,6 +318,72 @@ const StatNumber: React.FC<{ value: number }> = ({ value }) => {
   return <span ref={ref}>{current}+</span>;
 };
 
+const contributionCells = Array.from({ length: 91 }, (_, index) => {
+  const column = index % 13;
+  const row = Math.floor(index / 13);
+  const active =
+    (column * 3 + row * 5) % 11 === 0 ||
+    (column > 5 && row > 1 && (column + row) % 4 === 0) ||
+    (column > 8 && row < 6 && (column * row) % 7 === 0);
+
+  if (!active) return 0;
+  return ((column + row * 2) % 4) + 1;
+});
+
+const ContributionBackdrop: React.FC = () => (
+  <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[30px]">
+    <motion.div
+      animate={{ opacity: [0.2, 0.36, 0.24], y: [0, -6, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      className="absolute -right-12 top-5 w-[34rem] rounded-[26px] border border-emerald-200/10 bg-black/18 p-4 shadow-[0_0_80px_rgba(34,197,94,0.12)] backdrop-blur-2xl sm:right-5 sm:top-6"
+    >
+      <div className="mb-3 flex items-center justify-between gap-4">
+        <div className="h-2 w-32 rounded-full bg-white/12" />
+        <div className="flex gap-1">
+          {[0, 1, 2, 3].map((item) => (
+            <span key={item} className="h-2 w-8 rounded-full bg-emerald-300/10" />
+          ))}
+        </div>
+      </div>
+      <div className="grid grid-flow-col grid-rows-7 gap-1">
+        {contributionCells.map((level, index) => (
+          <motion.span
+            key={index}
+            animate={
+              level
+                ? { opacity: [0.48, 0.95, 0.58], scale: [1, 1.08, 1] }
+                : { opacity: [0.18, 0.26, 0.18] }
+            }
+            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: (index % 13) * 0.035 }}
+            className={`h-3 w-3 rounded-[4px] border border-white/5 ${
+              [
+                "bg-white/[0.035]",
+                "bg-emerald-900/70 shadow-[0_0_10px_rgba(22,163,74,0.25)]",
+                "bg-emerald-700/70 shadow-[0_0_12px_rgba(34,197,94,0.32)]",
+                "bg-emerald-500/75 shadow-[0_0_16px_rgba(34,197,94,0.42)]",
+                "bg-lime-400/80 shadow-[0_0_18px_rgba(132,204,22,0.45)]"
+              ][level]
+            }`}
+          />
+        ))}
+      </div>
+      <div className="mt-3 flex items-center justify-end gap-1 text-[10px] uppercase tracking-[0.2em] text-white/28">
+        <span>less</span>
+        {[1, 2, 3, 4].map((level) => (
+          <span
+            key={level}
+            className={`h-2.5 w-2.5 rounded-[3px] ${
+              ["bg-emerald-900/70", "bg-emerald-700/70", "bg-emerald-500/75", "bg-lime-400/80"][level - 1]
+            }`}
+          />
+        ))}
+        <span>more</span>
+      </div>
+    </motion.div>
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,rgba(34,197,94,0.1),transparent_34%),linear-gradient(90deg,rgba(5,5,5,0.02),rgba(5,5,5,0.72)_76%)] sm:bg-[radial-gradient(circle_at_78%_24%,rgba(34,197,94,0.12),transparent_34%),linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.54)_70%)]" />
+  </div>
+);
+
 const ScrollStage: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const reduceMotion = useReducedMotion();
@@ -1259,15 +1325,16 @@ const Home: React.FC = () => {
         </section>
 
         <section className="py-12">
-          <div className="rounded-[30px] border border-white/10 bg-white/[0.055] p-5 backdrop-blur-2xl sm:p-7">
-            <div className="mb-6 flex items-center justify-between gap-4">
+          <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.055] p-5 backdrop-blur-2xl sm:p-7">
+            <ContributionBackdrop />
+            <div className="relative mb-6 flex items-center justify-between gap-4">
               <div>
                 <SectionLabel tone="copper">Deliverables</SectionLabel>
                 <h2 className="mt-3 text-3xl font-semibold text-white">Numbers with momentum.</h2>
               </div>
               <ShieldCheck className="hidden h-9 w-9 text-orange-200/70 sm:block" />
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="relative grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
