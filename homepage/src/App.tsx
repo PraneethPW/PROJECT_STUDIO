@@ -39,10 +39,15 @@ import {
   SiMongodb,
   SiMysql,
   SiNextdotjs,
+  SiOpenai,
   SiPostgresql,
   SiPrisma,
+  SiPython,
+  SiPytorch,
+  SiScikitlearn,
   SiSpringboot,
   SiTailwindcss,
+  SiTensorflow,
   SiTypescript,
   SiVercel
 } from "react-icons/si";
@@ -115,6 +120,7 @@ const toneStyles: Record<
 
 const techStack: TechItem[] = [
   { name: "Java" },
+  { name: "Python", icon: SiPython },
   { name: "Spring Boot", icon: SiSpringboot },
   { name: "React", icon: FaReact },
   { name: "Next.js", icon: SiNextdotjs },
@@ -130,6 +136,10 @@ const techStack: TechItem[] = [
   { name: "Docker", icon: FaDocker },
   { name: "GraphQL", icon: SiGraphql },
   { name: "LangChain", icon: SiLangchain },
+  { name: "AI", icon: SiOpenai },
+  { name: "ML", icon: SiScikitlearn },
+  { name: "TensorFlow", icon: SiTensorflow },
+  { name: "PyTorch", icon: SiPytorch },
   { name: "AWS", icon: FaAws },
   { name: "Cloudflare", icon: SiCloudflare }
 ];
@@ -1065,7 +1075,7 @@ const Home: React.FC = () => {
                     Core build
                   </span>
                   <span className="rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs text-white/55">
-                    React / Node / Java / DB
+                    React / Node / Java / Python / AI / ML / DB
                   </span>
                 </div>
                 <h3 className="mt-5 text-2xl font-semibold text-white">A project you can actually explain.</h3>
