@@ -1059,6 +1059,51 @@ const ProfileLaunchBackdrop: React.FC = () => (
   </div>
 );
 
+const SectionProfileBackdrop: React.FC<{
+  align?: "left" | "right";
+  compact?: boolean;
+}> = ({ align = "right", compact = false }) => {
+  const sideClass =
+    align === "left"
+      ? "left-3 sm:left-6"
+      : "right-3 sm:right-6";
+
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[30px]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,145,65,0.07),transparent_28%),radial-gradient(circle_at_82%_18%,rgba(56,189,248,0.055),transparent_26%)]" />
+      <motion.div
+        animate={{ opacity: [0.12, 0.24, 0.15], y: [0, compact ? -4 : -7, 0] }}
+        transition={{ duration: compact ? 6 : 7.5, repeat: Infinity, ease: "easeInOut" }}
+        className={`absolute ${sideClass} top-4 w-[18.5rem] max-w-[calc(100%-1.5rem)] rounded-[24px] border border-white/8 bg-black/18 p-3 shadow-[0_0_70px_rgba(255,145,65,0.07)] backdrop-blur-2xl sm:top-5 sm:w-[25rem] sm:p-4`}
+      >
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Github className="h-4 w-4 text-orange-100/70" />
+            <Linkedin className="h-4 w-4 text-sky-100/70" />
+            <div className="h-2 w-24 rounded-full bg-white/16 sm:w-32" />
+          </div>
+          <span className="h-2 w-2 rounded-full bg-emerald-200 shadow-[0_0_14px_rgba(110,231,183,0.7)]" />
+        </div>
+        <div className="grid gap-2">
+          {["Repo", "Profile", "Launch"].map((item, index) => (
+            <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.035] px-3 py-2">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-white/8 text-orange-100/75">
+                {index === 1 ? <Linkedin className="h-3.5 w-3.5" /> : <FileText className="h-3.5 w-3.5" />}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="h-2 w-4/5 rounded-full bg-white/15" />
+                <div className="mt-2 h-1.5 w-1/2 rounded-full bg-white/8" />
+              </div>
+              <Check className="h-3.5 w-3.5 text-emerald-200/55" />
+            </div>
+          ))}
+        </div>
+      </motion.div>
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0.06),rgba(5,5,5,0.74)_52%,rgba(5,5,5,0.18)),linear-gradient(90deg,rgba(5,5,5,0.1),rgba(5,5,5,0.56)_76%)] sm:bg-[linear-gradient(90deg,rgba(5,5,5,0.08),rgba(5,5,5,0.52)_72%),linear-gradient(180deg,rgba(5,5,5,0.04),rgba(5,5,5,0.18))]" />
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050505] text-neutral-100 antialiased">
@@ -1226,8 +1271,9 @@ const Home: React.FC = () => {
           ))}
         </motion.section>
 
-        <section id="packages" className="py-16">
-          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <section id="packages" className="relative overflow-hidden rounded-[30px] py-16">
+          <SectionProfileBackdrop align="right" />
+          <div className="relative mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <SectionLabel tone="ember">Flagship package</SectionLabel>
               <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Portfolio + Project system</h2>
@@ -1237,7 +1283,7 @@ const Home: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-[1.7fr_0.85fr]">
+          <div className="relative grid gap-5 lg:grid-cols-[1.7fr_0.85fr]">
             <CardFrame tone="ember" className="p-6 sm:p-8">
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-3">
@@ -1317,8 +1363,9 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        <section id="services" className="py-12">
-          <div className="mb-8">
+        <section id="services" className="relative overflow-hidden rounded-[30px] py-12">
+          <SectionProfileBackdrop align="left" compact />
+          <div className="relative mb-8">
             <SectionLabel tone="gold">Services and add-ons</SectionLabel>
             <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">Everything around the project story.</h2>
           </div>
@@ -1328,7 +1375,7 @@ const Home: React.FC = () => {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             variants={stagger}
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            className="relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
           >
             {services.map((card) => {
               const Icon = card.icon;
@@ -1399,8 +1446,9 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        <section className="py-12">
-          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <section className="relative overflow-hidden rounded-[30px] py-12">
+          <SectionProfileBackdrop align="right" compact />
+          <div className="relative mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <SectionLabel tone="ember">Stack coverage</SectionLabel>
               <h2 className="mt-3 text-3xl font-semibold text-white">
@@ -1408,7 +1456,7 @@ const Home: React.FC = () => {
               </h2>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
+          <div className="relative grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6">
             {techStack.map((tech) => {
               const Icon = tech.icon;
               return (
@@ -1462,8 +1510,9 @@ const Home: React.FC = () => {
         </section>
 
         <section id="contact" className="py-16">
-          <div className="overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 lg:p-10">
-            <div className="grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
+          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-8 lg:p-10">
+            <SectionProfileBackdrop align="right" compact />
+            <div className="relative grid gap-8 lg:grid-cols-[1fr_0.7fr] lg:items-center">
               <div>
                 <SectionLabel tone="ember">Start here</SectionLabel>
                 <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
