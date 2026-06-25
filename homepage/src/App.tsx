@@ -393,6 +393,24 @@ const portfolioFlowItems = [
   }
 ];
 
+const deliveryChannels = [
+  {
+    title: "GitHub",
+    note: "Clean repo",
+    icon: Github
+  },
+  {
+    title: "LinkedIn",
+    note: "Profile story",
+    icon: Linkedin
+  },
+  {
+    title: "Docs",
+    note: "Project handoff",
+    icon: FileText
+  }
+];
+
 const stats = [
   { label: "Projects Delivered", value: 120 },
   { label: "GitHub Repos Updated", value: 95 },
@@ -1043,22 +1061,54 @@ const HeroReel: React.FC = () => {
               </motion.div>
 
               <motion.div
-                animate={{ opacity: [0.86, 1, 0.86] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-                className="rounded-[26px] border border-orange-300/18 bg-[linear-gradient(180deg,rgba(255,167,76,0.1),rgba(255,255,255,0.03))] p-4"
+                animate={{ opacity: [0.9, 1, 0.9], y: [0, -2, 0] }}
+                transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
+                className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.055),rgba(255,255,255,0.025))] p-4 shadow-inner shadow-black/20 backdrop-blur-2xl"
               >
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.22em] text-orange-100/72">
-                  <span>placement ready</span>
-                  <span>scroll to reveal</span>
-                </div>
-                <div className="mt-4 flex items-center gap-2">
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/8">
-                    <motion.div
-                      style={{ scaleX: scrollRail }}
-                      className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
-                    />
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h4 className="text-sm font-semibold uppercase tracking-[0.22em] text-white/58">
+                      Delivery channels
+                    </h4>
+                    <p className="mt-2 text-xs leading-5 text-white/46">
+                      Repo, profile, and handoff material prepared as one polished package.
+                    </p>
                   </div>
-                  <div className="text-xs text-white/45">GitHub / LinkedIn / Docs</div>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black/28 text-orange-200">
+                    <BadgeCheck className="h-5 w-5" />
+                  </div>
+                </div>
+
+                <div className="mt-4 space-y-2.5">
+                  {deliveryChannels.map((channel, index) => {
+                    const Icon = channel.icon;
+                    return (
+                      <div
+                        key={channel.title}
+                        className="flex items-center gap-3 rounded-2xl border border-white/8 bg-black/20 p-3"
+                      >
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white/78">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-sm font-semibold text-white">{channel.title}</p>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-white/34">
+                              0{index + 1}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-xs text-white/43">{channel.note}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <motion.div
+                    style={{ scaleX: scrollRail }}
+                    className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                  />
                 </div>
               </motion.div>
             </div>
