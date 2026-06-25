@@ -3,10 +3,8 @@ import {
   animate,
   motion,
   useInView,
-  useMotionValue,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform
 } from "framer-motion";
 import {
@@ -472,10 +470,10 @@ const CardFrame: React.FC<{
   className?: string;
 }> = ({ tone, children, className = "" }) => (
   <motion.article
-    whileHover={{ y: -10, scale: 1.015, rotateX: 6, rotateY: -5 }}
+    whileHover={{ y: -8 }}
     whileTap={{ scale: 0.995 }}
     transition={{ type: "spring", stiffness: 260, damping: 18 }}
-    className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] shadow-2xl backdrop-blur-2xl transform-gpu ${toneStyles[tone].glow} ${className}`}
+    className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] shadow-2xl backdrop-blur-2xl ${toneStyles[tone].glow} ${className}`}
   >
     <div
       className={`absolute inset-0 bg-gradient-to-br ${toneStyles[tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
@@ -881,12 +879,6 @@ const ScrollStage: React.FC = () => {
 };
 
 const HeroReel: React.FC = () => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const smoothX = useSpring(x, { stiffness: 120, damping: 18 });
-  const smoothY = useSpring(y, { stiffness: 120, damping: 18 });
-  const rotateX = useTransform(smoothY, [-90, 90], [10, -10]);
-  const rotateY = useTransform(smoothX, [-90, 90], [-12, 12]);
   const { scrollYProgress } = useScroll();
   const scrollLift = useTransform(scrollYProgress, [0, 1], [0, -18]);
   const scrollRail = useTransform(scrollYProgress, [0, 0.5, 1], [0.18, 1, 0.55]);
@@ -894,17 +886,8 @@ const HeroReel: React.FC = () => {
 
   return (
     <motion.div
-      style={{ rotateX, rotateY, y: scrollLift, perspective: 1800 }}
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        x.set(event.clientX - rect.left - rect.width / 2);
-        y.set(event.clientY - rect.top - rect.height / 2);
-      }}
-      onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      className="relative hidden min-h-[680px] overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/35 backdrop-blur-3xl transform-gpu lg:block"
+      style={{ y: scrollLift }}
+      className="relative hidden min-h-[680px] overflow-hidden rounded-[32px] border border-white/12 bg-white/[0.06] p-5 shadow-2xl shadow-black/35 backdrop-blur-3xl lg:block"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,149,58,0.18),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)_30%,rgba(255,255,255,0.06))]" />
       <div className="absolute inset-0 film-noise" />
@@ -1376,10 +1359,10 @@ const GalleryCard: React.FC<{ item: PortfolioDoc; index: number }> = ({ item, in
   return (
     <motion.article
       variants={fadeUp}
-      whileHover={{ y: -8, scale: 1.01, rotateX: 4, rotateY: -4 }}
+      whileHover={{ y: -6 }}
       whileTap={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 220, damping: 18 }}
-      className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl transform-gpu ${
+      className={`group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.055] p-4 shadow-2xl shadow-black/35 backdrop-blur-2xl ${
         isLandscape ? "w-[min(88vw,28rem)] sm:w-[26rem] lg:w-[28rem]" : "w-[min(84vw,22rem)] sm:w-[21rem] lg:w-[22.5rem]"
       }`}
     >
@@ -1626,7 +1609,7 @@ const Home: React.FC = () => {
 
             <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <motion.a
-                whileHover={{ y: -3, scale: 1.01 }}
+                whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
                 href={whatsapp}
                 target="_blank"
@@ -1652,7 +1635,7 @@ const Home: React.FC = () => {
                 return (
                   <motion.a
                     key={profile.label}
-                    whileHover={{ y: -4, scale: 1.01 }}
+                    whileHover={{ y: -4 }}
                     whileTap={{ scale: 0.98 }}
                     href={profile.href}
                     target="_blank"
@@ -1705,8 +1688,8 @@ const Home: React.FC = () => {
             <motion.article
               key={title}
               variants={fadeUp}
-              whileHover={{ y: -8, rotateX: 4, rotateY: -4 }}
-              className={`group rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl transform-gpu ${[
+              whileHover={{ y: -6 }}
+              className={`group rounded-[28px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl ${[
                 "shadow-orange-500/10",
                 "shadow-amber-500/10",
                 "shadow-rose-500/10"
@@ -1824,9 +1807,9 @@ const Home: React.FC = () => {
                 <motion.article
                   key={card.title}
                   variants={fadeUp}
-                  whileHover={{ y: -8, scale: 1.02, rotateX: 6, rotateY: -5 }}
+                  whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                  className={`group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl transform-gpu ${toneStyles[card.tone].glow}`}
+                  className={`group relative overflow-hidden rounded-[26px] border border-white/10 bg-white/[0.055] p-5 shadow-2xl backdrop-blur-2xl ${toneStyles[card.tone].glow}`}
                 >
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${toneStyles[card.tone].accent} opacity-0 transition duration-300 group-hover:opacity-100`}
@@ -1905,9 +1888,9 @@ const Home: React.FC = () => {
               return (
                 <motion.div
                   key={tech.name}
-                  whileHover={{ y: -4, scale: 1.03, rotateX: 7, rotateY: -7 }}
+                  whileHover={{ y: -3 }}
                   transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                  className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.045] p-3 text-center text-white/70 backdrop-blur-xl transform-gpu"
+                  className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.045] p-3 text-center text-white/70 backdrop-blur-xl"
                 >
                   <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 text-xl text-orange-200">
                     {Icon ? <Icon /> : <Code2 className="h-5 w-5" />}
@@ -1933,8 +1916,8 @@ const Home: React.FC = () => {
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  whileHover={{ y: -6, rotateX: 5, rotateY: -5 }}
-                  className={`rounded-2xl border border-white/10 bg-black/24 p-4 text-center shadow-2xl backdrop-blur-xl transform-gpu ${[
+                  whileHover={{ y: -4 }}
+                  className={`rounded-2xl border border-white/10 bg-black/24 p-4 text-center shadow-2xl backdrop-blur-xl ${[
                     "shadow-orange-500/10",
                     "shadow-amber-500/10",
                     "shadow-rose-500/10",
