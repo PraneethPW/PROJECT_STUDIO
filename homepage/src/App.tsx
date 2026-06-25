@@ -378,15 +378,18 @@ const socialProfiles = [
 const portfolioFlowItems = [
   {
     title: "AI apps",
-    note: "Full-stack builds"
+    note: "Full-stack builds",
+    icon: Code2
   },
   {
     title: "ML builds",
-    note: "Model demos"
+    note: "Model demos",
+    icon: Sparkles
   },
   {
     title: "Docs",
-    note: "README + handoff"
+    note: "README + handoff",
+    icon: FileText
   }
 ];
 
@@ -916,71 +919,90 @@ const HeroReel: React.FC = () => {
           </div>
 
           <div className="mt-5 grid gap-4 xl:grid-cols-[1.18fr_0.82fr]">
-            <div className="rounded-[26px] border border-white/12 bg-black/22 p-4">
-              <div className="relative overflow-hidden rounded-[22px] border border-white/12 aspect-[16/10] bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_28%,rgba(0,0,0,0.25)_72%)]">
-                <motion.div
-                  animate={{ backgroundPositionX: ["0%", "100%"] }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-55"
-                />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(255,145,65,0.34),transparent_24%),radial-gradient(circle_at_18%_22%,rgba(255,255,255,0.12),transparent_15%),radial-gradient(circle_at_82%_22%,rgba(255,255,255,0.08),transparent_16%)]" />
-                <div className="absolute inset-0 flex flex-col">
-                  <div className="flex items-start justify-between gap-3 p-4 pb-0">
-                    <div>
-                      <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-orange-100/78">
-                        <BlinkDot tone="amber" />
-                        project map
-                      </span>
-                      <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">AI portfolio system</h3>
-                    </div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-white/55">
-                      <Layers3 className="h-4 w-4 text-orange-300" />
-                      Demo ready
-                    </div>
+            <div className="rounded-[26px] border border-white/12 bg-[linear-gradient(180deg,rgba(10,12,18,0.95),rgba(8,10,15,0.88))] p-4 shadow-inner shadow-black/25">
+              <div className="rounded-[22px] border border-white/10 bg-white/[0.04] p-4 backdrop-blur-2xl">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/55">
+                      <BlinkDot tone="amber" />
+                      portfolio dossier
+                    </span>
+                    <h3 className="mt-2 text-xl font-semibold text-white sm:text-2xl">
+                      AI projects and delivery assets.
+                    </h3>
+                    <p className="mt-2 max-w-xl text-sm leading-6 text-white/54">
+                      A compact view of full-stack builds, ML experiments, and presentation-ready documents.
+                    </p>
+                  </div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-300/18 bg-emerald-300/8 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-emerald-100/75">
+                    <BadgeCheck className="h-4 w-4" />
+                    Review ready
+                  </div>
+                </div>
+
+                <div className="mt-4 rounded-[20px] border border-white/8 bg-black/22 p-3">
+                  <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.22em] text-white/42">
+                    <span>selected work</span>
+                    <span>three tracks</span>
                   </div>
 
-                  <div className="relative flex flex-1 items-center justify-center px-6">
-                    <motion.div
-                      animate={{ scale: [1, 1.05, 1], opacity: [0.9, 1, 0.9] }}
-                      transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                      className="relative flex h-20 w-20 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl"
+                  <div className="mt-3 grid gap-3">
+                    {portfolioFlowItems.map((item, index) => {
+                      const Icon = item.icon;
+                      return (
+                        <motion.div
+                          key={item.title}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.12 + index * 0.08 }}
+                          className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-3"
+                        >
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black/30 text-white/82">
+                            <Icon className="h-4.5 w-4.5" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-3">
+                              <p className="text-sm font-semibold text-white">{item.title}</p>
+                              <span className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+                                phase 0{index + 1}
+                              </span>
+                            </div>
+                            <p className="mt-1 text-xs text-white/46">{item.note}</p>
+                          </div>
+                          <div className="hidden w-24 sm:block">
+                            <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${68 - index * 7}%` }}
+                                transition={{ duration: 1.2, delay: 0.18 + index * 0.1 }}
+                                className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                              />
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {["GitHub", "LinkedIn", "Docs"].map((item, index) => (
+                    <div
+                      key={item}
+                      className="rounded-2xl border border-white/8 bg-black/20 p-3 text-center"
                     >
-                      <Layers3 className="h-8 w-8 text-orange-100" />
-                    </motion.div>
-
-                    <div className="absolute left-[12%] top-[18%] rounded-full border border-white/12 bg-black/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/70 backdrop-blur-xl">
-                      AI apps
+                      <p className="text-[10px] uppercase tracking-[0.22em] text-white/42">{item}</p>
+                      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+                        <motion.div
+                          style={{ scaleX: scrollRail }}
+                          className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
+                        />
+                      </div>
+                      <p className="mt-2 text-xs text-white/45">
+                        {index === 0 ? "repos" : index === 1 ? "profile" : "handoff"}
+                      </p>
                     </div>
-                    <div className="absolute right-[12%] top-[14%] rounded-full border border-white/12 bg-black/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/70 backdrop-blur-xl">
-                      ML builds
-                    </div>
-                    <div className="absolute left-[18%] bottom-[16%] rounded-full border border-white/12 bg-black/30 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/70 backdrop-blur-xl">
-                      Docs
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-3 p-4 pt-0">
-                    {portfolioFlowItems.map((item, index) => (
-                      <motion.div
-                        key={item.title}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.14 + index * 0.08 }}
-                        className="rounded-2xl border border-white/10 bg-black/25 p-3"
-                      >
-                        <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${62 + index * 8}%` }}
-                            transition={{ duration: 1.4, delay: 0.18 + index * 0.12 }}
-                            className="h-full rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
-                          />
-                        </div>
-                        <p className="text-sm font-semibold text-white">{item.title}</p>
-                        <p className="mt-1 text-xs text-white/45">{item.note}</p>
-                      </motion.div>
-                    ))}
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -1048,20 +1070,6 @@ const HeroReel: React.FC = () => {
 };
 
 const MobileHeroReel: React.FC = () => {
-  const launchSteps = [
-    {
-      title: "Share the brief",
-      desc: "Your idea, timeline, and college or client requirements."
-    },
-    {
-      title: "Build the stack",
-      desc: "UI, logic, README, deployment, and clean project files."
-    },
-    {
-      title: "Launch polished",
-      desc: "GitHub, LinkedIn, and viva-ready delivery material."
-    }
-  ];
   const { scrollYProgress } = useScroll();
   const scrollRail = useTransform(scrollYProgress, [0, 0.5, 1], [0.14, 1, 0.46]);
   const scrollDrift = useTransform(scrollYProgress, [0, 1], [0, -10]);
@@ -1107,67 +1115,57 @@ const MobileHeroReel: React.FC = () => {
         </div>
 
         <div className="mt-4 grid gap-3">
-          <div className="grid gap-3 sm:grid-cols-3">
-            {launchSteps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.12 + index * 0.08 }}
-                className="rounded-2xl border border-white/10 bg-black/22 p-3"
-              >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-orange-100/70">
-                    0{index + 1}
-                  </span>
-                  <ArrowRight className="h-3.5 w-3.5 text-orange-200/70" />
-                </div>
-                <p className="mt-3 text-sm font-semibold text-white">{step.title}</p>
-                <p className="mt-1 text-xs leading-5 text-white/48">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="relative overflow-hidden rounded-[20px] border border-white/12 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,145,65,0.08)_32%,rgba(0,0,0,0.25)_72%)] aspect-[16/10]">
-            <motion.div
-              animate={{ backgroundPositionX: ["0%", "100%"] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.12)_18%,rgba(255,145,65,0.05)_34%,rgba(255,255,255,0.02)_56%,rgba(255,255,255,0.1)_78%,rgba(255,255,255,0.02)_100%)] bg-[length:220%_220%] opacity-60"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(255,145,65,0.32),transparent_24%),radial-gradient(circle_at_20%_24%,rgba(255,255,255,0.12),transparent_15%),radial-gradient(circle_at_80%_24%,rgba(255,255,255,0.08),transparent_16%)]" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
-              <motion.div
-                animate={{ scale: [1, 1.06, 1], opacity: [0.9, 1, 0.9] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="flex h-14 w-14 items-center justify-center rounded-full border border-white/18 bg-black/35 shadow-[0_0_50px_rgba(255,145,65,0.28)] backdrop-blur-xl"
-              >
-                <Layers3 className="h-6 w-6 text-orange-100" />
-              </motion.div>
-              <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-orange-100/78">
-                project map
-              </p>
-              <p className="mt-2 max-w-[14rem] text-sm font-semibold text-white">
-                AI apps, ML builds, and docs ready for review.
-              </p>
+          <div className="rounded-[20px] border border-white/10 bg-black/22 p-3">
+            <div className="flex items-center justify-between gap-3">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-white/42">selected work</span>
+              <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-emerald-100/75">
+                <BadgeCheck className="h-3.5 w-3.5" />
+                review ready
+              </span>
             </div>
-            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] uppercase tracking-[0.24em] text-white/55">
-              <span>design / code / deploy</span>
-              <span>review ready</span>
+
+            <div className="mt-3 space-y-3">
+              {portfolioFlowItems.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={item.title}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.1 + index * 0.08 }}
+                    className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-3"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black/30 text-white/80">
+                      <Icon className="h-4.5 w-4.5" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="text-sm font-semibold text-white">{item.title}</p>
+                        <span className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+                          0{index + 1}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-xs text-white/45">{item.note}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
 
           <div className="grid gap-2 sm:grid-cols-3">
-            {portfolioFlowItems.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-white/10 bg-black/25 p-3">
-                <div className="mb-2 h-1.5 overflow-hidden rounded-full bg-white/10">
+            {["GitHub", "LinkedIn", "Docs"].map((item, index) => (
+              <div key={item} className="rounded-2xl border border-white/10 bg-black/25 p-3">
+                <p className="text-[10px] uppercase tracking-[0.22em] text-white/42">{item}</p>
+                <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                   <motion.div
                     style={{ scaleX: scrollRail }}
                     className="h-full origin-left rounded-full bg-gradient-to-r from-orange-300 via-amber-200 to-rose-200"
                   />
                 </div>
-                <p className="text-xs font-semibold text-white">{item.title}</p>
-                <p className="mt-1 text-[10px] text-white/45">{item.note}</p>
+                <p className="mt-2 text-[10px] text-white/45">
+                  {index === 0 ? "repos" : index === 1 ? "profile" : "handoff"}
+                </p>
               </div>
             ))}
           </div>
