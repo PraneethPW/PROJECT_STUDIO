@@ -24,7 +24,6 @@ import {
   MessageCircle,
   Move3d,
   Rocket,
-  ScanLine,
   ShieldCheck,
   Sparkles,
   Waypoints,
@@ -917,15 +916,16 @@ const HeroReel: React.FC = () => {
         <div className="rounded-[28px] border border-orange-200/14 bg-[radial-gradient(circle_at_50%_18%,rgba(255,148,53,0.3),rgba(255,148,53,0.08)_34%,rgba(0,0,0,0.18)_70%)] p-5">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-orange-100/80">
+              <span aria-hidden className="inline-flex items-center gap-2">
                 <BlinkDot tone="amber" />
-                motion reel
+                <span className="h-px w-16 bg-gradient-to-r from-orange-200/60 to-transparent" />
               </span>
               <h3 className="mt-3 text-2xl font-semibold text-white">Project flow</h3>
             </div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.22em] text-white/55">
-              <ScanLine className="h-4 w-4 text-orange-300" />
-              Scroll driven
+            <div aria-hidden className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/20 px-3 py-2">
+              <BlinkDot tone="orange" delay={0.25} />
+              <BlinkDot tone="amber" delay={0.45} />
+              <BlinkDot tone="orange" delay={0.65} />
             </div>
           </div>
 
